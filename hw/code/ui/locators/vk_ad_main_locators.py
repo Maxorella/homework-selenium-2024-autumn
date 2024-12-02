@@ -12,7 +12,7 @@ class AuthLocators:
     SURNAME_NAME_DIV = (By.CLASS_NAME, 'AccountSwitch_changeAccountName__pzp40') # div с Именем Фамилией текущего аккаунта
 
 
-class MainPageNoLoginLocators:
+class MainPageNoLoginNavbarLoc:
     # лого
     MAIN_PAGE_LOGO_BTN = (By.CLASS_NAME, 'content_home__VLt6p')
     # кнопка новости
@@ -35,3 +35,5 @@ class MainPageNoLoginLocators:
     MAIN_PAGE_REFERENCE_BTN = (By.XPATH, '//*[@id="classic-layout"]/div[1]/div/header/div/div[2]/div/div[2]/div/div/a')
     # кнопка в главный кабинет
     MAIN_PAGE_GO_TO_LK_BTN = (By.XPATH, '//*[@id="classic-layout"]/div[1]/div/header/div/div[2]/div/div[2]/a')
+    # плашка обучение
+    STUDY_POPUP = (By.XPATH, '//*[@id="classic-layout"]/div[1]/div/header/div/div[2]/div/div[1]/div[3]/div[1]/span')

@@ -1,6 +1,8 @@
 import time
 
 import allure
+from selenium.common import TimeoutException
+from selenium.webdriver import ActionChains
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -14,19 +16,24 @@ class PageNotOpenedExeption(Exception):
 class BasePage(object):
 
     # login_locators = AuthPageLocators()  # не нужно
-    url = 'https://ads.vk.com/' # урл страницы, c которой начинаю
+    url = 'https://ads.vk.com/'  # урл страницы, c которой начинаю
 
-    def is_opened(self, url='', timeout=15):
-        if url=='':
+    def is_opened(self, url='', trunc=0, timeout=15):
+        if url == '':
             url = self.url
         started = time.time()
         while time.time() - started < timeout:
-            if self.driver.current_url == url:
-                return True
+            if trunc != 0:
+                if self.driver.current_url[:trunc] == url:
+                    return True
+            else:
+                if self.driver.current_url == url:
+                    return True
         raise PageNotOpenedExeption(f'{url} did not open in {timeout} sec, current url {self.driver.current_url}')
 
     def __init__(self, driver):
         self.driver = driver
+        self.actions = ActionChains(self.driver)
         self.is_opened()
 
     def wait(self, timeout=None):
@@ -65,7 +72,22 @@ class BasePage(object):
         elem.send_keys(Keys.RETURN)
 
     @allure.step('GetText')
-    def get_text(self, locator, timeout=None) -> str:
+    def get_text(self, locator, timeout=2) -> str:
         self.wait(timeout).until(EC.presence_of_element_located(locator))
         element = self.driver.find_element(*locator)
         return element.text
+
+    def move_to_element(self, locator):
+        elem = self.find(locator)
+        self.actions.move_to_element(elem).perform()
+
+    def is_element_not_present(self, locator, timeout=2) -> bool:
+        """
+        Проверяет, что элемента НЕТ или он НЕВИДИМ на странице в течение указанного времени ожидания.
+        :return: True, если элемент отсутствует или невидим, False, если он присутствует и видим.
+        """
+        try:
+            WebDriverWait(self.driver, timeout).until(EC.invisibility_of_element_located(locator))
+            return True  # Элемент невидим или отсутствует
+        except TimeoutException:
+            return False  # Элемент видим
