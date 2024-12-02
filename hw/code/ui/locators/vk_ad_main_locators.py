@@ -84,4 +84,12 @@ class MainPageNoLoginCases:
     CASES_CONTAINER = (By.CLASS_NAME, 'styles_section__kQovd')
     # примеры кейсов
     CASES_EXAMPLES = (By.CLASS_NAME, 'styles_cols__Iavf_')
+    # переход к странице кейсов
+    CASES_HREF = (By.CLASS_NAME, 'styles_all__wnH9i')
+    # переход к кейсу
+    CHOSEN_CASE = (By.CLASS_NAME, 'Case_link__B_za3')
+    # заголовок кейса
+    CASE_TITLE = (By.CLASS_NAME, 'Case_title__JAisY')
+    # заголовок страницы кейса
+    CASE_PAGE_TITLE = (By.CLASS_NAME, 'Summary_content__yWIpY')
 
