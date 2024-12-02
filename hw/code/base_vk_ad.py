@@ -56,7 +56,7 @@ class BaseCaseVkAd:
         self.config = config
 
         self.base_page: BasePage = (request.getfixturevalue('base_vk_ad_page'))
-        self.news_page: NewsPage = (request.getfixturevalue('news_vk_ad_page'))
+        # self.news_page: NewsPage = (request.getfixturevalue('news_vk_ad_page'))
         self.email, self.password, self.profile_fi = (
             request.getfixturevalue('credentials_vk_ad').values()
         )

@@ -15,8 +15,7 @@ class TestHeader(BaseCaseVkAd):
 
     @allure.title("View Logo Test")
     def test_logo(self):
-        logo = self.base_page.find(MainPageNoLoginNavbarLoc.MAIN_PAGE_LOGO_BTN)
-        svg_element = logo.find_element(*MainPageNoLoginNavbarLoc.SVG_LOGO)
+        svg_element = self.base_page.find(MainPageNoLoginNavbarLoc.SVG_LOGO, 5)
         xmlns_attribute = svg_element.get_attribute('xmlns')
         assert xmlns_attribute == 'http://www.w3.org/2000/svg', "Атрибут xmlns не совпадает"
 

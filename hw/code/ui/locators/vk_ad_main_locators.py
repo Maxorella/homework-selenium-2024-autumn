@@ -16,7 +16,7 @@ class MainPageNoLoginNavbarLoc:
     # лого
     MAIN_PAGE_LOGO_BTN = (By.CLASS_NAME, 'content_home__VLt6p')
     # svg лого
-    SVG_LOGO = (By.TAG_NAME, 'SVG')
+    SVG_LOGO = (By.XPATH, '//*[@id="classic-layout"]/div[1]/div/header/div/div[1]/a/svg')
     # кнопка новости
     MAIN_PAGE_HEADER_NEWS_BTN = (By.XPATH, '//*[@id="classic-layout"]/div[1]/div/header/div/div[2]/div/div[1]/div[2]/div/a')
     # кнопка полезные материалы
