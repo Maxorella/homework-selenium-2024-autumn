@@ -64,6 +64,12 @@ class BasePage(object):
         elem.clear()
         elem.send_keys(value)
 
+    @allure.step('ClearEnterField')
+    def clear_enter_field(self, locator, value, timeout=None) -> WebElement:
+        elem = self.find(locator, timeout)
+        elem.clear()
+        elem.send_keys(value)
+
     @allure.step('EnterFieldReturn')
     def enter_field_return(self, locator, value, timeout=None) -> WebElement:
         elem = self.find(locator, timeout)
@@ -97,3 +103,14 @@ class BasePage(object):
             return True  # Элемент невидим или отсутствует
         except TimeoutException:
             return False  # Элемент видим
+
+    def element_presented(self, locator, timeout=2) -> bool:
+        """
+        Проверяет, что элемента  ВИДИМ на странице в течение указанного времени ожидания.
+        :return: True, если элемент виден, False, если он невиден или его нету.
+        """
+        try:
+            WebDriverWait(self.driver, timeout).until(EC.visibility_of_element_located(locator))
+            return True  # Элемент видим
+        except TimeoutException:
+            return False  # Элемент невидим

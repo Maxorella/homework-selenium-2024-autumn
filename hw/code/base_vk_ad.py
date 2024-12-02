@@ -28,6 +28,14 @@ class BaseCaseVkAd:
             self.driver.close()
         self.driver.switch_to.window(current)
 
+
+    def configure_browser_window(self, width, height, x=0, y=0):
+        self.driver.set_window_size(width, height)
+        self.driver.set_window_position(x, y)
+
+    def full_size_window(self):
+        self.driver.maximize_window()
+
     def save_cookies(self, file_path):
         """Сохраняет куки из браузера в файл."""
         with open(file_path, 'w') as file:
@@ -53,13 +61,13 @@ class BaseCaseVkAd:
             request.getfixturevalue('credentials_vk_ad').values()
         )
         if self.authorize:
-            self.base_page.click(AuthLocators.GO_TO_LK_BTN, 10)
-            self.base_page.click(AuthLocators.GO_WITH_EMAIL_BTN, 10)
-            self.base_page.enter_field(AuthLocators.EMAIL_ENTER_FIELD, self.email, 10)
-            self.base_page.click(AuthLocators.ENTER_BTN, 10)
-            self.base_page.click(AuthLocators.ENTER_OTHER_WAY_BTN, 10)
-            self.base_page.enter_field(AuthLocators.PASSWORD_ENTER_FIELD, self.password, 10)
-            self.base_page.click(AuthLocators.ENTER_PASSWORD_BTN, 10)
+            self.base_page.click(AuthLocators.GO_TO_LK_BTN, 15)
+            self.base_page.click(AuthLocators.GO_WITH_EMAIL_BTN, 15)
+            self.base_page.enter_field(AuthLocators.EMAIL_ENTER_FIELD, self.email, 15)
+            self.base_page.click(AuthLocators.ENTER_BTN, 15)
+            self.base_page.click(AuthLocators.ENTER_OTHER_WAY_BTN, 15)
+            self.base_page.enter_field(AuthLocators.PASSWORD_ENTER_FIELD, self.password, 15)
+            self.base_page.click(AuthLocators.ENTER_PASSWORD_BTN, 15)
 
 
         if self.use_cookie:
