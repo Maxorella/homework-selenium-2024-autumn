@@ -37,3 +37,33 @@ class MainPageNoLoginNavbarLoc:
     MAIN_PAGE_GO_TO_LK_BTN = (By.XPATH, '//*[@id="classic-layout"]/div[1]/div/header/div/div[2]/div/div[2]/a')
     # плашка обучение
     STUDY_POPUP = (By.XPATH, '//*[@id="classic-layout"]/div[1]/div/header/div/div[2]/div/div[1]/div[3]/div[1]/span')
+
+
+class MainPageNoLoginCarouselLoc:
+    # До 10000 бонусов
+    MAIN_PAGE_CAROUSEL_TEXT_1_1 = (By.XPATH, '//*[@id="title"]/p[1]')
+    # на первую кампанию
+    MAIN_PAGE_CAROUSEL_TEXT_1_2 = (By.XPATH, '//*[@id="title"]/p[2]')
+    # Акция для тех, у кого еще нет кабинета в VK Рекламе. Переходите по кнопке ниже, чтобы узнать подробности
+    MAIN_PAGE_CAROUSEL_TEXT_1_3 = (By.XPATH, '//*[@id="classic-layout"]/div[2]/div/div/div[1]/div/div[1]/div[1]/div/p')
+    # Получить бонус
+    MAIN_PAGE_CAROUSEL_TEXT_1_BTN = (By.XPATH, '//*[@id="classic-layout"]/div[2]/div/div/div[1]/div/div[1]/div[1]/a/button/span[1]/span')
+
+    # кнопка 1
+    MAIN_PAGE_CAROUSEL_ROUND_BTN_1 = (By.XPATH, '//*[@id="classic-layout"]/div[2]/div/div/div[1]/div/div[4]/div[1]')
+
+    # кнопка 2
+    MAIN_PAGE_CAROUSEL_ROUND_BTN_2 = (By.XPATH, '//*[@id="classic-layout"]/div[2]/div/div/div[1]/div/div[4]/div[2]')
+
+    # кнопка 3
+    MAIN_PAGE_CAROUSEL_ROUND_BTN_3 = (By.XPATH, '//*[@id="classic-layout"]/div[2]/div/div/div[1]/div/div[4]/div[3]')
+
+    # Реклама
+    MAIN_PAGE_CAROUSEL_TEXT_2_1 = (By.XPATH, '//*[@id="title"]/p[1]')
+    # для любых целей
+    MAIN_PAGE_CAROUSEL_TEXT_2_2 = (By.XPATH, '//*[@id="title"]/p[2]')
+    # вашего бизнеса
+    MAIN_PAGE_CAROUSEL_TEXT_2_3 = (By.XPATH, '//*[@id="title"]/p[3]')
+
+    # VK Реклама подходит для продвижения сайтов любой тематики, сообществ ВКонтакте и ОК, мобильных приложений, сбора лидов и охватных кампаний
+    MAIN_PAGE_CAROUSEL_TEXT_2_4 = (By.XPATH, '//*[@id="classic-layout"]/div[2]/div/div/div[1]/div/div[2]/div[1]/div/p')
