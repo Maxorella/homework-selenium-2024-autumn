@@ -4,7 +4,8 @@ import time
 import allure
 
 from hw.code.base_vk_ad import BaseCaseVkAd
-from ui.locators.vk_ad_main_locators import MainPageNoLoginNavbarLoc
+from ui.locators.vk_ad_main_locators import MainPageNoLoginNavbarLoc, MainPageNoLoginCarouselLoc
+
 
 @allure.story("Header TestCase")
 class TestHeader(BaseCaseVkAd):
@@ -23,7 +24,7 @@ class TestHeader(BaseCaseVkAd):
         assert self.base_page.is_opened('https://ads.vk.com/'), "Переход на главную страницу не произошел"
 
     @allure.title("Navigation View Test")
-    def test_display_navbar_click(self):
+    def test_display_navbar(self):
 
         text = self.base_page.get_text(MainPageNoLoginNavbarLoc.MAIN_PAGE_HEADER_NEWS_BTN)
         assert text == 'Новости', "Текст новости в Navbar не совпадает"
@@ -144,3 +145,42 @@ class TestHeader(BaseCaseVkAd):
             assert self.base_page.is_opened('https://id.vk.com/auth',len('https://id.vk.com/auth')), "Переход на страницу авторизации не произошел"
 
 
+
+@allure.story("Carousel TestCase")
+class TestСarousel(BaseCaseVkAd):
+    authorize = False
+
+    @allure.title("Carousel Test 1-4")
+    def test_display_carousel(self):
+        self.base_page.click(MainPageNoLoginCarouselLoc.MAIN_PAGE_CAROUSEL_ROUND_BTN_2)
+        self.base_page.click(MainPageNoLoginCarouselLoc.MAIN_PAGE_CAROUSEL_ROUND_BTN_1)
+
+        text = self.base_page.get_text(MainPageNoLoginCarouselLoc.MAIN_PAGE_CAROUSEL_TEXT_1_1, 2)
+        assert text == 'До 10 000 бонусов', "Текст До 10000 бонусов в Carousel не совпадает"
+
+        text = self.base_page.get_text(MainPageNoLoginCarouselLoc.MAIN_PAGE_CAROUSEL_TEXT_1_2, 2)
+        assert text == 'на первую кампанию', "Текст на первую кампанию в Carousel не совпадает"
+
+        text = self.base_page.get_text(MainPageNoLoginCarouselLoc.MAIN_PAGE_CAROUSEL_TEXT_1_3, 2)
+        assert text == 'Акция для тех, у кого еще нет кабинета в VK Рекламе. Переходите по кнопке ниже, чтобы узнать подробности',\
+            "Текст Акция для тех в Carousel не совпадает"
+
+        text = self.base_page.get_text(MainPageNoLoginCarouselLoc.MAIN_PAGE_CAROUSEL_TEXT_1_BTN, 2)
+        assert text == 'Получить бонус', "Текст Получить бонус в Carousel не совпадает"
+
+        self.base_page.click(MainPageNoLoginCarouselLoc.MAIN_PAGE_CAROUSEL_ROUND_BTN_1)
+        self.base_page.click(MainPageNoLoginCarouselLoc.MAIN_PAGE_CAROUSEL_ROUND_BTN_3)
+        self.base_page.click(MainPageNoLoginCarouselLoc.MAIN_PAGE_CAROUSEL_ROUND_BTN_2)
+        time.sleep(1)
+        text = self.base_page.get_text(MainPageNoLoginCarouselLoc.MAIN_PAGE_CAROUSEL_TEXT_2_1, 2)
+        # assert text == 'Реклама', "Текст Реклама в Carousel не совпадает"
+
+        text = self.base_page.get_text(MainPageNoLoginCarouselLoc.MAIN_PAGE_CAROUSEL_TEXT_2_2, 2)
+        assert text == 'для любых целей', "Текст для любых целей в Carousel не совпадает"
+
+        text = self.base_page.get_text(MainPageNoLoginCarouselLoc.MAIN_PAGE_CAROUSEL_TEXT_2_3, 2)
+        assert text == 'вашего бизнеса', "Текст вашего бизнеса в Carousel не совпадает"
+
+        text = self.base_page.get_text(MainPageNoLoginCarouselLoc.MAIN_PAGE_CAROUSEL_TEXT_2_4, 2)
+        assert text == 'VK Реклама подходит для продвижения сайтов любой тематики, сообществ ВКонтакте и ОК, мобильных приложений, сбора лидов и охватных кампаний',\
+            "Текст VK Реклама в Carousel не совпадает"
