@@ -6,6 +6,7 @@ import pytest
 from _pytest.fixtures import FixtureRequest
 
 from hw.code.ui.pages.base_page import BasePage
+from hw.code.ui.pages.news_page import NewsPage
 from ui.locators.vk_ad_main_locators import AuthLocators
 
 CLICK_RETRY = 3
@@ -47,6 +48,7 @@ class BaseCaseVkAd:
         self.config = config
 
         self.base_page: BasePage = (request.getfixturevalue('base_vk_ad_page'))
+        self.news_page: NewsPage = (request.getfixturevalue('news_vk_ad_page'))
         self.email, self.password, self.profile_fi = (
             request.getfixturevalue('credentials_vk_ad').values()
         )
@@ -63,6 +65,4 @@ class BaseCaseVkAd:
         if self.use_cookie:
             self.load_cookies('cookies.json')
             self.base_page.wait(20)
-#    self.base_page.click(AuthPageLocators.GO_WITH_EMAIL_BTN_LOC, 5)
-        #    self.base_page.enter_field(AuthPageLocators.EMAIL_INP_LOC, self.email, 5)
-        #    self.base_page.enter_field_return(AuthPageLocators.PASSWORD_INP_LOC, self.password, 5)
+

@@ -8,6 +8,7 @@ from webdriver_manager.firefox import GeckoDriverManager
 import json
 
 from hw.code.ui.pages.base_page import BasePage
+from hw.code.ui.pages.news_page import NewsPage
 
 
 @pytest.fixture(scope='function')
@@ -64,7 +65,8 @@ def all_drivers(config, request):
 def base_vk_ad_page(driver):
     return BasePage(driver=driver)
 
-
+def news_vk_ad_page(driver):
+    return NewsPage(driver=driver)
 
 @pytest.fixture(scope='session')
 def credentials_vk_ad():

@@ -93,3 +93,44 @@ class MainPageNoLoginCases:
     # заголовок страницы кейса
     CASE_PAGE_TITLE = (By.CLASS_NAME, 'Summary_content__yWIpY')
 
+class MainPageNoLoginCookie:
+    # контейнер куки
+    COOKIE_CONTAINER = (By.CLASS_NAME, 'CookieBanner_wrapper___Pfqg')
+
+class MainPageNoLoginEducate:
+    # контейнер блока
+    EDUCATE_CONTAINER = (By.CLASS_NAME, 'GetStarted_wrapper__cTNLj')
+    # кнопка блока
+    EDUCATE_ABOUT = (By.XPATH, '//*[@id="classic-layout"]/div[2]/div/div/div[3]/a/div[1]/button/span[1]')
+
+class MainPageNoLoginNews:
+    #контейнер блока
+    NEWS_CONTAINER = (By.CLASS_NAME, 'News_cols__L6uYy')
+    # кнопка блока
+    NEWS_ABOUT = (By.XPATH, '//*[@id="classic-layout"]/div[2]/div/div/div[4]/div/a/div/div[2]/button/span[1]')
+
+class MainPageNoLoginFooter:
+    # контейнер футера
+    FOOTER_CONTAINER = (By.TAG_NAME, 'footer')
+    # лого
+    FOOTER_LOGO = (By.CLASS_NAME, 'Footer_logo__pwCXU')
+    # переход в аккаунт
+    TO_ACCOUNT = (By.CLASS_NAME, 'ButtonCabinet_primary__LCfol')
+    # разделы
+    FOOTER_SECTIONS = (By.CLASS_NAME, 'Footer_menuTitle__TrNAn')
+    FOOTER_SECTIONS_LI = (By.CLASS_NAME, 'Footer_item__uymLH')
+    # ссылка на навости
+    FOOTER_NEWS = (By.XPATH, '//*[@id="classic-layout"]/div[2]/footer/div[1]/div[2]/ul/li[1]/a')
+    # ссылка на материалы
+    FOOTER_MATERIALS = (By.XPATH, '//*[@id="classic-layout"]/div[2]/footer/div[1]/div[2]/ul/li[3]/a')
+    # ссылка на документы
+    FOOTER_DOCUMENTS = (By.XPATH, '//*[@id="classic-layout"]/div[2]/footer/div[1]/div[2]/ul/li[7]/a')
+    # лого ВК
+    FOOTER_VK_LOGO = (By.CLASS_NAME, 'Footer_logoVKBusiness__dMZUT')
+    # social ссылки
+    FOOTER_SOCIAL = (By.CLASS_NAME, 'Footer_leftControls__25wO6')
+    # переключение языка
+    FOOTER_LANGUAGES = (By.CLASS_NAME, 'SelectLanguage_wrapper__id9eU')
+    # меню языков
+    FOOTER_CHOOSE_LANGUAGES = (By.XPATH, '//*[@id="classic-layout"]/div[2]/footer/div[2]/div/div[2]/div[1]/div/div/div')
+    FOOTER_CHOOSE_ENGLISH = (By.XPATH, '//*[@id="classic-layout"]/div[2]/footer/div[2]/div/div[2]/div[1]/div/div/div/h5/div/span[1]')
