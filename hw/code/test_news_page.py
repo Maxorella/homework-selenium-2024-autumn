@@ -1,10 +1,12 @@
+import time
+
 import allure
 
-from hw.code.base_vk_ad import BaseCaseVkAd
+from hw.code.news_case_vk import NewsCaseVkAd
 
 
 @allure.story("News page")
-class TestNewsPage(BaseCaseVkAd):
+class TestNewsCaseVkAd(NewsCaseVkAd):
     @allure.title("News page")
     def test_news_page(self):
-        pass
+        time.sleep(5)

@@ -65,6 +65,7 @@ def all_drivers(config, request):
 def base_vk_ad_page(driver):
     return BasePage(driver=driver)
 
+@pytest.fixture
 def news_vk_ad_page(driver):
     return NewsPage(driver=driver)
 
