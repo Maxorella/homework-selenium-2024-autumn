@@ -26,5 +26,3 @@ class TestLoginCookie(BaseCaseVkAd):
     def test_login(self):
         fio = self.base_page.get_text(AuthLocators.SURNAME_NAME_DIV, 10)
         assert fio == self.profile_fi, f"Ожидалось: '{self.profile_fi}', но было получено: '{fio}'"
-
-use_cookies = True

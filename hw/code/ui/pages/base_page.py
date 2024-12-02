@@ -16,12 +16,14 @@ class BasePage(object):
     # login_locators = AuthPageLocators()  # не нужно
     url = 'https://ads.vk.com/' # урл страницы, c которой начинаю
 
-    def is_opened(self, timeout=15):
+    def is_opened(self, url='', timeout=15):
+        if url=='':
+            url = self.url
         started = time.time()
         while time.time() - started < timeout:
-            if self.driver.current_url == self.url:
+            if self.driver.current_url == url:
                 return True
-        raise PageNotOpenedExeption(f'{self.url} did not open in {timeout} sec, current url {self.driver.current_url}')
+        raise PageNotOpenedExeption(f'{url} did not open in {timeout} sec, current url {self.driver.current_url}')
 
     def __init__(self, driver):
         self.driver = driver
