@@ -77,6 +77,12 @@ class BasePage(object):
         element = self.driver.find_element(*locator)
         return element.text
 
+    @allure.step('GetAttr')
+    def get_attribute(self, locator, attribute, timeout=2) -> str:
+        self.wait(timeout).until(EC.presence_of_element_located(locator))
+        element = self.driver.find_element(*locator)
+        return element.get_attribute(attribute)
+
     def move_to_element(self, locator):
         elem = self.find(locator)
         self.actions.move_to_element(elem).perform()

@@ -9,16 +9,27 @@ from ui.locators.vk_ad_main_locators import MainPageNoLoginNavbarLoc
 @allure.story("Header TestCase")
 class TestHeader(BaseCaseVkAd):
     authorize = False
-    @allure.title("Header Test 2")
+
+    @allure.title("View Logo Test")
+    def test_logo_click(self):
+        logo = self.driver.find_element(*MainPageNoLoginNavbarLoc.MAIN_PAGE_LOGO_BTN)
+        svg_element = logo.find_element(*MainPageNoLoginNavbarLoc.SVG_LOGO)
+        xmlns_attribute = svg_element.get_attribute('xmlns')
+        assert xmlns_attribute == 'http://www.w3.org/2000/svg', "Атрибут xmlns не совпадает"
+
+    @allure.title("Logo Click Test")
     def test_logo_click(self):
         self.base_page.click(MainPageNoLoginNavbarLoc.MAIN_PAGE_LOGO_BTN, 5)
         assert self.base_page.is_opened('https://ads.vk.com/'), "Переход на главную страницу не произошел"
 
-    @allure.title("Header Test 1 + 3")
+    @allure.title("Navigation View Test")
     def test_display_navbar_click(self):
 
         text = self.base_page.get_text(MainPageNoLoginNavbarLoc.MAIN_PAGE_HEADER_NEWS_BTN)
         assert text == 'Новости', "Текст новости в Navbar не совпадает"
+
+        text = self.base_page.get_text(MainPageNoLoginNavbarLoc.MAIN_PAGE_ADUCATION)
+        assert text == 'Обучение', "Текст Обучение в Navbar не совпадает"
 
         text = self.base_page.get_text(MainPageNoLoginNavbarLoc.MAIN_PAGE_CASES_BTN)
         assert text == 'Кейсы', "Текст Кейсы в Navbar не совпадает"
@@ -34,34 +45,35 @@ class TestHeader(BaseCaseVkAd):
 
         text = self.base_page.get_text(MainPageNoLoginNavbarLoc.MAIN_PAGE_GO_TO_LK_BTN)
         assert text == 'Перейти в кабинет', "Текст Перейти в кабинет в Navbar не совпадает"
-    @allure.title("Header Test 4")
+
+    @allure.title("News click Test")
     def test_news_click(self):
         self.base_page.click(MainPageNoLoginNavbarLoc.MAIN_PAGE_HEADER_NEWS_BTN, 5)
         assert self.base_page.is_opened('https://ads.vk.com/news'), "Переход на новостную страницу не произошел"
 
-    @allure.title("Header Test 5")
+    @allure.title("Cases click Test")
     def test_cases_click(self):
         self.base_page.click(MainPageNoLoginNavbarLoc.MAIN_PAGE_CASES_BTN, 5)
         assert self.base_page.is_opened('https://ads.vk.com/cases'), "Переход на кейс страницу не произошел"
 
-    @allure.title("Header Test 6")
+    @allure.title("Upvote click Test")
     def test_upvote_click(self):
         self.base_page.click(MainPageNoLoginNavbarLoc.MAIN_PAGE_IDEAS_BTN, 5)
         assert self.base_page.is_opened('https://ads.vk.com/upvote'), "Переход на форум идей страницу не произошел"
 
-    @allure.title("Header Test 7")
+    @allure.title("Partner click Test")
     def test_partner_click(self):
         current_window = self.driver.current_window_handle
         self.base_page.click(MainPageNoLoginNavbarLoc.MAIN_PAGE_MONETIZATION_BTN, 5)
         with self.switch_to_window(current_window, True):
             assert self.base_page.is_opened('https://ads.vk.com/partner'), "Переход на партнерскую страницу не произошел"
 
-    @allure.title("Header Test 8")
+    @allure.title("Help click Test")
     def test_help_click(self):
         self.base_page.click(MainPageNoLoginNavbarLoc.MAIN_PAGE_REFERENCE_BTN, 5)
         assert self.base_page.is_opened('https://ads.vk.com/help'), "Переход на страницу помощи не произошел"
 
-    @allure.title("Header Test 9")
+    @allure.title("Aducation popup Test")
     def test_open_study(self):
         self.base_page.move_to_element(MainPageNoLoginNavbarLoc.STUDY_POPUP)
 
@@ -77,19 +89,19 @@ class TestHeader(BaseCaseVkAd):
         text = self.base_page.get_text(MainPageNoLoginNavbarLoc.MAIN_PAGE_CERRTIFICATES_BTN)
         assert text == 'Сертификация', "Текст Сертификация в Navbar не совпадает"
 
-    @allure.title("Header Test 10")
+    @allure.title("Useful materials click Test")
     def test_materials_click(self):
         self.base_page.move_to_element(MainPageNoLoginNavbarLoc.STUDY_POPUP)
         self.base_page.click(MainPageNoLoginNavbarLoc.MAIN_PAGE_USEFUL_MATERIALS_BTN, 5)
         assert self.base_page.is_opened('https://ads.vk.com/insights'), "Переход на страницу материалов не произошел"
 
-    @allure.title("Header Test 11")
+    @allure.title("Events click Test")
     def test_events_click(self):
         self.base_page.move_to_element(MainPageNoLoginNavbarLoc.STUDY_POPUP)
         self.base_page.click(MainPageNoLoginNavbarLoc.MAIN_PAGE_EVENTS_BTN, 5)
         assert self.base_page.is_opened('https://ads.vk.com/events'), "Переход на страницу мероприятий не произошел"
 
-    @allure.title("Header Test 12")
+    @allure.title("Video courses click Test")
     def test_courses_click(self):
         current_window = self.driver.current_window_handle
         self.base_page.move_to_element(MainPageNoLoginNavbarLoc.STUDY_POPUP)
@@ -98,7 +110,7 @@ class TestHeader(BaseCaseVkAd):
             assert self.base_page.is_opened('https://expert.vk.com/catalog/courses/'), \
                 "Переход на страницу видеокурсы не произошел"
 
-    @allure.title("Header Test 13")
+    @allure.title("Certificates click Test")
     def test_certification_click(self):
         current_window = self.driver.current_window_handle
         self.base_page.move_to_element(MainPageNoLoginNavbarLoc.STUDY_POPUP)
@@ -107,7 +119,7 @@ class TestHeader(BaseCaseVkAd):
             assert self.base_page.is_opened('https://expert.vk.com/certification/'), \
                 "Переход на страницу сертификатов не произошел"
 
-    @allure.title("Header Test 14")
+    @allure.title("Aducation maouseover Test")
     def test_close_study(self):
         self.base_page.move_to_element(MainPageNoLoginNavbarLoc.STUDY_POPUP)
         self.base_page.move_to_element(MainPageNoLoginNavbarLoc.MAIN_PAGE_LOGO_BTN)
@@ -124,7 +136,7 @@ class TestHeader(BaseCaseVkAd):
         assert self.base_page.is_element_not_present(MainPageNoLoginNavbarLoc.MAIN_PAGE_CERRTIFICATES_BTN), \
             "Меню отображается, но не должно!"
 
-    @allure.title("Header Test 15")
+    @allure.title("Transfer to account Test")
     def test_auth_click(self):
         current_window = self.driver.current_window_handle
         self.base_page.click(MainPageNoLoginNavbarLoc.MAIN_PAGE_GO_TO_LK_BTN, 5)

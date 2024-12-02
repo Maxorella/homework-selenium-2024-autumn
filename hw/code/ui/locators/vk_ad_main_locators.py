@@ -9,12 +9,14 @@ class AuthLocators:
     ENTER_OTHER_WAY_BTN = (By.XPATH, '//*[@id="root"]/div/div/div/div/div/form/div[2]/div/div[6]/button[2]') # кнопка войти другим способом
     PASSWORD_ENTER_FIELD = (By.XPATH, '//*[@id="root"]/div/div/div/div/div/form/div[2]/div/div[2]/div/div/div/div/div/input') # поле ввода пароля
     ENTER_PASSWORD_BTN = (By.XPATH, '//*[@id="root"]/div/div/div/div/div/form/div[2]/div/div[3]/div/div/div[1]/button') # кнопка войти после ввода пароля
-    SURNAME_NAME_DIV = (By.CLASS_NAME, 'AccountSwitch_changeAccountName__pzp40') # div с Именем Фамилией текущего аккаунта
+    SURNAME_NAME_DIV = (By.CLASS_NAME, 'c1150') # div с Именем Фамилией текущего аккаунта
 
 
 class MainPageNoLoginNavbarLoc:
     # лого
     MAIN_PAGE_LOGO_BTN = (By.CLASS_NAME, 'content_home__VLt6p')
+    # svg лого
+    SVG_LOGO = (By.TAG_NAME, 'SVG')
     # кнопка новости
     MAIN_PAGE_HEADER_NEWS_BTN = (By.XPATH, '//*[@id="classic-layout"]/div[1]/div/header/div/div[2]/div/div[1]/div[2]/div/a')
     # кнопка полезные материалы
@@ -29,6 +31,8 @@ class MainPageNoLoginNavbarLoc:
     MAIN_PAGE_CASES_BTN = (By.XPATH, '//*[@id="classic-layout"]/div[1]/div/header/div/div[2]/div/div[1]/div[4]/div/a')
     # кнопка форум идей
     MAIN_PAGE_IDEAS_BTN = (By.XPATH, '//*[@id="classic-layout"]/div[1]/div/header/div/div[2]/div/div[1]/div[5]/div/a')
+    # блок обучние
+    MAIN_PAGE_ADUCATION = (By.CLASS_NAME, 'item_item__0CD1p')
     # кнопка монетизация
     MAIN_PAGE_MONETIZATION_BTN = (By.XPATH, '//*[@id="classic-layout"]/div[1]/div/header/div/div[2]/div/div[1]/div[6]/div/a')
     # кнопка справка
