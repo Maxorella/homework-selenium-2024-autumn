@@ -2,9 +2,10 @@ import os
 import time
 
 import allure
+from selenium.webdriver.common.by import By
 
 from hw.code.base_vk_ad import BaseCaseVkAd
-from ui.locators.vk_ad_main_locators import MainPageNoLoginNavbarLoc, MainPageNoLoginCarouselLoc
+from ui.locators.vk_ad_main_locators import MainPageNoLoginNavbarLoc, MainPageNoLoginCarouselLoc, MainPageNoLoginCases
 
 
 @allure.story("Header TestCase")
@@ -150,37 +151,47 @@ class TestHeader(BaseCaseVkAd):
 class TestСarousel(BaseCaseVkAd):
     authorize = False
 
-    @allure.title("Carousel Test 1-4")
+    @allure.title("View carousel Test")
     def test_display_carousel(self):
-        self.base_page.click(MainPageNoLoginCarouselLoc.MAIN_PAGE_CAROUSEL_ROUND_BTN_2)
+        carousel = self.driver.find_element(*MainPageNoLoginCarouselLoc.CAROUSEL_CONTAINER)
+        assert carousel.is_displayed(), "Карусель не отображается на странице"
+
+    @allure.title("Carousel autoscroll Test")
+    def test_carousel_autoscroll(self):
         self.base_page.click(MainPageNoLoginCarouselLoc.MAIN_PAGE_CAROUSEL_ROUND_BTN_1)
+        container = self.driver.find_element(*MainPageNoLoginCarouselLoc.CAROUSEL_BULLETS_CONTAINER)
+        firstBullet = container.find_element(By.TAG_NAME, 'DIV')
+        initial_class = firstBullet.get_attribute('class')
+        time.sleep(8)
+        new_class = firstBullet.get_attribute('class')
 
-        text = self.base_page.get_text(MainPageNoLoginCarouselLoc.MAIN_PAGE_CAROUSEL_TEXT_1_1, 2)
-        assert text == 'До 10 000 бонусов', "Текст До 10000 бонусов в Carousel не совпадает"
+        assert initial_class != new_class, "Не произошло автопереключение"
 
-        text = self.base_page.get_text(MainPageNoLoginCarouselLoc.MAIN_PAGE_CAROUSEL_TEXT_1_2, 2)
-        assert text == 'на первую кампанию', "Текст на первую кампанию в Carousel не совпадает"
-
-        text = self.base_page.get_text(MainPageNoLoginCarouselLoc.MAIN_PAGE_CAROUSEL_TEXT_1_3, 2)
-        assert text == 'Акция для тех, у кого еще нет кабинета в VK Рекламе. Переходите по кнопке ниже, чтобы узнать подробности',\
-            "Текст Акция для тех в Carousel не совпадает"
-
-        text = self.base_page.get_text(MainPageNoLoginCarouselLoc.MAIN_PAGE_CAROUSEL_TEXT_1_BTN, 2)
-        assert text == 'Получить бонус', "Текст Получить бонус в Carousel не совпадает"
+    @allure.title("Carousel switch Test")
+    def test_carousel_switch(self):
+        container = self.driver.find_element(*MainPageNoLoginCarouselLoc.CAROUSEL_BULLETS_CONTAINER)
+        firstBullet = container.find_element(By.TAG_NAME, 'DIV')
+        self.base_page.click(MainPageNoLoginCarouselLoc.MAIN_PAGE_CAROUSEL_ROUND_BTN_2)
+        initial_class = firstBullet.get_attribute('class')
 
         self.base_page.click(MainPageNoLoginCarouselLoc.MAIN_PAGE_CAROUSEL_ROUND_BTN_1)
-        self.base_page.click(MainPageNoLoginCarouselLoc.MAIN_PAGE_CAROUSEL_ROUND_BTN_3)
-        self.base_page.click(MainPageNoLoginCarouselLoc.MAIN_PAGE_CAROUSEL_ROUND_BTN_2)
-        time.sleep(1)
-        text = self.base_page.get_text(MainPageNoLoginCarouselLoc.MAIN_PAGE_CAROUSEL_TEXT_2_1, 2)
-        # assert text == 'Реклама', "Текст Реклама в Carousel не совпадает"
+        new_class = firstBullet.get_attribute('class')
 
-        text = self.base_page.get_text(MainPageNoLoginCarouselLoc.MAIN_PAGE_CAROUSEL_TEXT_2_2, 2)
-        assert text == 'для любых целей', "Текст для любых целей в Carousel не совпадает"
+        assert initial_class != new_class, "Не сработало переключение"
 
-        text = self.base_page.get_text(MainPageNoLoginCarouselLoc.MAIN_PAGE_CAROUSEL_TEXT_2_3, 2)
-        assert text == 'вашего бизнеса', "Текст вашего бизнеса в Carousel не совпадает"
+    @allure.title("Carousel button handler Test")
+    def test_carousel_button(self):
+        current_window = self.driver.current_window_handle
+        self.base_page.click(MainPageNoLoginCarouselLoc.MAIN_PAGE_CAROUSEL_ROUND_BTN_1)
+        self.base_page.click(MainPageNoLoginCarouselLoc.CAROUSEL_HANDLE_BTN)
+        with self.switch_to_window(current_window):
+            assert self.base_page.is_opened('https://ads.vk.com/promo/firstbonus',len('https://ads.vk.com/promo/firstbonus')), "Переход не произошел"
 
-        text = self.base_page.get_text(MainPageNoLoginCarouselLoc.MAIN_PAGE_CAROUSEL_TEXT_2_4, 2)
-        assert text == 'VK Реклама подходит для продвижения сайтов любой тематики, сообществ ВКонтакте и ОК, мобильных приложений, сбора лидов и охватных кампаний',\
-            "Текст VK Реклама в Carousel не совпадает"
+    @allure.title("Company cases view Test")
+    def test_company_cases(self):
+        cases = self.driver.find_element(*MainPageNoLoginCases.CASES_CONTAINER)
+        header = cases.find_element(By.TAG_NAME, 'h2')
+        cases_examples = cases.find_element(*MainPageNoLoginCases.CASES_EXAMPLES)
+        href = cases.find_element(By.TAG_NAME, 'a')
+        assert (header.text == 'Кейсы компаний' and cases_examples.is_displayed() and href.is_displayed() ), "Кейсы компаний не отображаются корректно"
+

@@ -44,6 +44,13 @@ class MainPageNoLoginNavbarLoc:
 
 
 class MainPageNoLoginCarouselLoc:
+
+    # div карусели
+    CAROUSEL_CONTAINER = (By.CLASS_NAME, 'styles_slider__S9aAm')
+    # контейнер кружков карусели
+    CAROUSEL_BULLETS_CONTAINER = (By.CLASS_NAME, 'Bullets_wrapper__pQBJR')
+    # кнопка взаимодействия
+    CAROUSEL_HANDLE_BTN = (By.CLASS_NAME, 'vkuiButton__in')
     # До 10000 бонусов
     MAIN_PAGE_CAROUSEL_TEXT_1_1 = (By.XPATH, '//*[@id="title"]/p[1]')
     # на первую кампанию
@@ -71,3 +78,10 @@ class MainPageNoLoginCarouselLoc:
 
     # VK Реклама подходит для продвижения сайтов любой тематики, сообществ ВКонтакте и ОК, мобильных приложений, сбора лидов и охватных кампаний
     MAIN_PAGE_CAROUSEL_TEXT_2_4 = (By.XPATH, '//*[@id="classic-layout"]/div[2]/div/div/div[1]/div/div[2]/div[1]/div/p')
+
+class MainPageNoLoginCases:
+    # блок кэйсов
+    CASES_CONTAINER = (By.CLASS_NAME, 'styles_section__kQovd')
+    # примеры кейсов
+    CASES_EXAMPLES = (By.CLASS_NAME, 'styles_cols__Iavf_')
+
