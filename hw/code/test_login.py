@@ -9,7 +9,6 @@ from ui.locators.vk_ad_main_locators import AuthLocators
 @allure.story("Авторизация и проверка профиля")
 class TestLogin(BaseCaseVkAd):
     authorize = True
-
     @allure.title("Проверка авторизации")
     def test_login(self):
         fio = self.base_page.get_text(AuthLocators.SURNAME_NAME_DIV_MAXORELLA, 20)

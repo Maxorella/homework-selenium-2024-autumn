@@ -83,6 +83,13 @@ class BasePage(object):
         element = self.driver.find_element(*locator)
         return element.text
 
+    @allure.step('GetText')
+    def get_text_visible(self, locator, timeout=2) -> str:
+        self.wait(timeout).until(EC.visibility_of_element_located(locator))
+        element = self.driver.find_element(*locator)
+        return element.text
+
+
     @allure.step('GetAttr')
     def get_attribute(self, locator, attribute, timeout=2) -> str:
         self.wait(timeout).until(EC.presence_of_element_located(locator))
