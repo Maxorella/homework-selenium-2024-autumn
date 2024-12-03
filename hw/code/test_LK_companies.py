@@ -137,6 +137,7 @@ class TestTargetActions(BaseCaseVkAd):
 
         assert self.base_page.find(TargetedActionsLocators.CALENDAR_CONTAINER).is_displayed(), "Каледнарь не отображается"
 
+# --- по сюда done
 @allure.story("Сайт")
 class TestSite(BaseCaseVkAd):
     authorize = True
@@ -205,6 +206,7 @@ class TestSite(BaseCaseVkAd):
         self.base_page.enter_field(TargetedActionsLocators.BUDGET_INPUT, '100')
 
         self.base_page.click(CompaniesLocators.CONTINUE_BUTTON)
+        # не проходит
         self.base_page.find(GroupLocators.SET_DATE)
 
         assert  self.base_page.find(GroupLocators.STRATEGY_CONTAINER).is_displayed(), "Не перешли на следующую страницу"
@@ -214,7 +216,7 @@ class TestSite(BaseCaseVkAd):
 class TestAdvrtiseGroup(BaseCaseVkAd):
     authorize = True
     company = True
-
+    # проходит
     @allure.title("Edit date")
     def test_edit_date(self):
         self.base_page.go_to_group()
