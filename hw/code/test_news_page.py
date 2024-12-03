@@ -45,10 +45,10 @@ class TestNewsCaseVkAd(NewsCaseVkAd):
 
     @allure.title("paggination go left test")
     def test_pagg_left_test(self):
-        # self.news_page.move_to_element(NewsLocators.PREV_PAGE)
         self.news_page.click(NewsLocators.CLOSE_NOTIFICATION)
         self.news_page.move_to_element(NewsLocators.NEWS_SECOND_PAGE)
         self.news_page.click(NewsLocators.NEWS_SECOND_PAGE)
+        self.news_page.find(NewsLocators.NEWS_SECOND_PAGE)
         self.news_page.move_to_element(NewsLocators.PREV_PAGE)
         self.news_page.click(NewsLocators.PREV_PAGE)
         self.news_page.move_to_element(NewsLocators.NEWS_CURRENT_PAGE)

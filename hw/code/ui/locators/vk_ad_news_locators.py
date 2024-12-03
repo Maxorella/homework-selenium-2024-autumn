@@ -18,6 +18,6 @@ class NewsLocators:
     # Следующая страница
     NEXT_PAGE = (By.CLASS_NAME, 'vkuiPagination__nextButtonContainer')
     # Предыдущая страница
-    PREV_PAGE = (By.XPATH, '//*[@class="vkuiPagination__prevButtonContainer"]/button')
+    PREV_PAGE = (By.CLASS_NAME, 'vkuiPagination__prevButtonContainer')
     # last page
     LAST_PAGE = (By.XPATH, '//*[@class="vkuiPagination__list"]/li[6]')

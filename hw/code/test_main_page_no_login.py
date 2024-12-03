@@ -15,7 +15,8 @@ class TestHeader(BaseCaseVkAd):
 
     @allure.title("View Logo Test")
     def test_logo(self):
-        svg_element = self.base_page.find(MainPageNoLoginNavbarLoc.SVG_LOGO, 5)
+        logo = self.base_page.find(MainPageNoLoginNavbarLoc.MAIN_PAGE_LOGO_BTN)
+        svg_element = logo.find_element(By.TAG_NAME,'svg')
         xmlns_attribute = svg_element.get_attribute('xmlns')
         assert xmlns_attribute == 'http://www.w3.org/2000/svg', "Атрибут xmlns не совпадает"
 
@@ -432,7 +433,6 @@ class TestFooter(BaseCaseVkAd):
         current_window = self.driver.current_window_handle
         self.base_page.move_to_element(MainPageNoLoginFooter.FOOTER_LANGUAGES)
         self.base_page.click(MainPageNoLoginFooter.FOOTER_LANGUAGES)
-        # self.base_page.move_to_element(MainPageNoLoginFooter.FOOTER_CHOOSE_ENGLISH)
         self.base_page.click(MainPageNoLoginFooter.FOOTER_CHOOSE_ENGLISH)
         with self.switch_to_window(current_window):
             assert self.base_page.is_opened('https://ads.vk.com/en',
@@ -443,5 +443,7 @@ class TestFooter(BaseCaseVkAd):
     def test_switch_language_mouseover(self):
         self.base_page.move_to_element(MainPageNoLoginFooter.FOOTER_LANGUAGES)
         self.base_page.click(MainPageNoLoginFooter.FOOTER_LANGUAGES)
-        self.base_page.click(MainPageNoLoginFooter.FOOTER_SECTIONS)
+        self.base_page.move_to_element(MainPageNoLoginFooter.FOOTER_CHOOSE_ENGLISH)
+        self.base_page.move_to_element(MainPageNoLoginFooter.TO_ACCOUNT)
+
         assert self.base_page.is_element_not_present(MainPageNoLoginFooter.FOOTER_CHOOSE_LANGUAGES), "Выбор до сих пор отображается"
