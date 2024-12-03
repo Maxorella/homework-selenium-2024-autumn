@@ -12,7 +12,7 @@ class TestLogin(BaseCaseVkAd):
 
     @allure.title("Проверка авторизации")
     def test_login(self):
-        fio = self.base_page.get_text(AuthLocators.SURNAME_NAME_DIV, 10)
+        fio = self.base_page.get_text(AuthLocators.SURNAME_NAME_DIV_MAXORELLA, 20)
         self.save_cookies('cookies.json')
         assert fio == self.profile_fi, f"Ожидалось: '{self.profile_fi}', но было получено: '{fio}'"
 
@@ -20,9 +20,9 @@ class TestLogin(BaseCaseVkAd):
 @allure.story("Авторизация и проверка профиля c cookie")
 class TestLoginCookie(BaseCaseVkAd):
     authorize = False
-    use_cookie = True
+    use_cookie = False
 
     @allure.title("Проверка авторизации  с куки")
     def test_login(self):
-        fio = self.base_page.get_text(AuthLocators.SURNAME_NAME_DIV, 10)
+        fio = self.base_page.get_text(AuthLocators.SURNAME_NAME_DIV_MAXORELLA, 10)
         assert fio == self.profile_fi, f"Ожидалось: '{self.profile_fi}', но было получено: '{fio}'"
