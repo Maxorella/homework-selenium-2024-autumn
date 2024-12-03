@@ -36,5 +36,20 @@ class TargetedActionsLocators:
     VIDEO_CONTAINER = (By.XPATH, '//*[@data-id="socialvideo"]')
     VIDEO_INPUT = (By.CLASS_NAME, 'vkuiPlaceholder__action')
 
-    CALENDAR_INPUT = (By.XPATH, '//*[@data-test-id="start-date"]')
+    CALENDAR_INPUT = (By.XPATH, '//*[@data-testid="start-date"]')
     CALENDAR_CONTAINER = (By.CLASS_NAME, 'vkuiCalendar')
+
+    BUDGET_INPUT = (By.XPATH, '//*[@data-testid="targeting-not-set"]')
+
+class SiteLocators:
+
+    SITE_INPUT_ERROR = (By.XPATH, '//*[@id="new_ad_create"]/div/div/div/div/div/section[2]/form/div/div/div/span[2]/div')
+    ABOUT_TEXT_AREA = (By.CLASS_NAME, 'vkuiTextarea__el')
+    TARGER_ACTION = (By.XPATH, '//*[@data-testid="priced-goal"]')
+    SWITCH = (By.CLASS_NAME, 'vkuiSwitch__pseudo')
+
+class GroupLocators:
+
+    STRATEGY_CONTAINER = (By.XPATH, '//*[@id="new_ad_create"]/div/div/div/div/div[1]/section[1]')
+    SET_DATE = (By.XPATH, '//*[@id="new_ad_create"]/div/div/div/div/div[1]/section[1]/fieldset/div[2]/div[1]/div/div/div[2]/div/span')
+    CHOSE_DATES = (By.XPATH, '//*[@data-name="dates"]')

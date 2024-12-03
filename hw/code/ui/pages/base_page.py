@@ -8,7 +8,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
 
-from hw.code.ui.locators.vk_ad_companies_locators import CompaniesLocators, TargetedActionsLocators
+from hw.code.ui.locators.vk_ad_companies_locators import CompaniesLocators, TargetedActionsLocators, GroupLocators
 
 
 class PageNotOpenedExeption(Exception):
@@ -95,6 +95,12 @@ class BasePage(object):
     def go_to_group(self):
         self.click(TargetedActionsLocators.SITE_CONTAINER)
         self.enter_field(TargetedActionsLocators.ADVERTISE_SITE, "https://vk.com/a645g743")
+        self.click(TargetedActionsLocators.ADVERTISE_CONTAINER)
+        self.find(TargetedActionsLocators.ADVERTISE_CONTAINER)
+        self.enter_field(TargetedActionsLocators.BUDGET_INPUT, '100')
+        self.click(CompaniesLocators.CONTINUE_BUTTON)
+        self.click(CompaniesLocators.CONTINUE_BUTTON)
+        self.find(GroupLocators.STRATEGY_CONTAINER)
 
 
     def move_to_element(self, locator):
