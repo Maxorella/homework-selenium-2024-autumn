@@ -14,3 +14,5 @@ class EventsLocators:
     EVENT_TITLE = (By.XPATH, '//*[@id="classic-layout"]/div[2]/div/article/div[1]/div/div/div/h1')
     # Ссылка на главное мероприятие
     MAIN_EVENT_HREF = (By.XPATH, '//*[@id="classic-layout"]/div[2]/div/div/div[2]/div[1]/a')
+    # Кнопка подробнее
+    EVENT_ABOUT = (By.XPATH, '//*[@id="classic-layout"]/div[2]/div/div/div[2]/div[1]/a/div[2]/div[3]')

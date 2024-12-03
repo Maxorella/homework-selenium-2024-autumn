@@ -2,9 +2,12 @@ import os
 import time
 from contextlib import contextmanager
 import json
+
+import allure
 import pytest
 from _pytest.fixtures import FixtureRequest
 
+from hw.code.ui.locators.vk_ad_companies_locators import CompaniesLocators
 from hw.code.ui.pages.base_page import BasePage
 from hw.code.ui.pages.news_page import NewsPage
 from ui.locators.vk_ad_main_locators import AuthLocators
@@ -14,6 +17,7 @@ CLICK_RETRY = 3
 
 class BaseCaseVkAd:
     authorize = True
+    company = False
     use_cookie = False
     driver = None
 
@@ -68,8 +72,12 @@ class BaseCaseVkAd:
             self.base_page.enter_field(AuthLocators.PASSWORD_ENTER_FIELD, self.password, 15)
             self.base_page.click(AuthLocators.ENTER_PASSWORD_BTN, 15)
 
+        if self.company:
+            self.base_page.click(CompaniesLocators.COMPANIES_HREF)
+            self.base_page.click(CompaniesLocators.CLOSE_EDUCATION_POPAP)
+            self.base_page.click(CompaniesLocators.CREATE_COMPANY)
+
 
         if self.use_cookie:
             self.load_cookies('cookies.json')
             self.base_page.wait(20)
-

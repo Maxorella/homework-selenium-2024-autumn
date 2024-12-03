@@ -8,6 +8,8 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
 
+from hw.code.ui.locators.vk_ad_companies_locators import CompaniesLocators, TargetedActionsLocators
+
 
 class PageNotOpenedExeption(Exception):
     pass
@@ -89,6 +91,12 @@ class BasePage(object):
         element = self.driver.find_element(*locator)
         return element.get_attribute(attribute)
 
+    @allure.step('goToGroup')
+    def go_to_group(self):
+        self.click(TargetedActionsLocators.SITE_CONTAINER)
+        self.enter_field(TargetedActionsLocators.ADVERTISE_SITE, "https://vk.com/a645g743")
+
+
     def move_to_element(self, locator):
         elem = self.find(locator)
         self.actions.move_to_element(elem).perform()
@@ -114,3 +122,4 @@ class BasePage(object):
             return True  # Элемент видим
         except TimeoutException:
             return False  # Элемент невидим
+

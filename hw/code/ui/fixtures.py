@@ -8,6 +8,7 @@ from webdriver_manager.firefox import GeckoDriverManager
 import json
 
 from hw.code.ui.pages.base_page import BasePage
+from hw.code.ui.pages.cases_page import CasesPage
 from hw.code.ui.pages.events_page import EventsPage
 from hw.code.ui.pages.materials_page import MaterialsPage
 from hw.code.ui.pages.news_page import NewsPage
@@ -78,6 +79,10 @@ def materials_vk_ad_page(driver):
 @pytest.fixture
 def events_vk_ad_page(driver):
     return EventsPage(driver=driver)
+
+@pytest.fixture
+def cases_vk_ad_page(driver):
+    return CasesPage(driver=driver)
 
 @pytest.fixture(scope='session')
 def credentials_vk_ad():
