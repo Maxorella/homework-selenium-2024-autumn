@@ -1,5 +1,6 @@
 import os
 import time
+from datetime import date
 
 import allure
 
@@ -62,7 +63,6 @@ class TestAudiences(BaseCaseVkAd):
     def test_audience_create_pipe(self):
         self.base_page.click(AudiencesLocators.GO_AUDIENCES_BTN, 20)
         assert self.base_page.is_opened('https://ads.vk.com/hq/audience'), "Переход на аудитории не произошел"
-        time.sleep(1)
         self.base_page.click(AudiencesLocators.UP_MENU_CREATE_AUDIENCE_BTN, 20)
 
         text = self.base_page.get_text(AudiencesLocators.CREATE_AUDIENCE_TEXT, 5)
@@ -87,25 +87,32 @@ class TestAudiences(BaseCaseVkAd):
         text = self.base_page.get_text(AudiencesLocators.NOTH_FOUND_TEXT, 20)
         assert text == 'Ничего не нашлось', f"Ожидалось: 'что-то', но было получено: '{text}'"
 
+    @allure.title("Audiences test 6")
+    def test_audience_6(self):
+        self.base_page.click(AudiencesLocators.GO_AUDIENCES_BTN, 20)
+        assert self.base_page.is_opened('https://ads.vk.com/hq/audience'), "Переход на аудитории не произошел"
+        self.base_page.click(AudiencesLocators.UP_MENU_CREATE_AUDIENCE_BTN, 20)
 
-        '''
-        # 5 чек-лист
-        self.configure_browser_window(1700,1000)
-        time.sleep(2)
-        self.base_page.enter_field(AudiencesLocators.SEARCH_FIELD_SOOBS, 'lmao', 10)
-        self.base_page.click(AudiencesLocators.SHOW_ALL_BTN, 20)
-        self.base_page.click(AudiencesLocators.ADD_LMAO_BTN, 20)
+        text = self.base_page.get_text(AudiencesLocators.CREATE_AUDIENCE_TEXT, 5)
+        assert text == 'Создание аудитории', f"Ожидалось: 'Создание аудитории', но было получено: '{text}'"
+
+        today = date.today()
+        text_aud = f"Аудитория {today}"
+
+        self.base_page.click(AudiencesLocators.ADD_IST_BTN, 10)
+        self.base_page.click(AudiencesLocators.SOOBS_SUBSC_BTN, 10)
+
+        text_lmao = "lmao"
+        self.base_page.enter_field(AudiencesLocators.SEARCH_FIELD_SOOBS, text_lmao, 10)
+
+        self.base_page.click(AudiencesLocators.SELECT_ALL_BTN, 20)
+
         self.base_page.click(AudiencesLocators.Subsc_title_text, 20)
-        time.sleep(2)
-        self.base_page.click(AudiencesLocators.Subsc_title_text, 20)
-        time.sleep(2)
         self.base_page.click(AudiencesLocators.SAVE_BTN, 20)
-        time.sleep(2)
+        time.sleep(1) # антипаттерн, но так надо...
         self.base_page.click(AudiencesLocators.SAVE2_BTN, 20)
-        time.sleep(2)
-        text = self.base_page.get_text(AudiencesLocators.AUD_TITLE_TEXT, 20)
-        assert text == text_16, f"Ожидалось: 'что-то', но было получено: '{text}'"
-        '''
 
 
+        title = self.base_page.get_text(AudiencesLocators.AUD_CREATED_TEXT, 20)
+        assert title == text_aud, f"Ожидалось: 'Создание аудитории', но было получено: '{title}'"
 

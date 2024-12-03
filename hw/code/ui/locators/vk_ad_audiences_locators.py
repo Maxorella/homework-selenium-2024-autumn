@@ -72,3 +72,8 @@ class AudiencesLocators:
     SAVE2_BTN = (By.XPATH, '//*[@id="root"]/div/div[2]/div/div[2]/form/div[2]/div/div[2]/div/button[1]')
     # aud название
     AUD_TITLE_TEXT = (By.XPATH, '//*[@id="audience"]/div/div[2]/div/div[2]/div/div/div/div/div[2]/div[1]/div/div/div[2]/div/h5')
+
+    SELECT_ALL_BTN = (By.CLASS_NAME, 'GroupHeader_selectAll__kkZtN')
+
+    # nazv sozd audit
+    AUD_CREATED_TEXT = (By.CLASS_NAME, 'NameCell_name__lgrNA')
