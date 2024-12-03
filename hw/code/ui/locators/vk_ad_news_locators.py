@@ -17,3 +17,7 @@ class NewsLocators:
     NEWS_SECOND_PAGE = (By.XPATH, '//*[@id="classic-layout"]/div[2]/div/div/div[3]/div/div/nav/ul/li[3]/div')
     # Следующая страница
     NEXT_PAGE = (By.CLASS_NAME, 'vkuiPagination__nextButtonContainer')
+    # Предыдущая страница
+    PREV_PAGE = (By.XPATH, '//*[@class="vkuiPagination__prevButtonContainer"]/button')
+    # last page
+    LAST_PAGE = (By.XPATH, '//*[@class="vkuiPagination__list"]/li[6]')

@@ -43,6 +43,30 @@ class TestNewsCaseVkAd(NewsCaseVkAd):
         page = self.news_page.get_attribute(NewsLocators.NEWS_CURRENT_PAGE, 'data-page')
         assert page == '2', "Не происходит переход на другую страницу"
 
+    @allure.title("paggination go left test")
+    def test_pagg_left_test(self):
+        # self.news_page.move_to_element(NewsLocators.PREV_PAGE)
+        self.news_page.click(NewsLocators.CLOSE_NOTIFICATION)
+        self.news_page.move_to_element(NewsLocators.NEWS_SECOND_PAGE)
+        self.news_page.click(NewsLocators.NEWS_SECOND_PAGE)
+        self.news_page.move_to_element(NewsLocators.PREV_PAGE)
+        self.news_page.click(NewsLocators.PREV_PAGE)
+        self.news_page.move_to_element(NewsLocators.NEWS_CURRENT_PAGE)
+        page = self.news_page.get_attribute(NewsLocators.NEWS_CURRENT_PAGE, 'data-page')
+
+        assert page == '1', "Не работает переход на предыдущую страницу"
+
+    @allure.title("paggination go left block test")
+    def test_pagg_left_block_test(self):
+        self.news_page.click(NewsLocators.CLOSE_NOTIFICATION)
+        self.news_page.move_to_element(NewsLocators.PREV_PAGE)
+
+        try:
+            self.news_page.click(NewsLocators.PREV_PAGE)
+            assert False, "Переход не заблокирован"
+        except:
+            assert True
+
     @allure.title("Paggination go right Test")
     def test_pagg_go_right_test(self):
         self.news_page.click(NewsLocators.CLOSE_NOTIFICATION)
@@ -51,3 +75,17 @@ class TestNewsCaseVkAd(NewsCaseVkAd):
         self.news_page.move_to_element(NewsLocators.NEWS_SECOND_PAGE)
         page = self.news_page.get_attribute(NewsLocators.NEWS_CURRENT_PAGE, 'data-page')
         assert page == '2', 'Не переходит на следующую страницу'
+
+
+    @allure.title("Paggiantion block previous page test")
+    def test_pagg_previous_page_test(self):
+        self.news_page.click(NewsLocators.CLOSE_NOTIFICATION)
+        self.news_page.move_to_element(NewsLocators.LAST_PAGE)
+        self.news_page.click(NewsLocators.LAST_PAGE)
+        self.news_page.move_to_element(NewsLocators.NEXT_PAGE)
+
+        try:
+            self.news_page.click(NewsLocators.NEXT_PAGE)
+            assert False, "Переход не заблокирован"
+        except:
+            assert True
