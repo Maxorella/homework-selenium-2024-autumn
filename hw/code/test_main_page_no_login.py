@@ -5,7 +5,7 @@ import allure
 from selenium.webdriver.common.by import By
 
 from hw.code.base_vk_ad import BaseCaseVkAd
-from ui.locators.vk_ad_main_locators import MainPageNoLoginNavbarLoc, MainPageNoLoginCarouselLoc, MainPageNoLoginCases, \
+from hw.code.ui.locators.vk_ad_main_locators import MainPageNoLoginNavbarLoc, MainPageNoLoginCarouselLoc, MainPageNoLoginCases, \
     MainPageNoLoginCookie, MainPageNoLoginEducate, MainPageNoLoginNews, MainPageNoLoginFooter
 
 

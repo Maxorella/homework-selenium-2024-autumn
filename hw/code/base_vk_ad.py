@@ -10,7 +10,7 @@ from _pytest.fixtures import FixtureRequest
 from hw.code.ui.locators.vk_ad_companies_locators import CompaniesLocators, TargetedActionsLocators
 from hw.code.ui.pages.base_page import BasePage
 from hw.code.ui.pages.news_page import NewsPage
-from ui.locators.vk_ad_main_locators import AuthLocators
+from hw.code.ui.locators.vk_ad_main_locators import AuthLocators
 
 CLICK_RETRY = 3
 

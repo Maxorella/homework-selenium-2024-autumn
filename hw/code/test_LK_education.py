@@ -10,6 +10,6 @@ class TestEducation(BaseCaseVkAd):
 
     @allure.title("Popup test")
     def test_popup(self):
-        self.base_page.click(EducationLocators.COMPANIES_HREF)
+        self.base_page.click(EducationLocators.COMPANIES_HREF,10)
 
         assert self.base_page.find(EducationLocators.EDUCATION_POPAP).is_displayed(), "Не отображается подсказка"

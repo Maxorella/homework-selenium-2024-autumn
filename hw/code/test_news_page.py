@@ -50,7 +50,7 @@ class TestNewsCaseVkAd(NewsCaseVkAd):
         self.news_page.click(NewsLocators.NEWS_SECOND_PAGE)
         self.news_page.find(NewsLocators.NEWS_SECOND_PAGE)
         self.news_page.move_to_element(NewsLocators.PREV_PAGE)
-        self.news_page.click(NewsLocators.PREV_PAGE)
+        self.news_page.click(NewsLocators.PREV_PAGE, 10)
         self.news_page.move_to_element(NewsLocators.NEWS_CURRENT_PAGE)
         page = self.news_page.get_attribute(NewsLocators.NEWS_CURRENT_PAGE, 'data-page')
 

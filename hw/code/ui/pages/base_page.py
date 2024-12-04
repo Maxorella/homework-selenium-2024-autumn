@@ -43,7 +43,7 @@ class BasePage(object):
             timeout = 5
         return WebDriverWait(self.driver, timeout=timeout)
 
-    def find(self, locator, timeout=None):
+    def find(self, locator, timeout=5):
         return self.wait(timeout).until(EC.presence_of_element_located(locator))
 
     @allure.step('Search')
@@ -55,25 +55,25 @@ class BasePage(object):
 
 
     @allure.step('Click')
-    def click(self, locator, timeout=None) -> WebElement:
+    def click(self, locator, timeout=5) -> WebElement:
         self.find(locator, timeout=timeout)
         elem = self.wait(timeout).until(EC.element_to_be_clickable(locator))
         elem.click()
 
     @allure.step('EnterField')
-    def enter_field(self, locator, value, timeout=None) -> WebElement:
+    def enter_field(self, locator, value, timeout=5) -> WebElement:
         elem = self.find(locator, timeout)
         elem.clear()
         elem.send_keys(value)
 
     @allure.step('ClearEnterField')
-    def clear_enter_field(self, locator, value, timeout=None) -> WebElement:
+    def clear_enter_field(self, locator, value, timeout=5) -> WebElement:
         elem = self.find(locator, timeout)
         elem.clear()
         elem.send_keys(value)
 
     @allure.step('EnterFieldReturn')
-    def enter_field_return(self, locator, value, timeout=None) -> WebElement:
+    def enter_field_return(self, locator, value, timeout=5) -> WebElement:
         elem = self.find(locator, timeout)
         elem.clear()
         elem.send_keys(value)

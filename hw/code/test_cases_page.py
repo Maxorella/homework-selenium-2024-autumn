@@ -2,6 +2,7 @@ import allure
 
 from hw.code.cases_case_vk import CasesCaseVkAd
 from hw.code.ui.locators.vk_ad_cases_locators import CasesLocators
+from hw.code.ui.fixtures import *
 
 
 @allure.story("Cases page")

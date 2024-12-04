@@ -12,7 +12,7 @@ from hw.code.ui.pages.cases_page import CasesPage
 from hw.code.ui.pages.events_page import EventsPage
 from hw.code.ui.pages.materials_page import MaterialsPage
 from hw.code.ui.pages.news_page import NewsPage
-
+from hw.code.conftest import *
 
 @pytest.fixture(scope='function')
 def driver(config):
