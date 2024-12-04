@@ -41,12 +41,14 @@ class TestAudiences(BaseCaseVkAd):
         text = self.base_page.get_text(AudiencesLocators.FILTER_TEXT, 5)
         assert text == 'Фильтр', f"Ожидалось: 'Фильтр', но было получено: '{text}'"
 
-        text = self.base_page.get_text(AudiencesLocators.BIG_TEXT_AUDIENCES, 5)
-        assert text == 'Сохраняйте пользователей по их действиям в аудитории. Аудитории можно использовать в кампаниях, чтобы показать рекламу тем, кого она точно заинтересует',\
-            f"Ожидалось: 'длинный текст, см код..', но было получено: '{text}'"
+        # закомментил - тк этот текст не отображается, если есть созданная аудитория
 
-        text = self.base_page.get_text(AudiencesLocators.CREATE_AUDIENCE_WINDOW_BTN, 5)
-        assert text == 'Создать аудиторию', f"Ожидалось: 'Создать аудиторию', но было получено: '{text}'"
+        # text = self.base_page.get_text(AudiencesLocators.BIG_TEXT_AUDIENCES, 5)
+        # assert text == 'Сохраняйте пользователей по их действиям в аудитории. Аудитории можно использовать в кампаниях, чтобы показать рекламу тем, кого она точно заинтересует',\
+        #     f"Ожидалось: 'длинный текст, см код..', но было получено: '{text}'"
+
+        # text = self.base_page.get_text(AudiencesLocators.CREATE_AUDIENCE_WINDOW_BTN, 5)
+        # assert text == 'Создать аудиторию', f"Ожидалось: 'Создать аудиторию', но было получено: '{text}'"
 
     @allure.title("Audiences test 3")
     def test_audience_create_click(self):
