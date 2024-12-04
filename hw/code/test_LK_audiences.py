@@ -11,12 +11,12 @@ from hw.code.ui.locators.vk_ad_audiences_locators import AudiencesLocators
 class TestAudiences(BaseCaseVkAd):
     authorize = True
 
-    @allure.title("Audiences test 1")
+    @allure.title("1 Личный кабинет")
     def test_audience_click(self):
         self.base_page.click(AudiencesLocators.GO_AUDIENCES_BTN, 10)
         assert self.base_page.is_opened('https://ads.vk.com/hq/audience'), "Переход на аудитории не произошел"
 
-    @allure.title("Audiences test 2")
+    @allure.title("2 Аудитории")
     def test_audience_visibility(self):
         self.base_page.click(AudiencesLocators.GO_AUDIENCES_BTN, 15)
         assert self.base_page.is_opened('https://ads.vk.com/hq/audience'), "Переход на аудитории не произошел"
@@ -31,9 +31,7 @@ class TestAudiences(BaseCaseVkAd):
         assert self.base_page.element_presented(AudiencesLocators.SHARE_BTN, 5), "не отображается"
         assert self.base_page.element_presented(AudiencesLocators.DELETE_BTN, 5), "не отображается"
         assert self.base_page.element_presented(AudiencesLocators.SEARCH_FIELD, 5), "не отображается"
-        # assert self.base_page.element_presented(AudiencesLocators.BIG_TEXT_AUDIENCES, 5), "не отображается"
-        # assert self.base_page.element_presented(AudiencesLocators.BIG_TEXT_AUDIENCES, 5), "не отображается"
-        # assert self.base_page.element_presented(AudiencesLocators.CREATE_AUDIENCE_WINDOW_BTN, 5), "не отображается"
+
 
         text = self.base_page.get_text(AudiencesLocators.UP_MENU_CREATE_AUDIENCE_BTN, 5)
         assert text == 'Создать аудиторию', f"Ожидалось: 'Создать аудиторию', но было получено: '{text}'"
@@ -41,16 +39,7 @@ class TestAudiences(BaseCaseVkAd):
         text = self.base_page.get_text(AudiencesLocators.FILTER_TEXT, 5)
         assert text == 'Фильтр', f"Ожидалось: 'Фильтр', но было получено: '{text}'"
 
-        # закомментил - тк этот текст не отображается, если есть созданная аудитория
-
-        # text = self.base_page.get_text(AudiencesLocators.BIG_TEXT_AUDIENCES, 5)
-        # assert text == 'Сохраняйте пользователей по их действиям в аудитории. Аудитории можно использовать в кампаниях, чтобы показать рекламу тем, кого она точно заинтересует',\
-        #     f"Ожидалось: 'длинный текст, см код..', но было получено: '{text}'"
-
-        # text = self.base_page.get_text(AudiencesLocators.CREATE_AUDIENCE_WINDOW_BTN, 5)
-        # assert text == 'Создать аудиторию', f"Ожидалось: 'Создать аудиторию', но было получено: '{text}'"
-
-    @allure.title("Audiences test 3")
+    @allure.title("3 Аудитории")
     def test_audience_create_click(self):
         self.base_page.click(AudiencesLocators.GO_AUDIENCES_BTN, 20)
         assert self.base_page.is_opened('https://ads.vk.com/hq/audience'), "Переход на аудитории не произошел"
@@ -61,7 +50,7 @@ class TestAudiences(BaseCaseVkAd):
         assert text == 'Создание аудитории', f"Ожидалось: 'Создание аудитории', но было получено: '{text}'"
 
 
-    @allure.title("Audiences test 4")
+    @allure.title("4 Создание аудитории")
     def test_audience_create_pipe(self):
         self.base_page.click(AudiencesLocators.GO_AUDIENCES_BTN, 20)
         assert self.base_page.is_opened('https://ads.vk.com/hq/audience'), "Переход на аудитории не произошел"
@@ -77,9 +66,6 @@ class TestAudiences(BaseCaseVkAd):
         text = self.base_page.get_text(AudiencesLocators.NAME_AUDIENCE_ERROR_TEXT, 5)
         assert text == 'Напишите текст не больше 255 символов', f"Ожидалось: 'что-то', но было получено: '{text}'"
 
-        # 6 чек-лист
-
-
         self.base_page.enter_field(AudiencesLocators.NAME_AUDIENCE_INPUT, text_16, 10)
         self.base_page.click(AudiencesLocators.ADD_IST_BTN, 10)
         self.base_page.click(AudiencesLocators.SOOBS_SUBSC_BTN, 10)
@@ -89,7 +75,7 @@ class TestAudiences(BaseCaseVkAd):
         text = self.base_page.get_text(AudiencesLocators.NOTH_FOUND_TEXT, 20)
         assert text == 'Ничего не нашлось', f"Ожидалось: 'что-то', но было получено: '{text}'"
 
-    @allure.title("Audiences test 6")
+    @allure.title("6 Создание аудитории")
     def test_audience_6(self):
         self.base_page.click(AudiencesLocators.GO_AUDIENCES_BTN, 20)
         assert self.base_page.is_opened('https://ads.vk.com/hq/audience'), "Переход на аудитории не произошел"

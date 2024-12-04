@@ -10,13 +10,13 @@ from hw.code.ui.locators.vk_ad_settings_locators import SettingsLocators
 class TestSettings(BaseCaseVkAd):
     authorize = True
 
-    @allure.title("Settings 1 Test")
+    @allure.title("1 Личный кабинет")
     def test_settings_1(self):
         self.base_page.click(SettingsLocators.SETTINGS_BTN,20)
         assert self.base_page.is_opened('https://ads.vk.com/hq/settings'), "Переход на настройки не произошел"
 
 
-    @allure.title("Settings 2 Test")
+    @allure.title("2 Настройки. Общие.")
     def test_settings_2(self):
         self.base_page.click(SettingsLocators.SETTINGS_BTN,20)
         assert self.base_page.is_opened('https://ads.vk.com/hq/settings'), "Переход на настройки не произошел"
@@ -52,7 +52,7 @@ class TestSettings(BaseCaseVkAd):
         assert text == 'Удалить кабинет', f"Ожидалось: 'длинный текст, см код..', но было получено: '{text}'"
 
 
-    @allure.title("Settings 3 Test")
+    @allure.title("3 Настройки. Уведомления.")
     def test_settings_3(self):
         self.base_page.click(SettingsLocators.SETTINGS_BTN,20)
         assert self.base_page.is_opened('https://ads.vk.com/hq/settings'), "Переход на настройки не произошел"
@@ -76,7 +76,7 @@ class TestSettings(BaseCaseVkAd):
 
 
 
-    @allure.title("Settings 4 Test")
+    @allure.title("4 Настройки. Права доступа.")
     def test_settings_4(self):
         self.base_page.click(SettingsLocators.SETTINGS_BTN,20)
         assert self.base_page.is_opened('https://ads.vk.com/hq/settings'), "Переход на настройки не произошел"
@@ -95,7 +95,7 @@ class TestSettings(BaseCaseVkAd):
         assert text == 'Подробнее', f"Ожидалось: 'длинный текст, см код..', но было получено: '{text}'"
 
 
-    @allure.title("Settings 5 Test")
+    @allure.title("5 Настройки. История изменений.")
     def test_settings_5(self):
         self.base_page.click(SettingsLocators.SETTINGS_BTN,20)
         assert self.base_page.is_opened('https://ads.vk.com/hq/settings'), "Переход на настройки не произошел"
