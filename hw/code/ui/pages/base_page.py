@@ -17,7 +17,6 @@ class PageNotOpenedExeption(Exception):
 
 class BasePage(object):
 
-    # login_locators = AuthPageLocators()  # не нужно
     url = 'https://ads.vk.com/'  # урл страницы, c которой начинаю
 
     def is_opened(self, url='', trunc=0, timeout=15):

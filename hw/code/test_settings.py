@@ -11,13 +11,13 @@ from hw.code.ui.locators.vk_ad_settings_locators import SettingsLocators
 class TestSettings(BaseCaseVkAd):
     authorize = True
 
-    @allure.title("Settings 1 Test")
+    @allure.title("1 Личный кабинет")
     def test_settings_1(self):
         assert_is_page_open(self.base_page, SettingsLocators.SETTINGS_BTN, 'https://ads.vk.com/hq/settings', 20,
                             "Переход на настройки не произошел")
 
 
-    @allure.title("Settings 2 Test")
+    @allure.title("2 Настройки. Общие.")
     def test_settings_2(self):
         assert_is_page_open(self.base_page, SettingsLocators.SETTINGS_BTN, 'https://ads.vk.com/hq/settings', 20,
                             "Переход на настройки не произошел")
@@ -53,7 +53,7 @@ class TestSettings(BaseCaseVkAd):
                                   5, 'Текст не совпал, ожидалось Удалить кабинет')
 
 
-    @allure.title("Settings 3 Test")
+    @allure.title("3 Настройки. Уведомления.")
     def test_settings_3(self):
         assert_is_page_open(self.base_page, SettingsLocators.SETTINGS_BTN, 'https://ads.vk.com/hq/settings', 20,
                             "Переход на настройки не произошел")
@@ -77,7 +77,7 @@ class TestSettings(BaseCaseVkAd):
 
 
 
-    @allure.title("Settings 4 Test")
+    @allure.title("4 Настройки. Права доступа.")
     def test_settings_4(self):
         assert_is_page_open(self.base_page, SettingsLocators.SETTINGS_BTN, 'https://ads.vk.com/hq/settings', 20,
                             "Переход на настройки не произошел")
@@ -95,7 +95,7 @@ class TestSettings(BaseCaseVkAd):
                                   15, 'Текст не совпал, ожидалось Подробнее')
 
 
-    @allure.title("Settings 5 Test")
+    @allure.title("5 Настройки. История изменений.")
     def test_settings_5(self):
         assert_is_page_open(self.base_page, SettingsLocators.SETTINGS_BTN, 'https://ads.vk.com/hq/settings', 20,
                             "Переход на настройки не произошел")
