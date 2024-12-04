@@ -1,5 +1,6 @@
 import allure
 
+from hw.code.asserts.asserts import *
 from hw.code.cases_case_vk import CasesCaseVkAd
 from hw.code.ui.locators.vk_ad_cases_locators import CasesLocators
 
@@ -8,5 +9,5 @@ from hw.code.ui.locators.vk_ad_cases_locators import CasesLocators
 class TestCasesCaseVkAd(CasesCaseVkAd):
     @allure.title("Cases view page Test")
     def test_cases_page(self):
-
-        assert self.cases_page.get_text(CasesLocators.CASES_HEADER) == 'Кейсы', "Неверное отображение страницы"
+        assert_compare_block_text(self.cases_page, CasesLocators.CASES_HEADER, 'Кейсы',
+                                         10, "Неверное отображение страницы")

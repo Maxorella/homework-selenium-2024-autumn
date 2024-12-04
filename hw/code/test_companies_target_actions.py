@@ -1,5 +1,6 @@
 import allure
 
+from hw.code.asserts.asserts import find_assert
 from hw.code.base_vk_ad import BaseCaseVkAd
 from hw.code.ui.locators.vk_ad_companies_locators import TargetedActionsLocators, CompaniesLocators
 
@@ -14,8 +15,7 @@ class TestTargetActions(BaseCaseVkAd):
         self.base_page.move_to_element(TargetedActionsLocators.SITE_CONTAINER)
         self.base_page.click(TargetedActionsLocators.SITE_CONTAINER)
 
-        assert self.base_page.find(TargetedActionsLocators.SITE_CONTAINER).is_displayed(), "Ввод сайта не отображается"
-
+        find_assert(self.base_page, TargetedActionsLocators.SITE_CONTAINER, 10, "Ввод сайта не отображается")
     @allure.title("Target catalog handler test")
     def test_target_catalog(self):
         self.base_page.click(TargetedActionsLocators.CATALOG_CONTAINER)

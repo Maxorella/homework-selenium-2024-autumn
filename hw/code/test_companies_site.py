@@ -1,5 +1,6 @@
 import allure
 
+from hw.code.asserts.asserts import assert_compare_block_text, find_assert, assert_constraint_input
 from hw.code.base_vk_ad import BaseCaseVkAd
 from hw.code.ui.locators.vk_ad_companies_locators import TargetedActionsLocators, SiteLocators, CompaniesLocators, \
     GroupLocators
@@ -15,9 +16,7 @@ class TestSite(BaseCaseVkAd):
         self.base_page.click(TargetedActionsLocators.SITE_CONTAINER)
         self.base_page.enter_field(TargetedActionsLocators.ADVERTISE_SITE, "sdfasf")
         self.base_page.click(TargetedActionsLocators.ADVERTISE_CONTAINER)
-        error = self.base_page.get_text(SiteLocators.SITE_INPUT_ERROR)
-
-        assert error == "Не удалось подгрузить данные ссылки", "Не отображается ошибка"
+        assert_compare_block_text(self.base_page, SiteLocators.SITE_INPUT_ERROR, "Не удалось подгрузить данные ссылки", 10, "Не отображается ошибка")
 
     @allure.title("Input href view test")
     def test_href_view(self):
@@ -26,7 +25,7 @@ class TestSite(BaseCaseVkAd):
         self.base_page.click(TargetedActionsLocators.ADVERTISE_CONTAINER)
         self.base_page.find(TargetedActionsLocators.ADVERTISE_CONTAINER)
 
-        assert self.base_page.find(TargetedActionsLocators.CALENDAR_INPUT).is_displayed(), "Не отображаются новые поля"
+        find_assert(self.base_page, TargetedActionsLocators.CALENDAR_INPUT, 10, "Не отображаются новые поля")
 
     @allure.title("Constraint input test")
     def test_constraint_input(self):
@@ -36,10 +35,7 @@ class TestSite(BaseCaseVkAd):
         self.base_page.find(TargetedActionsLocators.ADVERTISE_CONTAINER)
 
         self.base_page.move_to_element(SiteLocators.ABOUT_TEXT_AREA)
-        self.base_page.enter_field(SiteLocators.ABOUT_TEXT_AREA, 'a'*500)
-
-        assert self.base_page.get_text(SiteLocators.ABOUT_TEXT_AREA) == 'a'*300, "Ввод не ограничен"
-
+        assert_constraint_input(self.base_page, SiteLocators.ABOUT_TEXT_AREA, 'a'*500, 300, 10, "Ввод не ограничен")
     @allure.title("Test switch budget")
     def test_switch_budget(self):
         self.base_page.click(TargetedActionsLocators.SITE_CONTAINER)
@@ -67,5 +63,4 @@ class TestSite(BaseCaseVkAd):
         self.base_page.click(CompaniesLocators.CONTINUE_BUTTON)
 
         self.base_page.find(GroupLocators.SET_DATE)
-
-        assert  self.base_page.find(GroupLocators.STRATEGY_CONTAINER).is_displayed(), "Не перешли на следующую страницу"
+        find_assert(self.base_page, GroupLocators.STRATEGY_CONTAINER, 10, "Не перешли на следующую страницу")
