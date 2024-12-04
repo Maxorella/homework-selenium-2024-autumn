@@ -105,7 +105,7 @@ class BasePage(object):
         self.click(TargetedActionsLocators.ADVERTISE_CONTAINER)
         self.find(TargetedActionsLocators.ADVERTISE_CONTAINER)
         self.enter_field(TargetedActionsLocators.BUDGET_INPUT, '100')
-        self.click(CompaniesLocators.CONTINUE_BUTTON)
+        self.move_to_element(CompaniesLocators.CONTINUE_BUTTON)
         self.click(CompaniesLocators.CONTINUE_BUTTON)
         self.find(GroupLocators.STRATEGY_CONTAINER)
 

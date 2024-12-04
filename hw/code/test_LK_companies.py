@@ -122,6 +122,8 @@ class TestTargetActions(BaseCaseVkAd):
         self.base_page.click(TargetedActionsLocators.SITE_CONTAINER)
 
         self.base_page.click(CompaniesLocators.CONTINUE_BUTTON)
+
+        self.base_page.move_to_element(CompaniesLocators.ERROR_BUTTON)
         self.base_page.click(CompaniesLocators.ERROR_BUTTON)
 
         assert self.base_page.find(CompaniesLocators.ERROR_LOG).is_displayed(), "Ошибка не отображается"
@@ -173,15 +175,6 @@ class TestSite(BaseCaseVkAd):
 
         assert self.base_page.get_text(SiteLocators.ABOUT_TEXT_AREA) == 'a'*300, "Ввод не ограничен"
 
-    # @allure.title("Target action view test")
-    # def test_target_action(self):
-    #     self.base_page.click(TargetedActionsLocators.SITE_CONTAINER)
-    #     self.base_page.enter_field(TargetedActionsLocators.ADVERTISE_SITE, "https://vk.com/a645g743")
-    #     self.base_page.click(TargetedActionsLocators.ADVERTISE_CONTAINER)
-    #     self.base_page.find(TargetedActionsLocators.ADVERTISE_CONTAINER)
-    #     self.base_page.click(SiteLocators.TARGER_ACTION)
-    #     self.base_page
-
     @allure.title("Test switch budget")
     def test_switch_budget(self):
         self.base_page.click(TargetedActionsLocators.SITE_CONTAINER)
@@ -205,18 +198,19 @@ class TestSite(BaseCaseVkAd):
         self.base_page.find(TargetedActionsLocators.ADVERTISE_CONTAINER)
         self.base_page.enter_field(TargetedActionsLocators.BUDGET_INPUT, '100')
 
+        self.base_page.move_to_element(CompaniesLocators.CONTINUE_BUTTON)
         self.base_page.click(CompaniesLocators.CONTINUE_BUTTON)
-        # не проходит
-        # self.base_page.find(GroupLocators.SET_DATE)
 
-        # assert  self.base_page.find(GroupLocators.STRATEGY_CONTAINER).is_displayed(), "Не перешли на следующую страницу"
+        self.base_page.find(GroupLocators.SET_DATE)
+
+        assert  self.base_page.find(GroupLocators.STRATEGY_CONTAINER).is_displayed(), "Не перешли на следующую страницу"
 
 
 @allure.story("Группы объявлений")
 class TestAdvrtiseGroup(BaseCaseVkAd):
     authorize = True
     company = True
-    # проходит
+
     @allure.title("Edit date")
     def test_edit_date(self):
         self.base_page.go_to_group()
