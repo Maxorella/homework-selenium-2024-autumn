@@ -17,7 +17,7 @@ from hw.code.ui.pages.news_page import NewsPage
 
 def pytest_addoption(parser):
     parser.addoption('--browser', default='chrome')
-    parser.addoption('--url', default='https://ads.vk.com/news')
+    parser.addoption('--url', default='https://ads.vk.com/')
     parser.addoption('--debug_log', action='store_true')
     parser.addoption('--selenoid', action='store_true')
     parser.addoption('--vnc', action='store_true')

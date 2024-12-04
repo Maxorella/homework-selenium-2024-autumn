@@ -1,5 +1,6 @@
 import allure
 
+from hw.code.asserts.asserts import find_assert, assert_is_page_opened, assert_is_page_open
 from hw.code.base_vk_ad import BaseCaseVkAd
 from hw.code.ui.locators.vk_ad_main_locators import MainPageNoLoginNews
 
@@ -10,24 +11,19 @@ class TestNews(BaseCaseVkAd):
     @allure.title("News view Test")
     def test_news(self):
 
-        news = self.base_page.find(MainPageNoLoginNews.NEWS_CONTAINER)
+        find_assert(self.base_page, MainPageNoLoginNews.NEWS_CONTAINER, message="Блок не отображается")
 
-        assert news.is_displayed(), "Блок не отображается"
 
     @allure.title("News about Test")
     def test_news_about(self):
-        current_window = self.driver.current_window_handle
         self.base_page.move_to_element(MainPageNoLoginNews.NEWS_ABOUT)
-        self.base_page.click(MainPageNoLoginNews.NEWS_ABOUT)
-        with self.switch_to_window(current_window):
-            assert self.base_page.is_opened('https://ads.vk.com/news/sbor-auditorii-po-reklamnym-sobytiyam',
-                                            len('https://ads.vk.com/news/sbor-auditorii-po-reklamnym-sobytiyam')), "Переход не произошел"
+
+        assert_is_page_open(self.base_page, MainPageNoLoginNews.NEWS_ABOUT, 'https://ads.vk.com/news/sbor-auditorii-po-reklamnym-sobytiyam',
+                            message="Переход не произошел")
 
     @allure.title("News click Test")
     def test_news_click(self):
-        current_window = self.driver.current_window_handle
         self.base_page.move_to_element(MainPageNoLoginNews.NEWS_CONTAINER)
-        self.base_page.click(MainPageNoLoginNews.NEWS_CONTAINER)
-        with self.switch_to_window(current_window):
-            assert self.base_page.is_opened('https://ads.vk.com/news/sbor-auditorii-po-reklamnym-sobytiyam',
-                                            len('https://ads.vk.com/news/sbor-auditorii-po-reklamnym-sobytiyam')), "Переход не произошел"
+        assert_is_page_open(self.base_page, MainPageNoLoginNews.NEWS_CONTAINER,
+                            'https://ads.vk.com/news/sbor-auditorii-po-reklamnym-sobytiyam',
+                            message="Переход не произошел")

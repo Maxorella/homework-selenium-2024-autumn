@@ -3,7 +3,7 @@ import time
 import allure
 from selenium.webdriver.common.by import By
 
-from hw.code.asserts.asserts import find_assert, assert_compare_block_text, attribute_assert
+from hw.code.asserts.asserts import find_assert, assert_compare_block_text, attribute_assert, assert_click_try
 from hw.code.news_case_vk import NewsCaseVkAd
 from hw.code.ui.locators.vk_ad_main_locators import MainPageNoLoginCookie
 from hw.code.ui.locators.vk_ad_news_locators import NewsLocators
@@ -48,7 +48,7 @@ class TestNewsCaseVkAd(NewsCaseVkAd):
         self.news_page.click(NewsLocators.NEWS_SECOND_PAGE)
         self.news_page.find(NewsLocators.NEWS_SECOND_PAGE)
         self.news_page.move_to_element(NewsLocators.NEWS_SECOND_PAGE)
-        page = self.news_page.get_attribute(NewsLocators.NEWS_CURRENT_PAGE, 'data-page')
+
         attribute_assert(self.news_page, NewsLocators.NEWS_CURRENT_PAGE, 'data-page', '2',
                          "Не происходит переход на другую страницу")
 
@@ -64,20 +64,18 @@ class TestNewsCaseVkAd(NewsCaseVkAd):
         self.news_page.click(NewsLocators.PREV_PAGE, 10)
         self.news_page.find(NewsLocators.NEWS_CURRENT_PAGE)
         self.news_page.move_to_element(NewsLocators.NEWS_CURRENT_PAGE)
-        page = self.news_page.get_attribute(NewsLocators.NEWS_CURRENT_PAGE, 'data-page')
 
-        assert page == '1', "Не работает переход на предыдущую страницу"
+        attribute_assert(self.news_page, NewsLocators.NEWS_CURRENT_PAGE, 'data-page', '1',
+                         "Не работает переход на предыдущую страницу")
+
 
     @allure.title("paggination go left block test")
     def test_pagg_left_block_test(self):
         self.news_page.click(NewsLocators.CLOSE_NOTIFICATION)
         self.news_page.move_to_element(NewsLocators.PREV_PAGE)
 
-        try:
-            self.news_page.click(NewsLocators.PREV_PAGE)
-            assert False, "Переход не заблокирован"
-        except:
-            assert True
+        assert_click_try(self.news_page, NewsLocators.PREV_PAGE, "Переход не заблокирован")
+
 
     @allure.title("Paggination go right Test")
     def test_pagg_go_right_test(self):
@@ -87,8 +85,9 @@ class TestNewsCaseVkAd(NewsCaseVkAd):
         self.news_page.find(NewsLocators.NEWS_SECOND_PAGE)
         self.news_page.find(NewsLocators.NEWS_SECOND_PAGE)
         self.news_page.move_to_element(NewsLocators.NEWS_SECOND_PAGE)
-        page = self.news_page.get_attribute(NewsLocators.NEWS_CURRENT_PAGE, 'data-page')
-        assert page == '2', 'Не переходит на следующую страницу'
+
+        attribute_assert(self.news_page, NewsLocators.NEWS_CURRENT_PAGE, 'data-page', '2',
+                         "Не переходит на следующую страницу")
 
 
     @allure.title("Paggiantion block previous page test")
@@ -98,8 +97,4 @@ class TestNewsCaseVkAd(NewsCaseVkAd):
         self.news_page.click(NewsLocators.LAST_PAGE)
         self.news_page.move_to_element(NewsLocators.NEXT_PAGE)
 
-        try:
-            self.news_page.click(NewsLocators.NEXT_PAGE)
-            assert False, "Переход не заблокирован"
-        except:
-            assert True
+        assert_click_try(self.news_page, NewsLocators.NEXT_PAGE, "Переход не заблокирован")

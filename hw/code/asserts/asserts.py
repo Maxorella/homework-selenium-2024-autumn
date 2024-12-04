@@ -15,3 +15,14 @@ def attribute_assert(page_obj, locator, attribute, expected, message=None):
 
     assert page_obj.get_attribute(locator, attribute) == expected, message
 
+def assert_click_try(page_obj, locator, message=None):
+
+    try:
+        page_obj.click(locator)
+        assert False, message
+    except:
+        assert True
+
+def assert_is_page_opened(page_obj, url, trunc=0, timeout=10, message=None):
+    assert page_obj.is_opened(url, trunc, timeout), message
+
