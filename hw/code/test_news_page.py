@@ -3,6 +3,7 @@ import time
 import allure
 from selenium.webdriver.common.by import By
 
+from hw.code.asserts.asserts import find_assert, assert_compare_block_text, attribute_assert
 from hw.code.news_case_vk import NewsCaseVkAd
 from hw.code.ui.locators.vk_ad_main_locators import MainPageNoLoginCookie
 from hw.code.ui.locators.vk_ad_news_locators import NewsLocators
@@ -13,7 +14,8 @@ class TestNewsCaseVkAd(NewsCaseVkAd):
     @allure.title("News view page")
     def test_news_page(self):
         self.news_page.click(NewsLocators.CLOSE_NOTIFICATION)
-        assert self.news_page.find(NewsLocators.NEWS_HEADER).is_displayed(), "Header not found"
+
+        find_assert(self.news_page, NewsLocators.NEWS_HEADER, message="Header not found")
 
     @allure.title("News Content first Test")
     def test_news_content_first_test(self):
@@ -24,22 +26,21 @@ class TestNewsCaseVkAd(NewsCaseVkAd):
         title = self.news_page.get_text(NewsLocators.FIRST_TITLE)
         self.news_page.move_to_element(NewsLocators.ABOUT_FIRST)
         self.news_page.click(NewsLocators.ABOUT_FIRST)
-        new_text = self.news_page.get_text(NewsLocators.NEWS_TITLE)
 
-        assert title == new_text, "Перешли не на ту страницу или не перешли"
+        assert_compare_block_text(self.news_page, NewsLocators.NEWS_TITLE, title, message="Перешли не на ту страницу или не перешли")
 
     @allure.title("Paggination total view Test ")
     def test_pagg_total_view_test(self):
         self.news_page.click(NewsLocators.CLOSE_NOTIFICATION)
-        assert self.news_page.find(NewsLocators.NEWS_TOTAL).is_displayed(), "Общее количество не отображается"
+        find_assert(self.news_page, NewsLocators.NEWS_HEADER, message="Общее количество не отображается")
 
     @allure.title("Paggination current page test")
     def test_pagg_current_page_test(self):
         self.news_page.click(NewsLocators.CLOSE_NOTIFICATION)
-        page = self.news_page.get_attribute(NewsLocators.NEWS_CURRENT_PAGE,'data-page')
-        assert page == '1', "Неправильно отображается текущая странциа"
 
-    #error
+        attribute_assert(self.news_page, NewsLocators.NEWS_CURRENT_PAGE, 'data-page', '1',
+                         "Неправильно отображается текущая страница")
+
     @allure.title("Paggination click page 2 Test")
     def test_pagg_click_2_test(self):
         self.news_page.click(NewsLocators.CLOSE_NOTIFICATION)
@@ -48,7 +49,8 @@ class TestNewsCaseVkAd(NewsCaseVkAd):
         self.news_page.find(NewsLocators.NEWS_SECOND_PAGE)
         self.news_page.move_to_element(NewsLocators.NEWS_SECOND_PAGE)
         page = self.news_page.get_attribute(NewsLocators.NEWS_CURRENT_PAGE, 'data-page')
-        assert page == '2', "Не происходит переход на другую страницу"
+        attribute_assert(self.news_page, NewsLocators.NEWS_CURRENT_PAGE, 'data-page', '2',
+                         "Не происходит переход на другую страницу")
 
     # error
     @allure.title("paggination go left test")

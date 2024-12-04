@@ -2,6 +2,7 @@ import time
 
 import allure
 
+from hw.code.asserts.asserts import *
 from hw.code.base_vk_ad import BaseCaseVkAd
 from hw.code.ui.locators.vk_ad_settings_locators import SettingsLocators
 
@@ -12,96 +13,95 @@ class TestSettings(BaseCaseVkAd):
 
     @allure.title("Settings 1 Test")
     def test_settings_1(self):
-        self.base_page.click(SettingsLocators.SETTINGS_BTN,20)
-        assert self.base_page.is_opened('https://ads.vk.com/hq/settings'), "Переход на настройки не произошел"
+        assert_is_page_open(self.base_page, SettingsLocators.SETTINGS_BTN, 'https://ads.vk.com/hq/settings', 20,
+                            "Переход на настройки не произошел")
 
 
     @allure.title("Settings 2 Test")
     def test_settings_2(self):
-        self.base_page.click(SettingsLocators.SETTINGS_BTN,20)
-        assert self.base_page.is_opened('https://ads.vk.com/hq/settings'), "Переход на настройки не произошел"
+        assert_is_page_open(self.base_page, SettingsLocators.SETTINGS_BTN, 'https://ads.vk.com/hq/settings', 20,
+                            "Переход на настройки не произошел")
 
-        text = self.base_page.get_text(SettingsLocators.TELE_TEXT, 5)
-        assert text == 'Телефон', f"Ожидалось: 'длинный текст, см код..', но было получено: '{text}'"
+        assert_compare_block_text(self.base_page, SettingsLocators.TELE_TEXT, 'Телефон',
+                                  5, 'Текст не совпал, ожидалось Телефон')
 
-        text = self.base_page.get_text(SettingsLocators.EMAIL_TEXT, 5)
-        assert text == 'Email', f"Ожидалось: 'длинный текст, см код..', но было получено: '{text}'"
+        assert_compare_block_text(self.base_page, SettingsLocators.EMAIL_TEXT, 'Email',
+                                  5, 'Текст не совпал, ожидалось Email')
 
-        text = self.base_page.get_text(SettingsLocators.EMAIL_LINK, 5)
-        assert text == 'Добавить email', f"Ожидалось: 'длинный текст, см код..', но было получено: '{text}'"
+        assert_compare_block_text(self.base_page, SettingsLocators.EMAIL_LINK, 'Добавить email',
+                                  5, 'Текст не совпал, ожидалось Добавить email')
 
-        text = self.base_page.get_text(SettingsLocators.FIO_LINK, 5)
-        assert text == 'ФИО', f"Ожидалось: 'длинный текст, см код..', но было получено: '{text}'"
+        assert_compare_block_text(self.base_page, SettingsLocators.FIO_LINK, 'ФИО',
+                                  5, 'Текст не совпал, ожидалось ФИО')
 
-        text = self.base_page.get_text(SettingsLocators.INN_LINK, 5)
-        assert text == 'ИНН', f"Ожидалось: 'длинный текст, см код..', но было получено: '{text}'"
+        assert_compare_block_text(self.base_page, SettingsLocators.INN_LINK, 'ИНН',
+                                  5, 'Текст не совпал, ожидалось ИНН')
 
-        text = self.base_page.get_text(SettingsLocators.NAZB_CAB, 5)
-        assert text == 'Название кабинета', f"Ожидалось: 'длинный текст, см код..', но было получено: '{text}'"
+        assert_compare_block_text(self.base_page, SettingsLocators.NAZB_CAB, 'Название кабинета',
+                                  5, 'Текст не совпал, ожидалось Название кабинета')
 
-        text = self.base_page.get_text(SettingsLocators.LANG_INT, 5)
-        assert text == 'Язык интерфейса', f"Ожидалось: 'длинный текст, см код..', но было получено: '{text}'"
+        assert_compare_block_text(self.base_page, SettingsLocators.LANG_INT, 'Язык интерфейса',
+                                  5, 'Текст не совпал, ожидалось Язык интерфейса')
 
-        text = self.base_page.get_text(SettingsLocators.SVYAZ_CAB, 5)
-        assert text == 'Связанные кабинеты', f"Ожидалось: 'длинный текст, см код..', но было получено: '{text}'"
+        assert_compare_block_text(self.base_page, SettingsLocators.SVYAZ_CAB, 'Связанные кабинеты',
+                                  5, 'Текст не совпал, ожидалось Связанные кабинеты')
 
-        text = self.base_page.get_text(SettingsLocators.EXIT_OTHER_USTR, 5)
-        assert text == 'Выйти из других устройств', f"Ожидалось: 'длинный текст, см код..', но было получено: '{text}'"
+        assert_compare_block_text(self.base_page, SettingsLocators.EXIT_OTHER_USTR, 'Выйти из других устройств',
+                                  5, 'Текст не совпал, ожидалось Выйти из других устройств')
 
-        text = self.base_page.get_text(SettingsLocators.DELETE_CAB_BTN, 5)
-        assert text == 'Удалить кабинет', f"Ожидалось: 'длинный текст, см код..', но было получено: '{text}'"
+        assert_compare_block_text(self.base_page, SettingsLocators.DELETE_CAB_BTN, 'Удалить кабинет',
+                                  5, 'Текст не совпал, ожидалось Удалить кабинет')
 
 
     @allure.title("Settings 3 Test")
     def test_settings_3(self):
-        self.base_page.click(SettingsLocators.SETTINGS_BTN,20)
-        assert self.base_page.is_opened('https://ads.vk.com/hq/settings'), "Переход на настройки не произошел"
+        assert_is_page_open(self.base_page, SettingsLocators.SETTINGS_BTN, 'https://ads.vk.com/hq/settings', 20,
+                            "Переход на настройки не произошел")
 
         self.base_page.click(SettingsLocators.UVEDOML_BTN,20)
 
-        text = self.base_page.get_text(SettingsLocators.UVEDOML_BTN, 15)
-        assert text == 'Уведомления', f"Ожидалось: 'длинный текст, см код..', но было получено: '{text}'"
+        assert_compare_block_text(self.base_page, SettingsLocators.UVEDOML_BTN, 'Уведомления',
+                                  15, 'Текст не совпал, ожидалось Уведомления')
 
-        text = self.base_page.get_text(SettingsLocators.SPOS_POLUCH, 15)
-        assert text == 'Способы получения', f"Ожидалось: 'длинный текст, см код..', но было получено: '{text}'"
+        assert_compare_block_text(self.base_page, SettingsLocators.SPOS_POLUCH, 'Способы получения',
+                                  15, 'Текст не совпал, ожидалось Способы получения')
 
-        text = self.base_page.get_text(SettingsLocators.MESS_TELEG, 15)
-        assert text == 'Сообщение в Telegram', f"Ожидалось: 'длинный текст, см код..', но было получено: '{text}'"
+        assert_compare_block_text(self.base_page, SettingsLocators.MESS_TELEG, 'Сообщение в Telegram',
+                                  15, 'Текст не совпал, ожидалось Сообщение в Telegram')
 
-        text = self.base_page.get_text(SettingsLocators.OSNOVN, 15)
-        assert text == 'Основные', f"Ожидалось: 'длинный текст, см код..', но было получено: '{text}'"
+        assert_compare_block_text(self.base_page, SettingsLocators.OSNOVN, 'Основные',
+                                  15, 'Текст не совпал, ожидалось Основные')
 
-        text = self.base_page.get_text(SettingsLocators.NEWS_DISC, 15)
-        assert text == 'Новости и акции', f"Ожидалось: 'длинный текст, см код..', но было получено: '{text}'"
+        assert_compare_block_text(self.base_page, SettingsLocators.NEWS_DISC, 'Новости и акции',
+                                  15, 'Текст не совпал, ожидалось Новости и акции')
 
 
 
     @allure.title("Settings 4 Test")
     def test_settings_4(self):
-        self.base_page.click(SettingsLocators.SETTINGS_BTN,20)
-        assert self.base_page.is_opened('https://ads.vk.com/hq/settings'), "Переход на настройки не произошел"
+        assert_is_page_open(self.base_page, SettingsLocators.SETTINGS_BTN, 'https://ads.vk.com/hq/settings', 20,
+                            "Переход на настройки не произошел")
 
-        self.base_page.click(SettingsLocators.PRAVA_BTN_MENU,20)
-        assert self.base_page.is_opened('https://ads.vk.com/hq/settings/access'), "Переход на Права доступа не произошел"
+        assert_is_page_open(self.base_page, SettingsLocators.PRAVA_BTN_MENU, 'https://ads.vk.com/hq/settings/access', 20,
+                            "Переход на Права доступа не произошел")
 
+        assert_compare_block_text(self.base_page, SettingsLocators.PRAVA_BTN_MENU, 'Права доступа',
+                                  15, 'Текст не совпал, ожидалось Права доступа')
 
-        text = self.base_page.get_text(SettingsLocators.PRAVA_BTN_MENU, 15)
-        assert text == 'Права доступа', f"Ожидалось: 'длинный текст, см код..', но было получено: '{text}'"
+        assert_compare_block_text(self.base_page, SettingsLocators.ADD_CAB_BTN_TEXT, 'Добавить кабинет',
+                                  15, 'Текст не совпал, ожидалось Добавить кабинет')
 
-        text = self.base_page.get_text(SettingsLocators.ADD_CAB_BTN_TEXT, 15)
-        assert text == 'Добавить кабинет', f"Ожидалось: 'длинный текст, см код..', но было получено: '{text}'"
-
-        text = self.base_page.get_text(SettingsLocators.PODROBN_TEXT, 15)
-        assert text == 'Подробнее', f"Ожидалось: 'длинный текст, см код..', но было получено: '{text}'"
+        assert_compare_block_text(self.base_page, SettingsLocators.PODROBN_TEXT, 'Подробнее',
+                                  15, 'Текст не совпал, ожидалось Подробнее')
 
 
     @allure.title("Settings 5 Test")
     def test_settings_5(self):
-        self.base_page.click(SettingsLocators.SETTINGS_BTN,20)
-        assert self.base_page.is_opened('https://ads.vk.com/hq/settings'), "Переход на настройки не произошел"
+        assert_is_page_open(self.base_page, SettingsLocators.SETTINGS_BTN, 'https://ads.vk.com/hq/settings', 20,
+                            "Переход на настройки не произошел")
 
-        self.base_page.click(SettingsLocators.HIST_BTN_MENU,20)
-        assert self.base_page.is_opened('https://ads.vk.com/hq/settings/logs'), "Переход на История изменений не произошел"
+        assert_is_page_open(self.base_page, SettingsLocators.HIST_BTN_MENU, 'https://ads.vk.com/hq/settings/logs', 20,
+                            "Переход на История изменений не произошел")
 
-        text = self.base_page.get_text(SettingsLocators.HIST_TAB_TEXT, 15)
-        assert text == 'Здесь будет храниться история изменений в кабинете', f"Ожидалось: 'длинный текст, см код..', но было получено: '{text}'"
+        assert_compare_block_text(self.base_page, SettingsLocators.HIST_TAB_TEXT, 'Здесь будет храниться история изменений в кабинете',
+                                  15, 'Текст не совпал, ожидалось Здесь будет храниться история изменений в кабинете')
