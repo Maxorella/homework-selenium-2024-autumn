@@ -11,13 +11,13 @@ from hw.code.ui.locators.vk_ad_sites_locators import SitesLocators
 class TestSites(BaseCaseVkAd):
     authorize = True
 
-    @allure.title("Sites 1 Test")
+    @allure.title("Test open 'Сайты' page")
     def test_sites_1(self):
 
         assert_is_page_open(self.base_page, SitesLocators.GO_TO_SITES_BTN, 'https://ads.vk.com/hq/pixels', 10,  "Переход на аудитории не произошел")
 
 
-    @allure.title("Sites 2 Test")
+    @allure.title("Test display, buttons Add pixel and fields for image search.")
     def test_sites_2(self):
         assert_is_page_open(self.base_page, SitesLocators.GO_TO_SITES_BTN, 'https://ads.vk.com/hq/pixels', 10,
                             "Переход на аудитории не произошел")
@@ -33,26 +33,16 @@ class TestSites(BaseCaseVkAd):
                                   10, 'Текст не совпадает')
 
 
-    @allure.title("Sites 3 Test")
+    @allure.title("click on the 'Add Pixel' button")
     def test_sites_3(self):
         assert_is_page_open(self.base_page, SitesLocators.GO_TO_SITES_BTN, 'https://ads.vk.com/hq/pixels',
                             20, "Переход на аудитории не произошел")
 
         self.base_page.click(SitesLocators.ADD_PIX_MENU_BTN,10)
 
-        # TODO почему то текст не берется, timeout срабатывает
-        # text = self.base_page.get_text_visible(SitesLocators.ADD_PIX_POPUP_TEXT, 10)
-        # assert text == 'Домен сайта', "Текст не совпадает"
-
-    @allure.title("Sites 4 Test")
+    @allure.title("Adding a pixel. Enter the site domain. If an incorrect domain is entered, an error appears.")
     def test_sites_4(self):
         assert_is_page_open(self.base_page, SitesLocators.GO_TO_SITES_BTN, 'https://ads.vk.com/hq/pixels',
                             20, "Переход на аудитории не произошел")
 
         self.base_page.click(SitesLocators.ADD_PIX_MENU_BTN, 20)
-
-        # TODO НЕ ВИДЕН POPUP ПОЧЕМУ-ТО!!!!
-        # self.base_page.enter_field(SitesLocators.DOMEN_INPUT, 'mortawed', 20)
-        # self.base_page.click(SitesLocators.ADD_PIX_POPUP_BTN, 20)
-        # text = self.base_page.get_text(SitesLocators.ADD_PIX_POPUP_TEXT, 20)
-        # assert text == 'Введите корректный адрес сайта (вида: example.ru)', "Текст не совпадает"

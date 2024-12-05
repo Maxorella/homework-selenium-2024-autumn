@@ -11,13 +11,13 @@ from hw.code.ui.locators.vk_ad_settings_locators import SettingsLocators
 class TestSettings(BaseCaseVkAd):
     authorize = True
 
-    @allure.title('1 Личный кабинет. При нажатии на кнопку в меню "Настройки" открывается окно с настройками. https://ads.vk.com/hq/settings')
+    @allure.title('Personal account. Click on the button in the "Settings" menu, a window with settings opens.')
     def test_settings_1(self):
         assert_is_page_open(self.base_page, SettingsLocators.SETTINGS_BTN, 'https://ads.vk.com/hq/settings', 20,
                             "Переход на настройки не произошел")
 
 
-    @allure.title('Настройки. Общие. Проверка отображения. Контакты: поля "Телефон", "Email", кнопка "Добавить Email". Реквизиты: поля: "ФИО", "ИНН". Интерфейс: поля: "Название кабинета", "Язык интерфейса", "галочка" - "распознавать горячие клавиши". Связанные кабинеты. кнопка: "Привязать кабинет myTarget". Доступ к API. Ссылка "Запросить доступ к API". Кнопки "Выйти из других устройств", "Удалить кабинет".')
+    @allure.title('Settings. General. Checking the display. ')
     def test_settings_2(self):
         assert_is_page_open(self.base_page, SettingsLocators.SETTINGS_BTN, 'https://ads.vk.com/hq/settings', 20,
                             "Переход на настройки не произошел")
@@ -53,7 +53,7 @@ class TestSettings(BaseCaseVkAd):
                                   5, 'Текст не совпал, ожидалось Удалить кабинет')
 
 
-    @allure.title('Настройки. Уведомления. https://ads.vk.com/hq/settings/notifications Проверка отображения. Способы получения: переключатели "почты" "вконтакте", ссылка "Сообщение в Telegram". Основные: "Финансы", "Модерация", "Рекламные кампании", "Правила для объявлений", "Изменения в API". Новости и акции: "Новости", "Мероприятия", "Акции, спецпредложения и прочие"')
+    @allure.title('Settings. Notifications. Checking display.')
     def test_settings_3(self):
         assert_is_page_open(self.base_page, SettingsLocators.SETTINGS_BTN, 'https://ads.vk.com/hq/settings', 20,
                             "Переход на настройки не произошел")
@@ -77,7 +77,7 @@ class TestSettings(BaseCaseVkAd):
 
 
 
-    @allure.title('Настройки. Права доступа. https://ads.vk.com/hq/settings/access Проверка отображения. Кнопка "Добавить кабинет".')
+    @allure.title('Settings. Access rights. Display check. "Add office" button.')
     def test_settings_4(self):
         assert_is_page_open(self.base_page, SettingsLocators.SETTINGS_BTN, 'https://ads.vk.com/hq/settings', 20,
                             "Переход на настройки не произошел")
@@ -95,7 +95,7 @@ class TestSettings(BaseCaseVkAd):
                                   15, 'Текст не совпал, ожидалось Подробнее')
 
 
-    @allure.title('Настройки. История изменений. https://ads.vk.com/hq/settings/logs Проверка отображения. Кнопка "Фильтр", поле поиска.')
+    @allure.title('Settings. History of changes. Checking display. "Filter" button, search field.')
     def test_settings_5(self):
         assert_is_page_open(self.base_page, SettingsLocators.SETTINGS_BTN, 'https://ads.vk.com/hq/settings', 20,
                             "Переход на настройки не произошел")
