@@ -65,8 +65,11 @@ class TestNavigation(BaseCaseVkAd):
 
     @allure.title("Partner click Test")
     def test_partner_click(self):
-        assert_is_page_open(self.base_page, MainPageNoLoginNavbarLoc.MAIN_PAGE_MONETIZATION_BTN, 'https://ads.vk.com/partner',
-                            message="Переход на партнерскую страницу не произошел")
+        current_window = self.driver.current_window_handle
+        self.base_page.click(MainPageNoLoginNavbarLoc.MAIN_PAGE_MONETIZATION_BTN, 5)
+        with self.switch_to_window(current_window, True):
+            assert self.base_page.is_opened(
+                'https://ads.vk.com/partner'), "Переход на партнерскую страницу не произошел"
 
     @allure.title("Help click Test")
     def test_help_click(self):
@@ -106,32 +109,38 @@ class TestNavigation(BaseCaseVkAd):
 
     @allure.title("Video courses click Test")
     def test_courses_click(self):
+        current_window = self.driver.current_window_handle
         self.base_page.move_to_element(MainPageNoLoginNavbarLoc.STUDY_POPUP)
-        assert_is_page_open(self.base_page, MainPageNoLoginNavbarLoc.MAIN_PAGE_VIDEOCOURSES_BTN,
-                            'https://ads.vk.com/catalog/courses/',
-                            message="Переход на страницу видеокурсы не произошел")
+        self.base_page.click(MainPageNoLoginNavbarLoc.MAIN_PAGE_VIDEOCOURSES_BTN, 5)
+        with self.switch_to_window(current_window):
+            assert self.base_page.is_opened('https://expert.vk.com/catalog/courses/'), \
+                "Переход на страницу видеокурсы не произошел"
 
     @allure.title("Certificates click Test")
     def test_certification_click(self):
+        current_window = self.driver.current_window_handle
         self.base_page.move_to_element(MainPageNoLoginNavbarLoc.STUDY_POPUP)
-
-        assert_is_page_open(self.base_page, MainPageNoLoginNavbarLoc.MAIN_PAGE_CERRTIFICATES_BTN,
-                            'https://ads.vk.com/certification/',
-                            message="Переход на страницу сертификатов не произошел")
+        self.base_page.click(MainPageNoLoginNavbarLoc.MAIN_PAGE_CERRTIFICATES_BTN, 5)
+        with self.switch_to_window(current_window):
+            assert self.base_page.is_opened('https://expert.vk.com/certification/'), \
+                "Переход на страницу сертификатов не произошел"
 
     @allure.title("Education mouseover Test")
     def test_close_study(self):
         self.base_page.move_to_element(MainPageNoLoginNavbarLoc.STUDY_POPUP)
         self.base_page.move_to_element(MainPageNoLoginNavbarLoc.MAIN_PAGE_LOGO_BTN)
 
-        find_assert(self.base_page, MainPageNoLoginNavbarLoc.MAIN_PAGE_USEFUL_MATERIALS_BTN,
-                    message="Меню отображается, но не должно!")
-        find_assert(self.base_page, MainPageNoLoginNavbarLoc.MAIN_PAGE_EVENTS_BTN,
-                    message="Меню отображается, но не должно!")
-        find_assert(self.base_page, MainPageNoLoginNavbarLoc.MAIN_PAGE_VIDEOCOURSES_BTN,
-                    message="Меню отображается, но не должно!")
-        find_assert(self.base_page, MainPageNoLoginNavbarLoc.MAIN_PAGE_CERRTIFICATES_BTN,
-                    message="Меню отображается, но не должно!")
+        assert self.base_page.is_element_not_present(MainPageNoLoginNavbarLoc.MAIN_PAGE_USEFUL_MATERIALS_BTN), \
+            "Меню отображается, но не должно!"
+
+        assert self.base_page.is_element_not_present(MainPageNoLoginNavbarLoc.MAIN_PAGE_EVENTS_BTN), \
+            "Меню отображается, но не должно!"
+
+        assert self.base_page.is_element_not_present(MainPageNoLoginNavbarLoc.MAIN_PAGE_VIDEOCOURSES_BTN), \
+            "Меню отображается, но не должно!"
+
+        assert self.base_page.is_element_not_present(MainPageNoLoginNavbarLoc.MAIN_PAGE_CERRTIFICATES_BTN), \
+            "Меню отображается, но не должно!"
 
     @allure.title("Transfer to account Test")
     def test_auth_click(self):
