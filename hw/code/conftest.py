@@ -9,6 +9,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 from webdriver_manager.firefox import GeckoDriverManager
 import json
 
+from hw.code.helper import get_driver
 from hw.code.ui.pages.base_page import BasePage
 from hw.code.ui.pages.cases_page import CasesPage
 from hw.code.ui.pages.events_page import EventsPage
@@ -75,17 +76,6 @@ def driver(config):
     driver.maximize_window()
     yield driver
     driver.quit()
-
-
-def get_driver(browser_name):
-    if browser_name == 'chrome':
-        browser = webdriver.Chrome(executable_path=ChromeDriverManager().install())
-    elif browser_name == 'firefox':
-        browser = webdriver.Firefox(executable_path=GeckoDriverManager().install())
-    else:
-        raise RuntimeError(f'Unsupported browser: "{browser_name}"')
-    browser.maximize_window()
-    return browser
 
 
 @pytest.fixture(scope='session', params=['chrome', 'firefox'])

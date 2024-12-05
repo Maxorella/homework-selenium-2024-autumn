@@ -11,12 +11,12 @@ from hw.code.ui.locators.vk_ad_audiences_locators import AudiencesLocators
 class TestAudiences(BaseCaseVkAd):
     authorize = True
 
-    @allure.title("1 Личный кабинет")
+    @allure.title("1 Личный кабинет. Нажатие на сайдбаре кнопки 'Сайты'. Переход на страницу https://ads.vk.com/hq/audience")
     def test_audience_click(self):
         self.base_page.click(AudiencesLocators.GO_AUDIENCES_BTN, 10)
         assert self.base_page.is_opened('https://ads.vk.com/hq/audience'), "Переход на аудитории не произошел"
 
-    @allure.title("2 Аудитории")
+    @allure.title('2 Аудитории. Проверка отображения. Вверхнее меню кнопки: "Аудитории", "Список пользователей", "Офлайн-конверсии". Окно аудиторий, кнопки: создать аудиторию, троеточие, фильтр, кнопки поделиться и удалить, поле для поиска аудитории.')
     def test_audience_visibility(self):
         self.base_page.click(AudiencesLocators.GO_AUDIENCES_BTN, 15)
         assert self.base_page.is_opened('https://ads.vk.com/hq/audience'), "Переход на аудитории не произошел"
@@ -39,7 +39,7 @@ class TestAudiences(BaseCaseVkAd):
         text = self.base_page.get_text(AudiencesLocators.FILTER_TEXT, 5)
         assert text == 'Фильтр', f"Ожидалось: 'Фильтр', но было получено: '{text}'"
 
-    @allure.title("3 Аудитории")
+    @allure.title('Аудитории. При нажатии на кнопку "Создать аудиторию" открывается окно создания аудитории.')
     def test_audience_create_click(self):
         self.base_page.click(AudiencesLocators.GO_AUDIENCES_BTN, 20)
         assert self.base_page.is_opened('https://ads.vk.com/hq/audience'), "Переход на аудитории не произошел"
@@ -50,7 +50,7 @@ class TestAudiences(BaseCaseVkAd):
         assert text == 'Создание аудитории', f"Ожидалось: 'Создание аудитории', но было получено: '{text}'"
 
 
-    @allure.title("4 Создание аудитории")
+    @allure.title('Создание аудитории. Ввести название аудитории. Если название больше 255 символов, появляется ошибка.Аудитория создается с введеным названием.')
     def test_audience_create_pipe(self):
         self.base_page.click(AudiencesLocators.GO_AUDIENCES_BTN, 20)
         assert self.base_page.is_opened('https://ads.vk.com/hq/audience'), "Переход на аудитории не произошел"
@@ -75,7 +75,7 @@ class TestAudiences(BaseCaseVkAd):
         text = self.base_page.get_text(AudiencesLocators.NOTH_FOUND_TEXT, 20)
         assert text == 'Ничего не нашлось', f"Ожидалось: 'что-то', но было получено: '{text}'"
 
-    @allure.title("6 Создание аудитории")
+    @allure.title('6 Создание аудитории. Нажатие на кнопку "Добавить источник". Включить источник "Подписчики сообществ". Ввод названия сообщества. Если сообщества нету, то выводится сообщение "Ничего не нашлось".')
     def test_audience_6(self):
         self.base_page.click(AudiencesLocators.GO_AUDIENCES_BTN, 20)
         assert self.base_page.is_opened('https://ads.vk.com/hq/audience'), "Переход на аудитории не произошел"
@@ -103,4 +103,3 @@ class TestAudiences(BaseCaseVkAd):
 
         title = self.base_page.get_text(AudiencesLocators.AUD_CREATED_TEXT, 20)
         assert title == text_aud, f"Ожидалось: 'Создание аудитории', но было получено: '{title}'"
-
