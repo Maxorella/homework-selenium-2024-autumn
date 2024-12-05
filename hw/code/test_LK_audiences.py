@@ -11,12 +11,12 @@ from hw.code.ui.locators.vk_ad_audiences_locators import AudiencesLocators
 class TestAudiences(BaseCaseVkAd):
     authorize = True
 
-    @allure.title("1 Личный кабинет. Нажатие на сайдбаре кнопки 'Сайты'. Переход на страницу https://ads.vk.com/hq/audience")
+    @allure.title("Personal account. Clicking the 'Sites' button on the sidebar. Go to the page audience")
     def test_audience_click(self):
         self.base_page.click(AudiencesLocators.GO_AUDIENCES_BTN, 10)
         assert self.base_page.is_opened('https://ads.vk.com/hq/audience'), "Переход на аудитории не произошел"
 
-    @allure.title('2 Аудитории. Проверка отображения. Вверхнее меню кнопки: "Аудитории", "Список пользователей", "Офлайн-конверсии". Окно аудиторий, кнопки: создать аудиторию, троеточие, фильтр, кнопки поделиться и удалить, поле для поиска аудитории.')
+    @allure.title('Audiences. Checking the display. ')
     def test_audience_visibility(self):
         self.base_page.click(AudiencesLocators.GO_AUDIENCES_BTN, 15)
         assert self.base_page.is_opened('https://ads.vk.com/hq/audience'), "Переход на аудитории не произошел"
@@ -39,7 +39,7 @@ class TestAudiences(BaseCaseVkAd):
         text = self.base_page.get_text(AudiencesLocators.FILTER_TEXT, 5)
         assert text == 'Фильтр', f"Ожидалось: 'Фильтр', но было получено: '{text}'"
 
-    @allure.title('Аудитории. При нажатии на кнопку "Создать аудиторию" открывается окно создания аудитории.')
+    @allure.title('Audiences. Click on the "Create Audience" button, the audience creation window opens.')
     def test_audience_create_click(self):
         self.base_page.click(AudiencesLocators.GO_AUDIENCES_BTN, 20)
         assert self.base_page.is_opened('https://ads.vk.com/hq/audience'), "Переход на аудитории не произошел"
@@ -50,7 +50,7 @@ class TestAudiences(BaseCaseVkAd):
         assert text == 'Создание аудитории', f"Ожидалось: 'Создание аудитории', но было получено: '{text}'"
 
 
-    @allure.title('Создание аудитории. Ввести название аудитории. Если название больше 255 символов, появляется ошибка.Аудитория создается с введеным названием.')
+    @allure.title('Creating an audience. Enter the name of the audience. If the name is more than 255 characters, an error appears. The audience is created with the entered name.')
     def test_audience_create_pipe(self):
         self.base_page.click(AudiencesLocators.GO_AUDIENCES_BTN, 20)
         assert self.base_page.is_opened('https://ads.vk.com/hq/audience'), "Переход на аудитории не произошел"
@@ -75,7 +75,7 @@ class TestAudiences(BaseCaseVkAd):
         text = self.base_page.get_text(AudiencesLocators.NOTH_FOUND_TEXT, 20)
         assert text == 'Ничего не нашлось', f"Ожидалось: 'что-то', но было получено: '{text}'"
 
-    @allure.title('6 Создание аудитории. Нажатие на кнопку "Добавить источник". Включить источник "Подписчики сообществ". Ввод названия сообщества. Если сообщества нету, то выводится сообщение "Ничего не нашлось".')
+    @allure.title('Creating an audience. Click on the "Add source" button. Enable the "Community Subscribers" source. Entering the name of the community. If there is no community, the message “Nothing found” is displayed.')
     def test_audience_6(self):
         self.base_page.click(AudiencesLocators.GO_AUDIENCES_BTN, 20)
         assert self.base_page.is_opened('https://ads.vk.com/hq/audience'), "Переход на аудитории не произошел"
