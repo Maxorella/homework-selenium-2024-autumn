@@ -17,9 +17,10 @@ class BasePage(object):
 
     url = 'https://ads.vk.com/hq/'  # урл страницы, c которой начинаю
 
-    def is_opened(self, url='', trunc=0, timeout=15):
-        if url == '':
-            url = self.url
+    def is_opened(self, timeout=15):
+
+        url = self.url
+        trunc = len(url)
         started = time.time()
         while time.time() - started < timeout:
             if trunc != 0:

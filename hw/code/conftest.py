@@ -89,3 +89,8 @@ def auth_data():
 def main_page(auth_page, auth_data):
     main_page = auth_page.login_mail(auth_data["email"], auth_data["password"])
     return main_page
+
+@pytest.fixture
+def companies_page(auth_page, auth_data):
+    companies_page = auth_page.go_to_companies(auth_data["email"], auth_data["password"])
+    return companies_page
