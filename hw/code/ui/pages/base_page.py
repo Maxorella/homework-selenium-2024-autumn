@@ -15,7 +15,7 @@ class PageNotOpenedException(Exception):
 
 class BasePage(object):
 
-    url = 'https://ads.vk.com/hq/'  # урл страницы, c которой начинаю
+    url = 'https://ads.vk.com/'  # урл страницы, c которой начинаю
 
     def is_opened(self, timeout=15):
 
