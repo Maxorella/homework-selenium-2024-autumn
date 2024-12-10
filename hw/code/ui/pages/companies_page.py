@@ -16,3 +16,5 @@ class CompaniesPage(BasePage):
     def create_new_company(self):
         self.click(self.locators.CREATE_NEW_COMPANY)
 
+    def create_site_advertise(self):
+        self.click(self.locators.CREATE_SITE_ADVERTISE)
