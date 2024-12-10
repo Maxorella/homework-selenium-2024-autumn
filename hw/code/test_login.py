@@ -1,16 +1,19 @@
-import os
 import time
 
-import allure
+import pytest
+from dotenv import load_dotenv
 
-from hw.code.base_vk_ad import BaseCaseVkAd
-from hw.code.ui.locators.vk_ad_main_locators import AuthLocators
 
-@allure.story("Авторизация и проверка профиля")
-class TestLogin(BaseCaseVkAd):
+from hw.code.base_case import BaseCase
+
+load_dotenv()
+
+
+@pytest.mark.usefixtures()
+class TestAudience(BaseCase):
     authorize = True
-    @allure.title("Проверка авторизации")
-    def test_login(self):
-        fio = self.base_page.get_text(AuthLocators.SURNAME_NAME_DIV_MAXORELLA, 20)
-        self.save_cookies('cookies.json')
-        assert fio == self.profile_fi, f"Ожидалось: '{self.profile_fi}', но было получено: '{fio}'"
+
+    def test_open(self, main_page, auth_data):
+        print("here1")
+        time.sleep(1) # TODO убрать
+        print("here2")

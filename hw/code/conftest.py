@@ -1,20 +1,12 @@
-import pytest
-
 import os
-
 import pytest
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
-from webdriver_manager.firefox import GeckoDriverManager
-import json
-
-from hw.code.helper import get_driver
+from selenium.webdriver.chrome.service import Service
+from hw.code.ui.pages.auth_page import AuthPage
 from hw.code.ui.pages.base_page import BasePage
-from hw.code.ui.pages.cases_page import CasesPage
-from hw.code.ui.pages.events_page import EventsPage
-from hw.code.ui.pages.materials_page import MaterialsPage
-from hw.code.ui.pages.news_page import NewsPage
+
 
 def pytest_addoption(parser):
     parser.addoption('--browser', default='chrome')
@@ -47,13 +39,15 @@ def config(request):
         'vnc': vnc,
     }
 
-@pytest.fixture(scope='function')
+
+@pytest.fixture()
 def driver(config):
     browser = config['browser']
     url = config['url']
     selenoid = config['selenoid']
     vnc = config['vnc']
     options = Options()
+
     if selenoid:
         capabilities = {
             'browserName': 'chrome',
@@ -67,9 +61,8 @@ def driver(config):
             desired_capabilities=capabilities
         )
     elif browser == 'chrome':
-        driver = webdriver.Chrome(executable_path=ChromeDriverManager().install())
-    elif browser == 'firefox':
-        driver = webdriver.Firefox(executable_path=GeckoDriverManager().install())
+        service = Service(ChromeDriverManager().install())
+        driver = webdriver.Chrome(service=service, options=options)
     else:
         raise RuntimeError(f'Unsupported browser: "{browser}"')
     driver.get(url)
@@ -77,76 +70,22 @@ def driver(config):
     yield driver
     driver.quit()
 
-
-@pytest.fixture(scope='session', params=['chrome', 'firefox'])
-def all_drivers(config, request):
-    url = config['url']
-    browser = get_driver(request.param)
-    browser.get(url)
-    yield browser
-    browser.quit()
-
 @pytest.fixture
-def base_vk_ad_page(driver):
+def base_page(driver):
     return BasePage(driver=driver)
 
 @pytest.fixture
-def news_vk_ad_page(driver):
-    return NewsPage(driver=driver)
+def auth_page(driver):
+    return AuthPage(driver=driver)
 
 @pytest.fixture
-def materials_vk_ad_page(driver):
-    return MaterialsPage(driver=driver)
-
-@pytest.fixture
-def events_vk_ad_page(driver):
-    return EventsPage(driver=driver)
-
-@pytest.fixture
-def cases_vk_ad_page(driver):
-    return CasesPage(driver=driver)
-
-@pytest.fixture(scope='session')
-def credentials_vk_ad():
-    email = os.getenv('email')
-    password = os.getenv('password')
-    profile_fi = os.getenv('profile_fi')
-
+def auth_data():
     return {
-        'email':      email,
-        'password':   password,
-        'profile_fi': profile_fi
+        "email": os.getenv("email"),
+        "password": os.getenv("password")
     }
 
-@pytest.fixture(scope='session')
-def user_to_find_vked():
-    with open('files/userdata.json', 'r') as f:
-        userdata = json.load(f)
-
-    name_to_find = userdata['name_to_find']
-    surname_to_find = userdata['surname_to_find']
-    return {
-        'name_to_find':      name_to_find,
-        'surname_to_find':   surname_to_find,
-    }
-
-COOKIE_FILE = 'cookies.json'
-
-@pytest.fixture(scope='session')
-def save_cookies(driver):
-    yield
-    with open(COOKIE_FILE, 'w') as file:
-        cookies = driver.get_cookies()
-        json.dump(cookies, file)
-
-@pytest.fixture(scope='function')
-def load_cookies(driver):
-    driver.get('https://example.com')
-    try:
-        with open(COOKIE_FILE, 'r') as file:
-            cookies = json.load(file)
-            for cookie in cookies:
-                driver.add_cookie(cookie)
-        driver.refresh()
-    except FileNotFoundError:
-        print("Файл с куки не найден, выполняется тест без предварительных куки.")
+@pytest.fixture
+def main_page(auth_page, auth_data):
+    main_page = auth_page.login_mail(auth_data["email"], auth_data["password"])
+    return main_page

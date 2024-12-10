@@ -8,16 +8,14 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
 
-from hw.code.ui.locators.vk_ad_companies_locators import CompaniesLocators, TargetedActionsLocators, GroupLocators
 
-
-class PageNotOpenedExeption(Exception):
+class PageNotOpenedException(Exception):
     pass
 
 
 class BasePage(object):
 
-    url = 'https://ads.vk.com/'  # урл страницы, c которой начинаю
+    url = 'https://ads.vk.com/hq/'  # урл страницы, c которой начинаю
 
     def is_opened(self, url='', trunc=0, timeout=15):
         if url == '':
@@ -30,7 +28,7 @@ class BasePage(object):
             else:
                 if self.driver.current_url == url:
                     return True
-        raise PageNotOpenedExeption(f'{url} did not open in {timeout} sec, current url {self.driver.current_url}')
+        raise PageNotOpenedException(f'{url} did not open in {timeout} sec, current url {self.driver.current_url}')
 
     def __init__(self, driver):
         self.driver = driver
@@ -96,18 +94,6 @@ class BasePage(object):
         self.wait(timeout).until(EC.presence_of_element_located(locator))
         element = self.driver.find_element(*locator)
         return element.get_attribute(attribute)
-
-    @allure.step('goToGroup')
-    def go_to_group(self):
-        self.click(TargetedActionsLocators.SITE_CONTAINER)
-        self.enter_field(TargetedActionsLocators.ADVERTISE_SITE, "https://vk.com/a645g743")
-        self.click(TargetedActionsLocators.ADVERTISE_CONTAINER)
-        self.find(TargetedActionsLocators.ADVERTISE_CONTAINER)
-        self.enter_field(TargetedActionsLocators.BUDGET_INPUT, '100')
-        self.move_to_element(CompaniesLocators.CONTINUE_BUTTON)
-        self.click(CompaniesLocators.CONTINUE_BUTTON)
-        self.find(GroupLocators.STRATEGY_CONTAINER)
-
 
     def move_to_element(self, locator):
         elem = self.find(locator)
