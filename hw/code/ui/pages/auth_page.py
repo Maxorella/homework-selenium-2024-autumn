@@ -28,7 +28,7 @@ class AuthPage(BasePage):
 
     def go_to_companies(self, email, password):
         self.login(email, password)
-        self.click(AuthLocators.COMPANIES_PAGE)
+        self.click(AuthLocators.COMPANIES_PAGE,timeout=60)
         self.click(AuthLocators.COMPANIES_PAGE)
         self.find(CompaniesLocator.CREATE_NEW_COMPANY)
 
