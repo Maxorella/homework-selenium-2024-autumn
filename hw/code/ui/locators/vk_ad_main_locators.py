@@ -12,3 +12,6 @@ class AuthLocators:
     SURNAME_NAME_DIV = (By.CLASS_NAME, 'c1150') # div с Именем Фамилией текущего аккаунта
     SURNAME_NAME_DIV_MAXORELLA = (By.XPATH, '//*[@id="header"]/div/div[2]/div[1]/div/div/div') # div с Именем Фамилией текущего аккаунта
     COMPANIES_PAGE = (By.XPATH, '//*[@data-route="dashboardV2"]')
+
+    GO_TO_PIXEL_BTN = (By.XPATH, '//*[@id="root"]//a[@href="/hq/pixels"]')
+    GO_TO_AUDITORY_BTN = (By.XPATH, '//*[@id="root"]//a[@href="/hq/audience"]')

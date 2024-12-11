@@ -91,6 +91,16 @@ def main_page(auth_page, auth_data):
     return main_page
 
 @pytest.fixture
+def pixel_page(auth_page, auth_data):
+    pixel_page = auth_page.login_pixels(auth_data["email"], auth_data["password"])
+    return pixel_page
+
+@pytest.fixture
+def auditory_page(auth_page, auth_data):
+    auditory_page = auth_page.login_auditory(auth_data["email"], auth_data["password"])
+    return auditory_page
+
+@pytest.fixture
 def companies_page(auth_page, auth_data):
     companies_page = auth_page.go_to_companies(auth_data["email"], auth_data["password"])
     return companies_page
