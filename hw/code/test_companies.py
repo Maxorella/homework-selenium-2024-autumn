@@ -141,3 +141,270 @@ class TestCompanies(BaseCase):
     @allure.title("Демография. Тест на выбор пола")
     def test_demography_sex_choice(self, companies_page):
         companies_page.transfer_to_group_advertise()
+        assert companies_page.click(companies_page.locators.MALE_SEX), "Не происходит выбор пола"
+
+    # @allure.title("Демография. Тест на возраст, выбор от")
+    # def test_demography_age(self, companies_page):
+    #     companies_page.transfer_to_group_advertise()
+    #     companies_page.click(companies_page.locators.AGE_FROM)
+    #
+    # @allure.title("Демография. Тест на возраст, выбор до")
+    # def test_demography_age(self, companies_page):
+    #     companies_page.transfer_to_group_advertise()
+    #     companies_page.click(companies_page.locators.AGE_FROM)
+
+    @allure.title("Интересы и поведение. Тест строки интересов")
+    def test_interest_input(self, companies_page):
+        companies_page.transfer_to_group_advertise()
+        companies_page.click(companies_page.locators.INTEREST_AND_BEHAVIOUR_CONTAINER)
+        companies_page.click(companies_page.locators.INTEREST_CONTAINER)
+        companies_page.click(companies_page.locators.INTEREST_INPUT)
+        companies_page.click(companies_page.locators.FIRST_SEARCH_INTEREST)
+
+        assert companies_page.get_text(companies_page.locators.CHOSEN_INTEREST) == 'Авто', 'Поиск не работает'
+
+    @allure.title("Удаление выбранной категории")
+    def test_interest_delete(self, companies_page):
+        companies_page.transfer_to_group_advertise()
+        companies_page.click(companies_page.locators.INTEREST_AND_BEHAVIOUR_CONTAINER)
+        companies_page.click(companies_page.locators.INTEREST_CONTAINER)
+        companies_page.click(companies_page.locators.INTEREST_INPUT)
+        companies_page.click(companies_page.locators.FIRST_SEARCH_INTEREST)
+        companies_page.click(companies_page.locators.DELETE_INTEREST)
+
+        assert not companies_page.find(companies_page.locators.CHOSEN_INTEREST), "Удаление категории не произошло"
+
+    # На английском для саджестов
+    @allure.title("Exclude interest test")
+    def test_interest_exclude(self, companies_page):
+        companies_page.transfer_to_group_advertise()
+        companies_page.click(companies_page.locators.INTEREST_AND_BEHAVIOUR_CONTAINER)
+        companies_page.click(companies_page.locators.INTEREST_CONTAINER)
+        companies_page.click(companies_page.locators.ADD_EXCLUDES)
+        companies_page.click(companies_page.locators.EXCLUDES_INPUT)
+        companies_page.click(companies_page.locators.FIRST_SEARCH_INTEREST)
+
+        assert companies_page.get_text(companies_page.locators.CHOSEN_INTEREST) == 'Авто', 'Поиск не работает'
+
+    @allure.title("interest and exclude interest conflict test")
+    def test_interest_conflict(self, companies_page):
+        companies_page.transfer_to_group_advertise()
+        companies_page.click(companies_page.locators.INTEREST_AND_BEHAVIOUR_CONTAINER)
+        companies_page.click(companies_page.locators.INTEREST_CONTAINER)
+        companies_page.click(companies_page.locators.INTEREST_INPUT)
+        companies_page.click(companies_page.locators.FIRST_SEARCH_INTEREST)
+        companies_page.click(companies_page.locators.ADD_EXCLUDES)
+        companies_page.click(companies_page.locators.EXCLUDES_INPUT)
+        companies_page.click(companies_page.locators.FIRST_SEARCH_INTEREST)
+
+        companies_page.click(companies_page.locators.CONTINUE_BUTTON)
+
+        assert companies_page.get_text(companies_page.locators.INTEREST_ERROR) == 'Нельзя исключать добавленное — просто удалите это из интересов', 'Конфликт интересов не проверяется'
+
+    @allure.title("delete interest test")
+    def test_interest_delete(self, companies_page):
+        companies_page.transfer_to_group_advertise()
+        companies_page.click(companies_page.locators.INTEREST_AND_BEHAVIOUR_CONTAINER)
+        companies_page.click(companies_page.locators.INTEREST_CONTAINER)
+        companies_page.click(companies_page.locators.INTEREST_INPUT)
+        companies_page.click(companies_page.locators.FIRST_SEARCH_INTEREST)
+        companies_page.click(companies_page.locators.ADD_EXCLUDES)
+        companies_page.click(companies_page.locators.EXCLUDES_INPUT)
+        companies_page.click(companies_page.locators.FIRST_SEARCH_INTEREST)
+
+        companies_page.click(companies_page.locators.DELETE_INTEREST)
+        companies_page.click(companies_page.locators.INTEREST_CONTAINER)
+
+        assert companies_page.is_element_not_present(companies_page.locators.CHOSEN_INTEREST), 'Удаление интересов не произошло'
+
+    @allure.title("key phrases suggest test")
+    def test_keyphrases_suggest(self, companies_page):
+        companies_page.transfer_to_group_advertise()
+        companies_page.click(companies_page.locators.INTEREST_AND_BEHAVIOUR_CONTAINER)
+        companies_page.click(companies_page.locators.KEY_PHRASES_CONTAINER)
+        companies_page.enter_field(companies_page.locators.INPUT_KEY_PHRASES, 'Авто')
+
+        assert companies_page.get_text(companies_page.locators.PHRASES_SUGGEST) == 'Показать 10 похожих', "Подсказки не работают"
+
+    @allure.title("minus phrases test")
+    def test_minus_phrases(self, companies_page):
+        companies_page.transfer_to_group_advertise()
+        companies_page.click(companies_page.locators.INTEREST_AND_BEHAVIOUR_CONTAINER)
+        companies_page.click(companies_page.locators.KEY_PHRASES_CONTAINER)
+
+        assert companies_page.enter_field(companies_page.locators.INPUT_MINUS_PHRASES, 'Авто'), "Поле минус фразы заблокировано"
+
+    @allure.title("phrases conflict test")
+    def test_phrases_conflict(self, companies_page):
+        companies_page.transfer_to_group_advertise()
+        companies_page.click(companies_page.locators.INTEREST_AND_BEHAVIOUR_CONTAINER)
+        companies_page.click(companies_page.locators.KEY_PHRASES_CONTAINER)
+        companies_page.enter_field(companies_page.locators.INPUT_KEY_PHRASES, 'Авто')
+        companies_page.enter_field(companies_page.locators.INPUT_MINUS_PHRASES, 'Авто')
+
+        assert companies_page.get_text(companies_page.locators.PHRASES_WARNINGS) == 'У вас дублируется ', 'Не обработано дублирование фраз'
+
+    @allure.title("search period test")
+    def test_search_period(self, companies_page):
+        companies_page.transfer_to_group_advertise()
+        companies_page.click(companies_page.locators.INTEREST_AND_BEHAVIOUR_CONTAINER)
+        companies_page.click(companies_page.locators.KEY_PHRASES_CONTAINER)
+
+        companies_page.enter_field(companies_page.locators.SEARCH_PERIOD, "300")
+
+        assert companies_page.get_attribute(companies_page.locators.SEARCH_PERIOD, "value") == "30", "Ввод не ограничен 2 символами"
+
+    @allure.title("enter big period test")
+    def test_enter_big_period(self, companies_page):
+        companies_page.transfer_to_group_advertise()
+        companies_page.click(companies_page.locators.INTEREST_AND_BEHAVIOUR_CONTAINER)
+        companies_page.click(companies_page.locators.KEY_PHRASES_CONTAINER)
+
+        companies_page.enter_field(companies_page.locators.SEARCH_PERIOD, "50")
+        companies_page.click(companies_page.locators.FIELDS_CONTAINER)
+
+        assert companies_page.get_attribute(companies_page.locators.SEARCH_PERIOD, "value") == "30", "Ввод не исправляет значение на 30"
+
+    @allure.title("enter zero period test")
+    def test_enter_zero_period(self, companies_page):
+        companies_page.transfer_to_group_advertise()
+        companies_page.click(companies_page.locators.INTEREST_AND_BEHAVIOUR_CONTAINER)
+        companies_page.click(companies_page.locators.KEY_PHRASES_CONTAINER)
+
+        companies_page.enter_field(companies_page.locators.SEARCH_PERIOD, "0")
+        companies_page.click(companies_page.locators.FIELDS_CONTAINER)
+
+        assert companies_page.get_attribute(companies_page.locators.SEARCH_PERIOD,
+                                            "value") == "1", "Ввод не исправляет значение на 1"
+
+    @allure.title("delete key phrases test")
+    def test_delete_key_phrases(self, companies_page):
+        companies_page.transfer_to_group_advertise()
+        companies_page.click(companies_page.locators.INTEREST_AND_BEHAVIOUR_CONTAINER)
+        companies_page.click(companies_page.locators.KEY_PHRASES_CONTAINER)
+
+        companies_page.enter_field(companies_page.locators.SEARCH_PERIOD, "15")
+
+        companies_page.click(companies_page.locators.DELETE_KEY_PHRASES)
+        companies_page.click(companies_page.locators.KEY_PHRASES_CONTAINER)
+
+        assert companies_page.get_attribute(companies_page.locators.SEARCH_PERIOD,
+                                            "value") == "15", "Значение периода не сохраняется"
+
+    @allure.title("communities choose test")
+    def test_communities_choose(self, companies_page):
+        companies_page.transfer_to_group_advertise()
+        companies_page.click(companies_page.locators.INTEREST_AND_BEHAVIOUR_CONTAINER)
+        companies_page.click(companies_page.locators.COMMUNITIES_CONTAINER)
+        companies_page.enter_field(companies_page.locators.COMMUNITIES_INPUT, 'Профсоюз')
+        companies_page.click(companies_page.locators.VK_COMMUNITIES, timeout=10)
+        companies_page.click(companies_page.locators.FIRST_SEARCHED)
+        companies_page.click(companies_page.locators.VK_COMMUNITIES)
+        companies_page.click(companies_page.locators.OK_COMMUNITIES)
+        companies_page.click(companies_page.locators.FIRST_SEARCHED_OK)
+        companies_page.click(companies_page.locators.COMMUNITIES_CONTAINER)
+
+        assert companies_page.get_text(companies_page.locators.COMMUNITY_COUNTER) == 'Выбрано 2 сообщества', 'Выбор сообщества не работает'
+
+    @allure.title("communities delete chosen group test")
+    def test_communities_delete(self, companies_page):
+        companies_page.transfer_to_group_advertise()
+        companies_page.click(companies_page.locators.INTEREST_AND_BEHAVIOUR_CONTAINER)
+        companies_page.click(companies_page.locators.COMMUNITIES_CONTAINER)
+        companies_page.enter_field(companies_page.locators.COMMUNITIES_INPUT, 'Профсоюз')
+        companies_page.click(companies_page.locators.VK_COMMUNITIES, timeout=10)
+        companies_page.click(companies_page.locators.FIRST_SEARCHED)
+        companies_page.click(companies_page.locators.COMMUNITIES_CONTAINER)
+
+        companies_page.click(companies_page.locators.DELETE_GROUP)
+
+        assert companies_page.is_element_not_present(companies_page.locators.SELECTED_GROUP), 'Удаление выбранной группы не работает'
+
+    @allure.title("communities cancel test")
+    def test_communities_cancel(self, companies_page):
+        companies_page.transfer_to_group_advertise()
+        companies_page.click(companies_page.locators.INTEREST_AND_BEHAVIOUR_CONTAINER)
+        companies_page.click(companies_page.locators.COMMUNITIES_CONTAINER)
+        companies_page.enter_field(companies_page.locators.COMMUNITIES_INPUT, 'Профсоюз')
+        companies_page.click(companies_page.locators.VK_COMMUNITIES, timeout=10)
+        companies_page.click(companies_page.locators.FIRST_SEARCHED)
+        companies_page.click(companies_page.locators.COMMUNITIES_CONTAINER)
+
+        companies_page.click(companies_page.locators.CANCEL_BTN)
+
+        assert companies_page.is_element_not_present(companies_page.locators.SELECTED_GROUP), 'Кнопка отмены не работает'
+
+    @allure.title("communities delete all test")
+    def test_communities_all(self, companies_page):
+        companies_page.transfer_to_group_advertise()
+        companies_page.click(companies_page.locators.INTEREST_AND_BEHAVIOUR_CONTAINER)
+        companies_page.click(companies_page.locators.COMMUNITIES_CONTAINER)
+        companies_page.enter_field(companies_page.locators.COMMUNITIES_INPUT, 'Профсоюз')
+        companies_page.click(companies_page.locators.VK_COMMUNITIES, timeout=10)
+        companies_page.click(companies_page.locators.FIRST_SEARCHED)
+        companies_page.click(companies_page.locators.COMMUNITIES_CONTAINER)
+
+        companies_page.click(companies_page.locators.COMMUNITIES_DELETE_ALL)
+        companies_page.click(companies_page.locators.COMMUNITIES_CONTAINER)
+
+        assert companies_page.is_element_not_present(companies_page.locators.SELECTED_GROUP), 'Кнопка корзины не работает'
+
+    @allure.title("musicians choose test")
+    def test_musicians_choose(self, companies_page):
+        companies_page.transfer_to_group_advertise()
+        companies_page.click(companies_page.locators.INTEREST_AND_BEHAVIOUR_CONTAINER)
+        companies_page.click(companies_page.locators.MUSICIANS_CONTAINER)
+        companies_page.enter_field(companies_page.locators.MUSICIANS_INPUT,'Баста')
+        companies_page.click(companies_page.locators.FIRST_MUSICIAN)
+        companies_page.click(companies_page.locators.DONE_MUSICIANS_SEARCH)
+
+        assert companies_page.get_text(companies_page.locators.SELECTED_MUSICIAN_COUNTER) == 'Выбран 1 музыкант', 'Выбор музыканта не работает'
+
+    @allure.title("musicians delete chosen test")
+    def test_musicians_delete_chosen(self, companies_page):
+        companies_page.transfer_to_group_advertise()
+        companies_page.click(companies_page.locators.INTEREST_AND_BEHAVIOUR_CONTAINER)
+        companies_page.click(companies_page.locators.MUSICIANS_CONTAINER)
+        companies_page.enter_field(companies_page.locators.MUSICIANS_INPUT, 'Баста')
+        companies_page.click(companies_page.locators.FIRST_MUSICIAN)
+        companies_page.click(companies_page.locators.DONE_MUSICIANS_SEARCH)
+
+        companies_page.click(companies_page.locators.DELETE_SEARCHED_MUSICIAN)
+
+        assert companies_page.is_element_not_present(companies_page.locators.SELECTED_MUSICIAN), 'Удаление музыканта не работает'
+
+    @allure.title("musicians delete all test")
+    def test_delete_all(self, companies_page):
+        companies_page.transfer_to_group_advertise()
+        companies_page.click(companies_page.locators.INTEREST_AND_BEHAVIOUR_CONTAINER)
+        companies_page.click(companies_page.locators.MUSICIANS_CONTAINER)
+        companies_page.enter_field(companies_page.locators.MUSICIANS_INPUT, 'Баста')
+        companies_page.click(companies_page.locators.FIRST_MUSICIAN)
+        companies_page.click(companies_page.locators.DONE_MUSICIANS_SEARCH)
+
+        companies_page.click(companies_page.locators.MUSICIANS_DELETE_ALL)
+
+        assert companies_page.is_element_not_present(
+            companies_page.locators.SELECTED_MUSICIAN), 'Удаление всего не работает'
+
+    @allure.title("musicians trash bean all test")
+    def test_trash_bean(self, companies_page):
+        companies_page.transfer_to_group_advertise()
+        companies_page.click(companies_page.locators.INTEREST_AND_BEHAVIOUR_CONTAINER)
+        companies_page.click(companies_page.locators.MUSICIANS_CONTAINER)
+        companies_page.enter_field(companies_page.locators.MUSICIANS_INPUT, 'Баста')
+        companies_page.click(companies_page.locators.FIRST_MUSICIAN)
+        companies_page.click(companies_page.locators.DONE_MUSICIANS_SEARCH)
+
+        companies_page.click(companies_page.locators.MUSICIANS_TRASH_BEAN)
+
+        companies_page.click(companies_page.locators.MUSICIANS_CONTAINER)
+
+        assert companies_page.is_element_not_present(
+            companies_page.locators.SELECTED_MUSICIAN), 'Корзина не работает'
+
+
+
+
+
+
