@@ -47,6 +47,9 @@ class BasePage(object):
     def find(self, locator, timeout=20):
         return self.wait(timeout).until(EC.visibility_of_element_located(locator))
 
+    def find_presence(self, locator, timeout=20):
+        return self.wait(timeout).until(EC.presence_of_element_located(locator))
+
     @allure.step('Search')
     def search(self, query):
         elem = self.find(self.locators.QUERY_LOCATOR_ID)
@@ -64,7 +67,7 @@ class BasePage(object):
 
     @allure.step('EnterField')
     def enter_field(self, locator, value, timeout=20) -> WebElement:
-        elem = self.find(locator, timeout)
+        elem = self.find_presence(locator, timeout)
         elem.clear()
         elem.send_keys(value)
 
@@ -126,3 +129,8 @@ class BasePage(object):
     def click_move(self, button):
         action = ActionChains(self.driver)
         action.move_to_element(button).click(button).perform()
+
+    def move_to_element(self, locator):
+        elem = self.find(locator)
+        action = ActionChains(self.driver)
+        action.move_to_element(elem).perform()

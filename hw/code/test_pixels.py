@@ -19,17 +19,19 @@ class TestSites(BaseCase):
         pixel_page.assert_created_url("tean.homes")
 
 
+    @allure.title("Создание аудиторного тега")
+    def test_create_tag(self, pixel_page):
+        pixel_page.click_settings()
+        pixel_page.click_aud_tags()
+        pixel_page.click_create_tag()
+        pixel_page.enter_tag_name("mytag_name") # here
+        pixel_page.click_submit_create_tag()
+        pixel_page.assert_created_auditory("mytag_name")
+
+
     @allure.title("Проверка удаления")
     def test_delete_pixel(self, pixel_page):
         pixel_page.click_3_point()
         pixel_page.click_delete_dropped()
-        pixel_page.click_save_dropped()
+        pixel_page.click_submit_delete()
         pixel_page.assert_deleted_pixel()
-
-    @allure.title("Создание аудиторного тега")
-    def test_create_tag(self, pixel_page):
-        pixel_page.click_go_pixel_settings()
-        pixel_page.click_create_tag()
-        pixel_page.enter_tag_name("mytag_name")
-        pixel_page.click_submit_create_tag()
-        pixel_page.assert_created_auditory("mytag_name")

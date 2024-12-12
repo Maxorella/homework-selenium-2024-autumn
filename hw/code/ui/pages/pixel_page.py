@@ -31,6 +31,7 @@ class PixelPage(BasePage):
         assert self.get_text(self.locators.CREATED_PIX_URL) == pixel_url
 
     def click_3_point(self):
+        self.move_to_element(self.locators.AUD_SPIS)
         elem = self.find(self.locators.POINT_3_BTN)
         self.click_move(elem)
 
@@ -44,7 +45,10 @@ class PixelPage(BasePage):
         assert self.get_text(self.locators.TITLE_NO_PIX) == "Нет привязанных пикселей трекинга"
 
     # 5 тест
-    def click_go_pixel_settings(self):
+    def click_settings(self):
+        self.click(self.locators.SETTINGS_BTN)
+
+    def click_aud_tags(self):
         self.click(self.locators.AUDITORY_TAGS_BTN)
 
     def click_create_tag(self):
