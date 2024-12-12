@@ -26,6 +26,7 @@ class CompaniesLocator:
     NUMBER_CHOSEN = (By.CLASS_NAME, 'RegionsSelector_selectedRegionsCount__LWBfS')
 
     # Демография
+    DEMOGRAPHY_CONTAINER = (By.ID, 'react-collapsed-toggle-:rt:')
     SEX_CONTAINER = (By.XPATH, '//*[@data-name="sex"]')
     MALE_SEX = (By.XPATH, '//*[@data-name="sex"]/label[2]')
     AGE_FROM = (By.XPATH, '//*[@class="RangeSelector_container__HX-gb"]/div[1]')

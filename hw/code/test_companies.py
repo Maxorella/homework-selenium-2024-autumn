@@ -36,7 +36,7 @@ class TestCompanies(BaseCase):
         companies_page.click(companies_page.locators.ERROR_BTN)
 
         assert companies_page.get_text(companies_page.locators.ADVERTISE_SITE_ERROR) == "Рекламируемый сайт"
-
+    # error
     @allure.title("Тест валидации бюджета")
     def test_budget_positive(self, companies_page):
         companies_page.create_new_company()
@@ -137,10 +137,11 @@ class TestCompanies(BaseCase):
         companies_page.click(companies_page.locators.SEARCH_RESULT)
 
         assert companies_page.get_text(companies_page.locators.NUMBER_CHOSEN) == '2 выбрано', 'Не сработал выбор нескольких регионов'
-
+    # error
     @allure.title("Демография. Тест на выбор пола")
     def test_demography_sex_choice(self, companies_page):
         companies_page.transfer_to_group_advertise()
+        companies_page.click(companies_page.locators.DEMOGRAPHY_CONTAINER)
         assert companies_page.click(companies_page.locators.MALE_SEX), "Не происходит выбор пола"
 
     # @allure.title("Демография. Тест на возраст, выбор от")
