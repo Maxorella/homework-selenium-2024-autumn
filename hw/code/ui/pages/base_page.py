@@ -35,13 +35,17 @@ class BasePage(object):
         self.driver = driver
         self.is_opened()
 
+    def refresh_page(self):
+        self.driver.refresh()
+        self.is_opened()
+
     def wait(self, timeout=None):
         if timeout is None:
-            timeout = 5
+            timeout = 20
         return WebDriverWait(self.driver, timeout=timeout)
 
-    def find(self, locator, timeout=5):
-        return self.wait(timeout).until(EC.presence_of_element_located(locator))
+    def find(self, locator, timeout=20):
+        return self.wait(timeout).until(EC.visibility_of_element_located(locator))
 
     @allure.step('Search')
     def search(self, query):
@@ -52,50 +56,51 @@ class BasePage(object):
 
 
     @allure.step('Click')
-    def click(self, locator, timeout=5) -> WebElement:
+    def click(self, locator, timeout=15) -> WebElement:
         self.find(locator, timeout=timeout)
         elem = self.wait(timeout).until(EC.element_to_be_clickable(locator))
+        _ = self.wait(timeout).until(EC.visibility_of_element_located(locator))
         elem.click()
 
     @allure.step('EnterField')
-    def enter_field(self, locator, value, timeout=5) -> WebElement:
+    def enter_field(self, locator, value, timeout=20) -> WebElement:
         elem = self.find(locator, timeout)
         elem.clear()
         elem.send_keys(value)
 
     @allure.step('ClearEnterField')
-    def clear_enter_field(self, locator, value, timeout=5) -> WebElement:
+    def clear_enter_field(self, locator, value, timeout=20) -> WebElement:
         elem = self.find(locator, timeout)
         elem.clear()
         elem.send_keys(value)
 
     @allure.step('EnterFieldReturn')
-    def enter_field_return(self, locator, value, timeout=5) -> WebElement:
+    def enter_field_return(self, locator, value, timeout=20) -> WebElement:
         elem = self.find(locator, timeout)
         elem.clear()
         elem.send_keys(value)
         elem.send_keys(Keys.RETURN)
 
     @allure.step('GetText')
-    def get_text(self, locator, timeout=2) -> str:
+    def get_text(self, locator, timeout=20) -> str:
         self.wait(timeout).until(EC.presence_of_element_located(locator))
         element = self.driver.find_element(*locator)
         return element.text
 
     @allure.step('GetText')
-    def get_text_visible(self, locator, timeout=2) -> str:
+    def get_text_visible(self, locator, timeout=20) -> str:
         self.wait(timeout).until(EC.visibility_of_element_located(locator))
         element = self.driver.find_element(*locator)
         return element.text
 
 
     @allure.step('GetAttr')
-    def get_attribute(self, locator, attribute, timeout=2) -> str:
+    def get_attribute(self, locator, attribute, timeout=20) -> str:
         self.wait(timeout).until(EC.presence_of_element_located(locator))
         element = self.driver.find_element(*locator)
         return element.get_attribute(attribute)
 
-    def is_element_not_present(self, locator, timeout=2) -> bool:
+    def is_element_not_present(self, locator, timeout=20) -> bool:
         """
         Проверяет, что элемента НЕТ или он НЕВИДИМ на странице в течение указанного времени ожидания.
         :return: True, если элемент отсутствует или невидим, False, если он присутствует и видим.
@@ -106,7 +111,7 @@ class BasePage(object):
         except TimeoutException:
             return False  # Элемент видим
 
-    def element_presented(self, locator, timeout=2) -> bool:
+    def element_presented(self, locator, timeout=20) -> bool:
         """
         Проверяет, что элемента  ВИДИМ на странице в течение указанного времени ожидания.
         :return: True, если элемент виден, False, если он невиден или его нету.

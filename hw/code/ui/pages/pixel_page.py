@@ -31,7 +31,8 @@ class PixelPage(BasePage):
         assert self.get_text(self.locators.CREATED_PIX_URL) == pixel_url
 
     def click_3_point(self):
-        self.click_move(self.locators.POINT_3_BTN)
+        elem = self.find(self.locators.POINT_3_BTN)
+        self.click_move(elem)
 
     def click_delete_dropped(self):
         self.click(self.locators.DELETE_DROPPED_BTN)

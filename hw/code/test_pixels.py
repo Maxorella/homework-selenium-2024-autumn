@@ -14,6 +14,7 @@ class TestSites(BaseCase):
         pixel_page.enter_pixel_name("tean.homes")
         pixel_page.click_create_window_pix()
         pixel_page.click_create_new_pix()
+        time.sleep(5) # TODO УБРАТЬ
         pixel_page.click_close_created()
         pixel_page.assert_created_url("tean.homes")
 

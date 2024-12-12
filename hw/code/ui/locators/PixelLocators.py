@@ -3,10 +3,10 @@ from selenium.webdriver.common.by import By
 
 class PixelLocators:
     CREATE_PIX_NOPIX_BTN = (By.XPATH, '//*[@class="vkuiPlaceholder__action"]//button')
-    DOMEN_INPUT = (By.XPATH, '//*[@id="_modal_40"]//input[@placeholder="Домен сайта"]')
+    DOMEN_INPUT = (By.XPATH, '//*//input[@placeholder="Домен сайта"]')
     ADD_PIXEL_BTN = (By.XPATH, '//*[@class="vkuiModalCardBase__actions"]//button')
-    CHOICE_CREATE_NEW_PIX_BTN = (By.XPATH, '//*[@class="FlowSelectStep_cellsWrap__iLF+N"]//div[@role="button"][2]')
-    CLOSE_CREATED_BTN = (By.XPATH, '//*[@id="_modal_40"]//div[@role="button"]')
+    CHOICE_CREATE_NEW_PIX_BTN = (By.XPATH, '//*//div[@role="button" and contains(@class,"FlowSelectStep_cell__LXV8m")][2]')
+    CLOSE_CREATED_BTN = (By.XPATH, '//*//div[@aria-label = "Закрыть"]')
     CREATED_PIX_URL = (By.XPATH, '//*[@id="pixels"]//a[@href and contains(text(), "tean.homes")]') # tean.homes
 
     # 2 тест
