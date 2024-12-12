@@ -1,3 +1,5 @@
+import time
+
 from hw.code.ui.locators.AuditoryLocators import AuditoryLocators
 from hw.code.ui.pages.base_page import BasePage
 
@@ -29,7 +31,7 @@ class AuditoryPage(BasePage):
         self.click(self.locators.VK_SOOBS_BTN)
 
     def enter_soobs_href(self, soobs_href):
-        self.enter_field(self.locators.TEXT_AREA, soobs_href)
+        self.enter_field(self.locators.TEXT_AREA, soobs_href, 15)
 
     def click_confr_add(self):
         self.click(self.locators.ADD_BTN)
@@ -43,6 +45,5 @@ class AuditoryPage(BasePage):
     def click_submit_create(self):
         self.click(self.locators.SUBMIT_CREATE_BTN)
 
-    def assert_lmao_span(self):
-        pass
-        #self.click(self.locators.SUBMIT_CREATE_BTN)
+    def assert_lmao_span(self, expected_title):
+        assert expected_title == self.get_text(self.locators.LMAO_SPAN)
