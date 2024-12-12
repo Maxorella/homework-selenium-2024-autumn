@@ -14,5 +14,4 @@ class TestAudience(BaseCase):
 
     def test_open(self, main_page):
         print("here1")
-        time.sleep(1) # TODO убрать
         print("here2")

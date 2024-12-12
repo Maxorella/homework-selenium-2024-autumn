@@ -21,7 +21,6 @@ class TestAuditory(BaseCase):
         auditory_page.click_confr_add()
         auditory_page.click_close_krest()
         auditory_page.click_save()
-        time.sleep(2) # TODO КАК УБРАТЬ ElementClickInterceptedException
         auditory_page.click_submit_create()
         auditory_page.refresh_page()
         auditory_page.assert_lmao_span(expected_title=f"Аудитория {datetime.now().strftime('%Y-%m-%d')}")
