@@ -36,7 +36,8 @@ class TestCompanies(BaseCase):
         companies_page.click(companies_page.locators.ERROR_BTN)
 
         assert companies_page.get_text(companies_page.locators.ADVERTISE_SITE_ERROR) == "Рекламируемый сайт"
-    # error
+
+
     @allure.title("Тест валидации бюджета")
     def test_budget_positive(self, companies_page):
         companies_page.create_new_company()
@@ -61,17 +62,6 @@ class TestCompanies(BaseCase):
 
         assert companies_page.get_text(companies_page.locators.ADVERTISE_SITE_ERROR) == "Бюджет"
 
-    # @allure.title("Тест валидации бюджета 3")
-    # def test_budget_consumption(self, companies_page):
-    #     companies_page.create_new_company()
-    #     companies_page.create_site_advertise()
-    #     companies_page.enter_field(companies_page.locators.SITE_HREF, "https://www.statista.com")
-    #     companies_page.click(companies_page.locators.CREATE_SITE_ADVERTISE)
-    #     companies_page.enter_field(companies_page.locators.BUDGET_FIELD, "999999999999999")
-    #     companies_page.click(companies_page.locators.CREATE_SITE_ADVERTISE)
-    #
-    #     assert  companies_page.get_text(companies_page.locators.BUDGET_FIELD) == "9 999 999 999 999"
-
     @allure.title("Тест сохранения бюджета")
     def test_budget_save(self, companies_page):
         companies_page.create_new_company()
@@ -83,13 +73,6 @@ class TestCompanies(BaseCase):
         companies_page.click(companies_page.locators.CONTINUE_BUTTON)
 
         assert companies_page.get_text(companies_page.locators.BUDGET_DUPLICATE) == "100 ₽"
-
-    # @allure.title("Тест опции за всё время")
-    # def test_all_time_budget(self, companies_page):
-    #     companies_page.create_new_company()
-    #     companies_page.create_site_advertise()
-    #     companies_page.enter_field(companies_page.locators.SITE_HREF, "https://www.statista.com")
-    #     companies_page.click(companies_page.locators.CREATE_SITE_ADVERTISE)
 
     @allure.title("Тест календаря (выбора даты до)")
     def test_calendar_choice(self, companies_page):
@@ -137,22 +120,20 @@ class TestCompanies(BaseCase):
         companies_page.click(companies_page.locators.SEARCH_RESULT)
 
         assert companies_page.get_text(companies_page.locators.NUMBER_CHOSEN) == '2 выбрано', 'Не сработал выбор нескольких регионов'
-    # error
+
+
     @allure.title("Демография. Тест на выбор пола")
     def test_demography_sex_choice(self, companies_page):
         companies_page.transfer_to_group_advertise()
+        time.sleep(20)
+        companies_page.find(companies_page.locators.DEMOGRAPHY_CONTAINER)
         companies_page.click(companies_page.locators.DEMOGRAPHY_CONTAINER)
-        assert companies_page.click(companies_page.locators.MALE_SEX), "Не происходит выбор пола"
 
-    # @allure.title("Демография. Тест на возраст, выбор от")
-    # def test_demography_age(self, companies_page):
-    #     companies_page.transfer_to_group_advertise()
-    #     companies_page.click(companies_page.locators.AGE_FROM)
-    #
-    # @allure.title("Демография. Тест на возраст, выбор до")
-    # def test_demography_age(self, companies_page):
-    #     companies_page.transfer_to_group_advertise()
-    #     companies_page.click(companies_page.locators.AGE_FROM)
+        try:
+            companies_page.click(companies_page.locators.MALE_SEX)
+        except:
+            assert 1 == 0, "Не происходит выбор пола"
+
 
     @allure.title("Интересы и поведение. Тест строки интересов")
     def test_interest_input(self, companies_page):
@@ -173,7 +154,7 @@ class TestCompanies(BaseCase):
         companies_page.click(companies_page.locators.FIRST_SEARCH_INTEREST)
         companies_page.click(companies_page.locators.DELETE_INTEREST)
 
-        assert not companies_page.find(companies_page.locators.CHOSEN_INTEREST), "Удаление категории не произошло"
+        assert companies_page.is_element_not_present(companies_page.locators.CHOSEN_INTEREST), "Удаление категории не произошло"
 
     # На английском для саджестов
     @allure.title("Exclude interest test")
@@ -203,7 +184,7 @@ class TestCompanies(BaseCase):
         assert companies_page.get_text(companies_page.locators.INTEREST_ERROR) == 'Нельзя исключать добавленное — просто удалите это из интересов', 'Конфликт интересов не проверяется'
 
     @allure.title("delete interest test")
-    def test_interest_delete(self, companies_page):
+    def test_interest_delete_exclude(self, companies_page):
         companies_page.transfer_to_group_advertise()
         companies_page.click(companies_page.locators.INTEREST_AND_BEHAVIOUR_CONTAINER)
         companies_page.click(companies_page.locators.INTEREST_CONTAINER)
@@ -214,6 +195,8 @@ class TestCompanies(BaseCase):
         companies_page.click(companies_page.locators.FIRST_SEARCH_INTEREST)
 
         companies_page.click(companies_page.locators.DELETE_INTEREST)
+
+        time.sleep(1)
         companies_page.click(companies_page.locators.INTEREST_CONTAINER)
 
         assert companies_page.is_element_not_present(companies_page.locators.CHOSEN_INTEREST), 'Удаление интересов не произошло'
@@ -223,6 +206,7 @@ class TestCompanies(BaseCase):
         companies_page.transfer_to_group_advertise()
         companies_page.click(companies_page.locators.INTEREST_AND_BEHAVIOUR_CONTAINER)
         companies_page.click(companies_page.locators.KEY_PHRASES_CONTAINER)
+        companies_page.move_to_element(companies_page.locators.INPUT_KEY_PHRASES)
         companies_page.enter_field(companies_page.locators.INPUT_KEY_PHRASES, 'Авто')
 
         assert companies_page.get_text(companies_page.locators.PHRASES_SUGGEST) == 'Показать 10 похожих', "Подсказки не работают"
@@ -232,18 +216,22 @@ class TestCompanies(BaseCase):
         companies_page.transfer_to_group_advertise()
         companies_page.click(companies_page.locators.INTEREST_AND_BEHAVIOUR_CONTAINER)
         companies_page.click(companies_page.locators.KEY_PHRASES_CONTAINER)
+        companies_page.move_to_element(companies_page.locators.INPUT_MINUS_PHRASES)
+        companies_page.enter_field(companies_page.locators.INPUT_MINUS_PHRASES, 'Авто')
 
-        assert companies_page.enter_field(companies_page.locators.INPUT_MINUS_PHRASES, 'Авто'), "Поле минус фразы заблокировано"
+        assert companies_page.get_text(companies_page.locators.INPUT_MINUS_PHRASES) == 'Авто', "Поле минус фразы заблокировано"
 
     @allure.title("phrases conflict test")
     def test_phrases_conflict(self, companies_page):
         companies_page.transfer_to_group_advertise()
         companies_page.click(companies_page.locators.INTEREST_AND_BEHAVIOUR_CONTAINER)
         companies_page.click(companies_page.locators.KEY_PHRASES_CONTAINER)
+        companies_page.move_to_element(companies_page.locators.INPUT_KEY_PHRASES)
         companies_page.enter_field(companies_page.locators.INPUT_KEY_PHRASES, 'Авто')
+        companies_page.move_to_element(companies_page.locators.INPUT_MINUS_PHRASES)
         companies_page.enter_field(companies_page.locators.INPUT_MINUS_PHRASES, 'Авто')
 
-        assert companies_page.get_text(companies_page.locators.PHRASES_WARNINGS) == 'У вас дублируется ', 'Не обработано дублирование фраз'
+        assert companies_page.get_text(companies_page.locators.PHRASES_WARNINGS) == 'У вас дублируется\n1 фраза', 'Не обработано дублирование фраз'
 
     @allure.title("search period test")
     def test_search_period(self, companies_page):
@@ -251,6 +239,7 @@ class TestCompanies(BaseCase):
         companies_page.click(companies_page.locators.INTEREST_AND_BEHAVIOUR_CONTAINER)
         companies_page.click(companies_page.locators.KEY_PHRASES_CONTAINER)
 
+        companies_page.move_to_element(companies_page.locators.SEARCH_PERIOD)
         companies_page.enter_field(companies_page.locators.SEARCH_PERIOD, "300")
 
         assert companies_page.get_attribute(companies_page.locators.SEARCH_PERIOD, "value") == "30", "Ввод не ограничен 2 символами"
@@ -261,6 +250,7 @@ class TestCompanies(BaseCase):
         companies_page.click(companies_page.locators.INTEREST_AND_BEHAVIOUR_CONTAINER)
         companies_page.click(companies_page.locators.KEY_PHRASES_CONTAINER)
 
+        companies_page.move_to_element(companies_page.locators.SEARCH_PERIOD)
         companies_page.enter_field(companies_page.locators.SEARCH_PERIOD, "50")
         companies_page.click(companies_page.locators.FIELDS_CONTAINER)
 
@@ -272,6 +262,7 @@ class TestCompanies(BaseCase):
         companies_page.click(companies_page.locators.INTEREST_AND_BEHAVIOUR_CONTAINER)
         companies_page.click(companies_page.locators.KEY_PHRASES_CONTAINER)
 
+        companies_page.move_to_element(companies_page.locators.SEARCH_PERIOD)
         companies_page.enter_field(companies_page.locators.SEARCH_PERIOD, "0")
         companies_page.click(companies_page.locators.FIELDS_CONTAINER)
 
@@ -284,6 +275,7 @@ class TestCompanies(BaseCase):
         companies_page.click(companies_page.locators.INTEREST_AND_BEHAVIOUR_CONTAINER)
         companies_page.click(companies_page.locators.KEY_PHRASES_CONTAINER)
 
+        companies_page.move_to_element(companies_page.locators.SEARCH_PERIOD)
         companies_page.enter_field(companies_page.locators.SEARCH_PERIOD, "15")
 
         companies_page.click(companies_page.locators.DELETE_KEY_PHRASES)
@@ -296,9 +288,11 @@ class TestCompanies(BaseCase):
     def test_communities_choose(self, companies_page):
         companies_page.transfer_to_group_advertise()
         companies_page.click(companies_page.locators.INTEREST_AND_BEHAVIOUR_CONTAINER)
+        companies_page.move_to_element(companies_page.locators.COMMUNITIES_CONTAINER)
         companies_page.click(companies_page.locators.COMMUNITIES_CONTAINER)
+        companies_page.move_to_element(companies_page.locators.COMMUNITIES_INPUT)
         companies_page.enter_field(companies_page.locators.COMMUNITIES_INPUT, 'Профсоюз')
-        companies_page.click(companies_page.locators.VK_COMMUNITIES, timeout=10)
+        companies_page.click(companies_page.locators.VK_COMMUNITIES, timeout=20)
         companies_page.click(companies_page.locators.FIRST_SEARCHED)
         companies_page.click(companies_page.locators.VK_COMMUNITIES)
         companies_page.click(companies_page.locators.OK_COMMUNITIES)
@@ -311,9 +305,11 @@ class TestCompanies(BaseCase):
     def test_communities_delete(self, companies_page):
         companies_page.transfer_to_group_advertise()
         companies_page.click(companies_page.locators.INTEREST_AND_BEHAVIOUR_CONTAINER)
+        companies_page.move_to_element(companies_page.locators.COMMUNITIES_CONTAINER)
         companies_page.click(companies_page.locators.COMMUNITIES_CONTAINER)
+        companies_page.move_to_element(companies_page.locators.COMMUNITIES_INPUT)
         companies_page.enter_field(companies_page.locators.COMMUNITIES_INPUT, 'Профсоюз')
-        companies_page.click(companies_page.locators.VK_COMMUNITIES, timeout=10)
+        companies_page.click(companies_page.locators.VK_COMMUNITIES, timeout=20)
         companies_page.click(companies_page.locators.FIRST_SEARCHED)
         companies_page.click(companies_page.locators.COMMUNITIES_CONTAINER)
 
@@ -326,8 +322,9 @@ class TestCompanies(BaseCase):
         companies_page.transfer_to_group_advertise()
         companies_page.click(companies_page.locators.INTEREST_AND_BEHAVIOUR_CONTAINER)
         companies_page.click(companies_page.locators.COMMUNITIES_CONTAINER)
+        companies_page.move_to_element(companies_page.locators.COMMUNITIES_INPUT)
         companies_page.enter_field(companies_page.locators.COMMUNITIES_INPUT, 'Профсоюз')
-        companies_page.click(companies_page.locators.VK_COMMUNITIES, timeout=10)
+        companies_page.click(companies_page.locators.VK_COMMUNITIES, timeout=20)
         companies_page.click(companies_page.locators.FIRST_SEARCHED)
         companies_page.click(companies_page.locators.COMMUNITIES_CONTAINER)
 
@@ -354,7 +351,9 @@ class TestCompanies(BaseCase):
     def test_musicians_choose(self, companies_page):
         companies_page.transfer_to_group_advertise()
         companies_page.click(companies_page.locators.INTEREST_AND_BEHAVIOUR_CONTAINER)
+        companies_page.move_to_element(companies_page.locators.MUSICIANS_CONTAINER)
         companies_page.click(companies_page.locators.MUSICIANS_CONTAINER)
+        companies_page.move_to_element(companies_page.locators.MUSICIANS_INPUT)
         companies_page.enter_field(companies_page.locators.MUSICIANS_INPUT,'Баста')
         companies_page.click(companies_page.locators.FIRST_MUSICIAN)
         companies_page.click(companies_page.locators.DONE_MUSICIANS_SEARCH)
@@ -365,7 +364,9 @@ class TestCompanies(BaseCase):
     def test_musicians_delete_chosen(self, companies_page):
         companies_page.transfer_to_group_advertise()
         companies_page.click(companies_page.locators.INTEREST_AND_BEHAVIOUR_CONTAINER)
+        companies_page.move_to_element(companies_page.locators.MUSICIANS_CONTAINER)
         companies_page.click(companies_page.locators.MUSICIANS_CONTAINER)
+        companies_page.move_to_element(companies_page.locators.MUSICIANS_INPUT)
         companies_page.enter_field(companies_page.locators.MUSICIANS_INPUT, 'Баста')
         companies_page.click(companies_page.locators.FIRST_MUSICIAN)
         companies_page.click(companies_page.locators.DONE_MUSICIANS_SEARCH)
@@ -378,7 +379,9 @@ class TestCompanies(BaseCase):
     def test_delete_all(self, companies_page):
         companies_page.transfer_to_group_advertise()
         companies_page.click(companies_page.locators.INTEREST_AND_BEHAVIOUR_CONTAINER)
+        companies_page.move_to_element(companies_page.locators.MUSICIANS_CONTAINER)
         companies_page.click(companies_page.locators.MUSICIANS_CONTAINER)
+        companies_page.move_to_element(companies_page.locators.MUSICIANS_INPUT)
         companies_page.enter_field(companies_page.locators.MUSICIANS_INPUT, 'Баста')
         companies_page.click(companies_page.locators.FIRST_MUSICIAN)
         companies_page.click(companies_page.locators.DONE_MUSICIANS_SEARCH)
@@ -392,7 +395,9 @@ class TestCompanies(BaseCase):
     def test_trash_bean(self, companies_page):
         companies_page.transfer_to_group_advertise()
         companies_page.click(companies_page.locators.INTEREST_AND_BEHAVIOUR_CONTAINER)
+        companies_page.move_to_element(companies_page.locators.MUSICIANS_CONTAINER)
         companies_page.click(companies_page.locators.MUSICIANS_CONTAINER)
+        companies_page.move_to_element(companies_page.locators.MUSICIANS_INPUT)
         companies_page.enter_field(companies_page.locators.MUSICIANS_INPUT, 'Баста')
         companies_page.click(companies_page.locators.FIRST_MUSICIAN)
         companies_page.click(companies_page.locators.DONE_MUSICIANS_SEARCH)
@@ -403,6 +408,124 @@ class TestCompanies(BaseCase):
 
         assert companies_page.is_element_not_present(
             companies_page.locators.SELECTED_MUSICIAN), 'Корзина не работает'
+
+    @allure.title("transfer to advertisement test")
+    def test_transfer_to_advertisement(self, companies_page):
+        companies_page.transfer_to_group_advertise()
+        companies_page.click(companies_page.locators.FAST_CHOICE_REGIONS)
+        companies_page.click(companies_page.locators.CONTINUE_BUTTON)
+
+        assert companies_page.find(companies_page.locators.ADVERTISEMENT_SETTINGS), 'Переход на этап объявления не произошёл'
+
+    @allure.title("title input positive test")
+    def test_title_in_positive(self, companies_page):
+        companies_page.transfer_to_advertisement()
+        companies_page.move_to_element(companies_page.locators.TITLE)
+        companies_page.enter_field(companies_page.locators.TITLE, 'Тест')
+
+        assert companies_page.get_text(companies_page.locators.TITLE) == 'Тест', 'Ввод заголовка заблокирован'
+
+    @allure.title("short description input negative test")
+    def test_short_description_in_positive(self, companies_page):
+        companies_page.transfer_to_advertisement()
+
+        companies_page.move_to_element(companies_page.locators.SHORT_DESCRIPTION)
+        companies_page.enter_field(companies_page.locators.SHORT_DESCRIPTION, 'Тест')
+
+        assert companies_page.get_text(companies_page.locators.SHORT_DESCRIPTION) == 'Тест', 'Ввод короткого описания заблокирован'
+
+    @allure.title("About autocomplete test")
+    def test_about_autocomplete(self, companies_page):
+        companies_page.transfer_to_advertisement()
+
+        companies_page.move_to_element(companies_page.locators.ABOUT)
+
+        assert companies_page.get_text(companies_page.locators.ABOUT) != '', 'Автозаполнение не работает. Попробуйте сами создать и ввести ФИО и ИНН в форму'
+
+    @allure.title("add media test")
+    def test_add_media(self, companies_page):
+        companies_page.transfer_to_advertisement()
+        companies_page.move_to_element(companies_page.locators.MEDIAFILES_BUTTON)
+        companies_page.click(companies_page.locators.MEDIAFILES_BUTTON)
+        companies_page.find(companies_page.locators.MEDIA_PICTURE)
+        companies_page.click(companies_page.locators.MEDIA_PICTURE)
+        companies_page.click(companies_page.locators.ADD_PICTURES)
+
+        assert companies_page.wait_for_clickable(companies_page.locators.IMAGES, timeout=20), 'Загрузка фотографии не работает. Возможно на аккаунте нет загруженных фотографий'
+
+    @allure.title("complete advertisement test")
+    def test_complete_advertisement(self, companies_page):
+        companies_page.transfer_to_advertisement()
+        companies_page.move_to_element(companies_page.locators.TITLE)
+        companies_page.enter_field(companies_page.locators.TITLE, 'Тест')
+        companies_page.move_to_element(companies_page.locators.SHORT_DESCRIPTION)
+        companies_page.enter_field(companies_page.locators.SHORT_DESCRIPTION, 'Тест')
+        companies_page.move_to_element(companies_page.locators.MEDIAFILES_BUTTON)
+        companies_page.click(companies_page.locators.MEDIAFILES_BUTTON)
+        companies_page.find(companies_page.locators.MEDIA_PICTURE)
+        companies_page.click(companies_page.locators.MEDIA_PICTURE)
+        companies_page.click(companies_page.locators.ADD_PICTURES)
+        companies_page.move_to_element(companies_page.locators.ABOUT)
+        text = companies_page.get_text(companies_page.locators.ABOUT)
+        if text == '':
+            companies_page.enter_field(companies_page.locators.ABOUT, 'Жидков Антон Алексеевич, ИНН 501818145478')
+
+        company_name = companies_page.get_text(companies_page.locators.COMPANY_NAME_)
+        companies_page.find(companies_page.locators.AI_IMAGE)
+        companies_page.click(companies_page.locators.CONTINUE_BUTTON)
+
+        companies_page.find(companies_page.locators.COMPANY_NAME, timeout=20)
+
+        assert companies_page.get_text(companies_page.locators.COMPANY_NAME) == company_name, 'Кампания не создаётся'
+
+        companies_page.click(companies_page.locators.SELECT_ALL, timeout=10)
+        companies_page.click(companies_page.locators.ACTIONS)
+        companies_page.click(companies_page.locators.DELETE_ACTION)
+
+    @allure.title("duplicate company name test")
+    def test_duplicate_company_name(self, companies_page):
+        companies_page.create_company()
+        current_company_name = companies_page.get_text(companies_page.locators.COMPANY_NAME)
+        companies_page.move_to_element(companies_page.locators.COMPANY_OPTIONS)
+        companies_page.click(companies_page.locators.COMPANY_DUPLICATE)
+        companies_page.find(companies_page.locators.COMPANY_NAME_)
+
+        assert companies_page.get_text(companies_page.locators.COMPANY_NAME_) != 'копия ' + current_company_name, 'Имя копии задаётся неверно'
+
+        companies_page.delete_all_companies()
+
+    @allure.title("duplicate company test")
+    def test_duplicate_company(self, companies_page):
+        companies_page.create_company()
+        companies_page.move_to_element(companies_page.locators.COMPANY_OPTIONS)
+        companies_page.move_to_element(companies_page.locators.COMPANY_DUPLICATE)
+        companies_page.click(companies_page.locators.COMPANY_DUPLICATE)
+        companies_page.find(companies_page.locators.COMPANY_NAME_)
+        name = companies_page.get_text(companies_page.locators.COMPANY_NAME_)
+        companies_page.click(companies_page.locators.CONTINUE_BUTTON)
+        companies_page.wait_for_clickable(companies_page.locators.CONTINUE_BUTTON)
+        companies_page.click(companies_page.locators.CONTINUE_BUTTON)
+        companies_page.wait_for_clickable(companies_page.locators.CONTINUE_BUTTON)
+        companies_page.click(companies_page.locators.CONTINUE_BUTTON)
+        companies_page.find(companies_page.locators.DUPLICATED_NAME,timeout=20)
+
+        assert companies_page.get_text(companies_page.locators.DUPLICATED_NAME) != 'копия ' + name, 'Копия не создалась'
+
+        companies_page.delete_all_companies()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

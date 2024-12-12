@@ -43,6 +43,10 @@ class BasePage(object):
     def find(self, locator, timeout=5):
         return self.wait(timeout).until(EC.presence_of_element_located(locator))
 
+    @allure.step('Wait for click')
+    def wait_for_clickable(self, locator, timeout=5):
+        return self.wait(timeout).until(EC.element_to_be_clickable(locator))
+
     @allure.step('Search')
     def search(self, query):
         elem = self.find(self.locators.QUERY_LOCATOR_ID)
@@ -121,3 +125,9 @@ class BasePage(object):
     def click_move(self, button):
         action = ActionChains(self.driver)
         action.move_to_element(button).click(button).perform()
+
+    @allure.step('MoveElement')
+    def move_to_element(self, locator):
+        action = ActionChains(self.driver)
+        elem = self.find(locator)
+        action.move_to_element(elem).perform()
