@@ -1,8 +1,10 @@
 from hw.code.ui.locators.companiesLocator import CompaniesLocator
 from hw.code.ui.locators.vk_ad_main_locators import AuthLocators
+from hw.code.ui.pages.auditory_page import AuditoryPage
 from hw.code.ui.pages.base_page import BasePage
 from hw.code.ui.pages.companies_page import CompaniesPage
 from hw.code.ui.pages.main_page import MainPage
+from hw.code.ui.pages.pixel_page import PixelPage
 
 
 class AuthPage(BasePage):
@@ -26,6 +28,15 @@ class AuthPage(BasePage):
         self.login(email, password)
         return MainPage(self.driver)
 
+    def login_pixels(self, email, password):
+        self.login(email, password)
+        self.click(AuthLocators.GO_TO_PIXEL_BTN, 15)
+        return PixelPage(self.driver)
+
+    def login_auditory(self, email, password):
+        self.login(email, password)
+        self.click(AuthLocators.GO_TO_AUDITORY_BTN, 15)
+        return AuditoryPage(self.driver)
     def go_to_companies(self, email, password):
         self.login(email, password)
         self.click(AuthLocators.COMPANIES_PAGE,timeout=60)

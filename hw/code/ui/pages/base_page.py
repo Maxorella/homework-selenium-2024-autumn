@@ -15,7 +15,7 @@ class PageNotOpenedException(Exception):
 
 class BasePage(object):
 
-    url = 'https://ads.vk.com/hq/'  # урл страницы, c которой начинаю
+    url = 'https://ads.vk.com/'  # урл страницы, c которой начинаю
 
     def is_opened(self, timeout=15):
 
@@ -33,7 +33,6 @@ class BasePage(object):
 
     def __init__(self, driver):
         self.driver = driver
-        self.actions = ActionChains(self.driver)
         self.is_opened()
 
     def wait(self, timeout=None):
@@ -96,10 +95,6 @@ class BasePage(object):
         element = self.driver.find_element(*locator)
         return element.get_attribute(attribute)
 
-    def move_to_element(self, locator):
-        elem = self.find(locator)
-        self.actions.move_to_element(elem).perform()
-
     def is_element_not_present(self, locator, timeout=2) -> bool:
         """
         Проверяет, что элемента НЕТ или он НЕВИДИМ на странице в течение указанного времени ожидания.
@@ -122,3 +117,7 @@ class BasePage(object):
         except TimeoutException:
             return False  # Элемент невидим
 
+    @allure.step('MoveClick')
+    def click_move(self, button):
+        action = ActionChains(self.driver)
+        action.move_to_element(button).click(button).perform()
