@@ -1,5 +1,3 @@
-import time
-
 import allure
 
 from hw.code.base_case import BaseCase
@@ -125,8 +123,7 @@ class TestCompanies(BaseCase):
     @allure.title("Демография. Тест на выбор пола")
     def test_demography_sex_choice(self, companies_page):
         companies_page.transfer_to_group_advertise()
-        time.sleep(20)
-        companies_page.find(companies_page.locators.DEMOGRAPHY_CONTAINER)
+        companies_page.find(companies_page.locators.DEMOGRAPHY_CONTAINER, timeout=20)
         companies_page.click(companies_page.locators.DEMOGRAPHY_CONTAINER)
 
         try:
@@ -196,7 +193,6 @@ class TestCompanies(BaseCase):
 
         companies_page.click(companies_page.locators.DELETE_INTEREST)
 
-        time.sleep(1)
         companies_page.click(companies_page.locators.INTEREST_CONTAINER)
 
         assert companies_page.is_element_not_present(companies_page.locators.CHOSEN_INTEREST), 'Удаление интересов не произошло'
