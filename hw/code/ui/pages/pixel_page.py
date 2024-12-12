@@ -55,6 +55,7 @@ class PixelPage(BasePage):
         self.click(self.locators.CREATE_AUDITORY_TAG_BTN)
 
     def enter_tag_name(self, tag_name: str):
+        self.move_to_element(self.locators.DOMEN_INPUT)
         self.enter_field(self.locators.DOMEN_INPUT, tag_name)
 
     def click_submit_create_tag(self):

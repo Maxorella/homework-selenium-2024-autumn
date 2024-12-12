@@ -35,6 +35,6 @@ class PixelLocators:
     # SETTINGS_BTN
     AUDITORY_TAGS_BTN = (By.XPATH, '//*[@id="tab_pixels.audience_tags"]')
     CREATE_AUDITORY_TAG_BTN = (By.XPATH, '//*[@id="pixels.audience_tags"]//button[normalize-space(.)="Создать аудиторный тег"]')
-    TAG_NAME_INPUT = (By.XPATH, '//*/span/input')
+    TAG_NAME_INPUT = (By.XPATH, '//span/input[@placeholder="Введите название тега"]')
     SUBMIT_CREATE_BTN = (By.XPATH, '//*/button[2]')
     TAG_NAME_CREATED_AUDITORY = (By.XPATH, '//*[@id="pixels.audience_tags"]//div[@class="BaseTable__row-cell-text" and contains(text(), "mytag_name")]')
