@@ -63,10 +63,14 @@ class BasePage(object):
 
 
     @allure.step('Click')
-    def click(self, locator, timeout=15) -> WebElement:
+    def click(self, element, timeout=15) -> WebElement:
+        elem = self.wait(timeout).until(EC.element_to_be_clickable(element))
+        elem.click()
+
+    @allure.step('Find and click')
+    def find_and_click(self, locator, timeout=15) -> WebElement:
         self.find(locator, timeout=timeout)
         elem = self.wait(timeout).until(EC.element_to_be_clickable(locator))
-        _ = self.wait(timeout).until(EC.visibility_of_element_located(locator))
         elem.click()
 
     @allure.step('EnterField')
@@ -74,6 +78,12 @@ class BasePage(object):
         elem = self.find_presence(locator, timeout)
         elem.clear()
         elem.send_keys(value)
+
+    @allure.step('Enter field element')
+    def enter_field_element(self, element, value, timeout=20) -> WebElement:
+        WebDriverWait(self.driver, timeout).until(EC.visibility_of(element))
+        element.clear()
+        element.send_keys(value)
 
     @allure.step('ClearEnterField')
     def clear_enter_field(self, locator, value, timeout=20) -> WebElement:
@@ -94,6 +104,11 @@ class BasePage(object):
         element = self.driver.find_element(*locator)
         return element.text
 
+    @allure.step('Get element text')
+    def get_element_text(self, element, timeout=20) -> str:
+        self.wait(timeout).until(EC.visibility_of(element))
+        return element.text
+
     @allure.step('GetText')
     def get_text_visible(self, locator, timeout=20) -> str:
         self.wait(timeout).until(EC.visibility_of_element_located(locator))
@@ -107,7 +122,7 @@ class BasePage(object):
         element = self.driver.find_element(*locator)
         return element.get_attribute(attribute)
 
-    def is_element_not_present(self, locator, timeout=20) -> bool:
+    def is_not_present(self, locator, timeout=20) -> bool:
         """
         Проверяет, что элемента НЕТ или он НЕВИДИМ на странице в течение указанного времени ожидания.
         :return: True, если элемент отсутствует или невидим, False, если он присутствует и видим.
@@ -117,6 +132,18 @@ class BasePage(object):
             return True  # Элемент невидим или отсутствует
         except TimeoutException:
             return False  # Элемент видим
+
+    def is_element_not_present(self, element, timeout=20) -> bool:
+        """
+        Проверяет, что элемента НЕТ или он НЕВИДИМ на странице в течение указанного времени ожидания.
+        :return: True, если элемент отсутствует или невидим, False, если он присутствует и видим.
+        """
+        try:
+            WebDriverWait(self.driver, timeout).until(EC.invisibility_of_element(element))
+            return True  # Элемент невидим или отсутствует
+        except TimeoutException:
+            return False  # Элемент видим
+
 
     def element_presented(self, locator, timeout=20) -> bool:
         """

@@ -4,6 +4,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service
+
 from hw.code.ui.pages.auth_page import AuthPage
 from hw.code.ui.pages.base_page import BasePage
 

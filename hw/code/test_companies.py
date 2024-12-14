@@ -10,114 +10,101 @@ class TestCompanies(BaseCase):
     def test_advertise_site_positive(self, companies_page):
         companies_page.create_new_company()
         companies_page.create_site_advertise()
-        companies_page.enter_field(companies_page.locators.SITE_HREF, "https://www.statista.com")
-        companies_page.click(companies_page.locators.CREATE_SITE_ADVERTISE)
-        assert companies_page.element_presented(companies_page.locators.BUDGET_FIELD, 5), "Не раскрылись поля"
+        companies_page.insert_site_href("https://www.statista.com")
+
+        companies_page.assert_valid_href()
 
     @allure.title("Тест невалидной ссылки")
     def test_advertise_site_negative(self, companies_page):
         companies_page.create_new_company()
         companies_page.create_site_advertise()
-        companies_page.enter_field(companies_page.locators.SITE_HREF, "rewq")
-        companies_page.click(companies_page.locators.CREATE_SITE_ADVERTISE)
-        error = companies_page.get_text(companies_page.locators.HREF_ERROR)
+        companies_page.insert_site_href("rewq")
 
-        assert error == "Не удалось подгрузить данные ссылки", 'Ошибка не отображается'
+        companies_page.assert_invalid_href()
 
     @allure.title("Тест отображения ошибок")
     def test_error_view(self, companies_page):
         companies_page.create_new_company()
         companies_page.create_site_advertise()
-        companies_page.enter_field(companies_page.locators.SITE_HREF, "rewq")
-        companies_page.click(companies_page.locators.CREATE_SITE_ADVERTISE)
-        companies_page.click(companies_page.locators.CONTINUE_BUTTON)
-        companies_page.click(companies_page.locators.ERROR_BTN)
+        companies_page.insert_site_href("https://www.statista.com")
+        companies_page.transfer_to_next_step()
 
-        assert companies_page.get_text(companies_page.locators.ADVERTISE_SITE_ERROR) == "Рекламируемый сайт"
+        companies_page.assert_error_view()
 
 
     @allure.title("Тест валидации бюджета")
-    def test_budget_positive(self, companies_page):
+    def test_budget_valid(self, companies_page):
         companies_page.create_new_company()
         companies_page.create_site_advertise()
-        companies_page.enter_field(companies_page.locators.SITE_HREF, "https://www.statista.com")
-        companies_page.click(companies_page.locators.CREATE_SITE_ADVERTISE)
-        companies_page.enter_field(companies_page.locators.BUDGET_FIELD, "100")
-        companies_page.click(companies_page.locators.CONTINUE_BUTTON)
-        companies_page.click(companies_page.locators.CONTINUE_BUTTON)
+        companies_page.insert_site_href("https://www.statista.com")
+        companies_page.set_budget("100")
+        companies_page.wait_budget_error_not_present()
 
-        assert companies_page.find(companies_page.locators.EXPAND_REGION), "Переход на следующий этап не сработал"
+        companies_page.transfer_to_next_step()
+
 
     @allure.title("Тест валидации бюджета 2")
     def test_budget_negative(self, companies_page):
         companies_page.create_new_company()
         companies_page.create_site_advertise()
-        companies_page.enter_field(companies_page.locators.SITE_HREF, "https://www.statista.com")
-        companies_page.click(companies_page.locators.CREATE_SITE_ADVERTISE)
-        companies_page.enter_field(companies_page.locators.BUDGET_FIELD, "50")
-        companies_page.click(companies_page.locators.CONTINUE_BUTTON)
-        companies_page.click(companies_page.locators.ERROR_BTN)
+        companies_page.insert_site_href("https://www.statista.com")
+        companies_page.set_budget("50")
 
-        assert companies_page.get_text(companies_page.locators.ADVERTISE_SITE_ERROR) == "Бюджет"
+        companies_page.assert_budget_error()
+
 
     @allure.title("Тест сохранения бюджета")
     def test_budget_save(self, companies_page):
         companies_page.create_new_company()
         companies_page.create_site_advertise()
-        companies_page.enter_field(companies_page.locators.SITE_HREF, "https://www.statista.com")
-        companies_page.click(companies_page.locators.CREATE_SITE_ADVERTISE)
+        companies_page.insert_site_href("https://www.statista.com")
         companies_page.enter_field(companies_page.locators.BUDGET_FIELD, "100")
-        companies_page.click(companies_page.locators.CONTINUE_BUTTON)
-        companies_page.click(companies_page.locators.CONTINUE_BUTTON)
+        companies_page.transfer_to_next_step()
 
-        assert companies_page.get_text(companies_page.locators.BUDGET_DUPLICATE) == "100 ₽"
+        companies_page.assert_budget_save()
 
     @allure.title("Тест календаря (выбора даты до)")
     def test_calendar_choice(self, companies_page):
         companies_page.create_new_company()
         companies_page.create_site_advertise()
-        companies_page.enter_field(companies_page.locators.SITE_HREF, "https://www.statista.com")
-        companies_page.click(companies_page.locators.CREATE_SITE_ADVERTISE)
-        companies_page.click(companies_page.locators.END_DATE)
-        companies_page.click(companies_page.locators.DECEMBER_31)
+        companies_page.insert_site_href("https://www.statista.com")
 
-        assert companies_page.get_attribute(companies_page.locators.END_INPUT_DATE, 'value') == "31.12.2024"
+        companies_page.set_valid_end_date()
+
+        companies_page.assert_end_input_date()
 
     @allure.title("Негативный тест календаря")
     def test_calendar_negative(self, companies_page):
         companies_page.create_new_company()
         companies_page.create_site_advertise()
-        companies_page.enter_field(companies_page.locators.SITE_HREF, "https://www.statista.com")
-        companies_page.click(companies_page.locators.CREATE_SITE_ADVERTISE)
-        companies_page.click(companies_page.locators.END_DATE)
-        companies_page.click(companies_page.locators.DECEMBER_2)
+        companies_page.insert_site_href("https://www.statista.com")
 
-        assert companies_page.get_attribute(companies_page.locators.END_INPUT_DATE, 'value') == '', "Произошёл выбор прошедшей даты"
+        companies_page.set_invalid_end_date()
+
+        companies_page.assert_invalid_end_input_date()
 
     @allure.title("Проверка быстрого выбора региона")
     def test_region_fast_choice(self, companies_page):
         companies_page.transfer_to_group_advertise()
-        companies_page.click(companies_page.locators.FAST_CHOICE_REGIONS)
+        companies_page.fast_choice_moscow()
 
-        assert companies_page.get_text(companies_page.locators.CHOSEN_REGION) == "Москва", "Быстрый выбор не сработал"
+        companies_page.assert_choice_moscow()
 
     @allure.title("Проверка поиска городов в регионах показа")
     def test_region_search(self, companies_page):
         companies_page.transfer_to_group_advertise()
-        companies_page.enter_field(companies_page.locators.REGION_SEARCH, "Королев")
-        companies_page.click(companies_page.locators.SEARCH_RESULT)
+        companies_page.choice_region_korolev()
 
-        assert companies_page.get_text(companies_page.locators.CHOSEN_REGION) == "Королев", "Поиск не сработал"
+        companies_page.assert_search_choice()
 
     @allure.title("Проверка добавления нескольких регионов")
     def test_few_regions(self, companies_page):
         companies_page.transfer_to_group_advertise()
 
-        companies_page.click(companies_page.locators.FAST_CHOICE_REGIONS)
-        companies_page.enter_field(companies_page.locators.REGION_SEARCH, "Королев")
-        companies_page.click(companies_page.locators.SEARCH_RESULT)
+        companies_page.fast_choice_moscow()
+        companies_page.choice_region_korolev()
 
-        assert companies_page.get_text(companies_page.locators.NUMBER_CHOSEN) == '2 выбрано', 'Не сработал выбор нескольких регионов'
+        companies_page.assert_few_regions()
 
 
     @allure.title("Демография. Тест на выбор пола")
@@ -192,6 +179,8 @@ class TestCompanies(BaseCase):
         companies_page.click(companies_page.locators.FIRST_SEARCH_INTEREST)
 
         companies_page.click(companies_page.locators.DELETE_INTEREST)
+
+        companies_page.is_element_not_present(companies_page.locators.DELETE_INTEREST)
 
         companies_page.click(companies_page.locators.INTEREST_CONTAINER)
 
