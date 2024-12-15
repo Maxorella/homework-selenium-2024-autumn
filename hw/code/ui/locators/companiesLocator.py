@@ -29,7 +29,8 @@ class CompaniesLocator:
     DEMOGRAPHY_CONTAINER = (By.XPATH, '//*[@class="GroupForm_layout__2FvbV"]/section[1]/div[1]/div')
 
     SEX_CONTAINER = (By.XPATH, '//*[@data-name="sex"]')
-    MALE_SEX = (By.XPATH, '//*[@data-name="sex"]/label[2]')
+    MALE_SEX = (By.XPATH, '//*[@data-name="sex"]/label[2]') #'//*[@data-name="sex"]/label[2]/input'
+    MALE_SEX_INPUT = (By.XPATH, '//*[@data-name="sex"]/label[2]/input')
     AGE_FROM = (By.XPATH, '//*[@class="RangeSelector_container__HX-gb"]/div[1]')
     AGE_TO = (By.XPATH, '//*[@class="RangeSelector_container__HX-gb"]/div[2]')
 
@@ -44,6 +45,7 @@ class CompaniesLocator:
     EXCLUDES_INPUT = (By.XPATH, '(//*[@class="ChipsSelect_wrapper__m9y64"])[2]/span/div/label/input')
     INTEREST_ERROR = (By.XPATH, '//*[@data-name="interests"]/span/div')
     DELETE_INTEREST = (By.XPATH, '(//div[contains(@class, "InterestsSubSection_header__6qVgB")])[1]//*[local-name()="svg"]')
+    ADD_INTEREST = (By.XPATH, '(//*[@class="InterestsSubSection_wrap__fUg-P"])[1]/div//*[local-name()="svg"]')
 
     # Ключевые фразы
     KEY_PHRASES_CONTAINER = (By.XPATH, '(//*[@class="InterestsSubSection_wrap__fUg-P"])[2]')

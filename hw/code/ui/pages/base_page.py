@@ -144,6 +144,17 @@ class BasePage(object):
         except TimeoutException:
             return False  # Элемент видим
 
+    def is_element_visible(self, element, timeout=20) -> bool:
+        """
+                Проверяет, что элемента  ВИДИМ на странице в течение указанного времени ожидания.
+                :return: True, если элемент виден, False, если он невиден или его нету.
+                """
+        try:
+            WebDriverWait(self.driver, timeout).until(EC.visibility_of(element))
+            return True  # Элемент видим
+        except TimeoutException:
+            return False  # Элемент невидим
+
 
     def element_presented(self, locator, timeout=20) -> bool:
         """

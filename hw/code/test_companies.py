@@ -1,3 +1,5 @@
+import time
+
 import allure
 
 from hw.code.base_case import BaseCase
@@ -110,86 +112,63 @@ class TestCompanies(BaseCase):
     @allure.title("Демография. Тест на выбор пола")
     def test_demography_sex_choice(self, companies_page):
         companies_page.transfer_to_group_advertise()
-        companies_page.find(companies_page.locators.DEMOGRAPHY_CONTAINER, timeout=20)
-        companies_page.click(companies_page.locators.DEMOGRAPHY_CONTAINER)
 
-        try:
-            companies_page.click(companies_page.locators.MALE_SEX)
-        except:
-            assert 1 == 0, "Не происходит выбор пола"
+        companies_page.choose_male_sex()
+
+        companies_page.assert_male_sex_selected()
 
 
     @allure.title("Интересы и поведение. Тест строки интересов")
     def test_interest_input(self, companies_page):
         companies_page.transfer_to_group_advertise()
-        companies_page.click(companies_page.locators.INTEREST_AND_BEHAVIOUR_CONTAINER)
-        companies_page.click(companies_page.locators.INTEREST_CONTAINER)
-        companies_page.click(companies_page.locators.INTEREST_INPUT)
-        companies_page.click(companies_page.locators.FIRST_SEARCH_INTEREST)
+        companies_page.open_interest()
+        companies_page.choose_first_interest()
 
-        assert companies_page.get_text(companies_page.locators.CHOSEN_INTEREST) == 'Авто', 'Поиск не работает'
+        companies_page.assert_interest_input()
 
     @allure.title("Удаление выбранной категории")
     def test_interest_delete(self, companies_page):
         companies_page.transfer_to_group_advertise()
-        companies_page.click(companies_page.locators.INTEREST_AND_BEHAVIOUR_CONTAINER)
-        companies_page.click(companies_page.locators.INTEREST_CONTAINER)
-        companies_page.click(companies_page.locators.INTEREST_INPUT)
-        companies_page.click(companies_page.locators.FIRST_SEARCH_INTEREST)
-        companies_page.click(companies_page.locators.DELETE_INTEREST)
+        companies_page.open_interest()
+        companies_page.choose_first_interest()
+        companies_page.delete_interest()
 
-        assert companies_page.is_element_not_present(companies_page.locators.CHOSEN_INTEREST), "Удаление категории не произошло"
+        companies_page.assert_interest_delete()
 
     # На английском для саджестов
     @allure.title("Exclude interest test")
     def test_interest_exclude(self, companies_page):
         companies_page.transfer_to_group_advertise()
-        companies_page.click(companies_page.locators.INTEREST_AND_BEHAVIOUR_CONTAINER)
-        companies_page.click(companies_page.locators.INTEREST_CONTAINER)
-        companies_page.click(companies_page.locators.ADD_EXCLUDES)
-        companies_page.click(companies_page.locators.EXCLUDES_INPUT)
-        companies_page.click(companies_page.locators.FIRST_SEARCH_INTEREST)
+        companies_page.open_interest()
+        companies_page.exclude_first_interest()
 
-        assert companies_page.get_text(companies_page.locators.CHOSEN_INTEREST) == 'Авто', 'Поиск не работает'
+        companies_page.assert_interest_input()
 
     @allure.title("interest and exclude interest conflict test")
     def test_interest_conflict(self, companies_page):
         companies_page.transfer_to_group_advertise()
-        companies_page.click(companies_page.locators.INTEREST_AND_BEHAVIOUR_CONTAINER)
-        companies_page.click(companies_page.locators.INTEREST_CONTAINER)
-        companies_page.click(companies_page.locators.INTEREST_INPUT)
-        companies_page.click(companies_page.locators.FIRST_SEARCH_INTEREST)
-        companies_page.click(companies_page.locators.ADD_EXCLUDES)
-        companies_page.click(companies_page.locators.EXCLUDES_INPUT)
-        companies_page.click(companies_page.locators.FIRST_SEARCH_INTEREST)
+        companies_page.open_interest()
+        companies_page.choose_first_interest()
+        companies_page.exclude_first_interest()
+        companies_page.transfer_to_next_step()
 
-        companies_page.click(companies_page.locators.CONTINUE_BUTTON)
-
-        assert companies_page.get_text(companies_page.locators.INTEREST_ERROR) == 'Нельзя исключать добавленное — просто удалите это из интересов', 'Конфликт интересов не проверяется'
+        companies_page.assert_interest_error()
 
     @allure.title("delete interest test")
     def test_interest_delete_exclude(self, companies_page):
         companies_page.transfer_to_group_advertise()
-        companies_page.click(companies_page.locators.INTEREST_AND_BEHAVIOUR_CONTAINER)
-        companies_page.click(companies_page.locators.INTEREST_CONTAINER)
-        companies_page.click(companies_page.locators.INTEREST_INPUT)
-        companies_page.click(companies_page.locators.FIRST_SEARCH_INTEREST)
-        companies_page.click(companies_page.locators.ADD_EXCLUDES)
-        companies_page.click(companies_page.locators.EXCLUDES_INPUT)
-        companies_page.click(companies_page.locators.FIRST_SEARCH_INTEREST)
+        companies_page.open_interest()
+        companies_page.choose_first_interest()
+        companies_page.exclude_first_interest()
 
-        companies_page.click(companies_page.locators.DELETE_INTEREST)
-
-        companies_page.is_element_not_present(companies_page.locators.DELETE_INTEREST)
-
-        companies_page.click(companies_page.locators.INTEREST_CONTAINER)
-
-        assert companies_page.is_element_not_present(companies_page.locators.CHOSEN_INTEREST), 'Удаление интересов не произошло'
+        companies_page.delete_all_interest()
+        companies_page.open_interest_with_plus()
+        companies_page.assert_all_interest_deleted()
 
     @allure.title("key phrases suggest test")
     def test_keyphrases_suggest(self, companies_page):
         companies_page.transfer_to_group_advertise()
-        companies_page.click(companies_page.locators.INTEREST_AND_BEHAVIOUR_CONTAINER)
+        companies_page.open_interest() # закончил тут
         companies_page.click(companies_page.locators.KEY_PHRASES_CONTAINER)
         companies_page.move_to_element(companies_page.locators.INPUT_KEY_PHRASES)
         companies_page.enter_field(companies_page.locators.INPUT_KEY_PHRASES, 'Авто')

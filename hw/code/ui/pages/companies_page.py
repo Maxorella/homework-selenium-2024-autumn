@@ -50,6 +50,43 @@ class CompaniesPage(BasePage):
         self.enter_field_element(field, "Королев")
         self.find_and_click(self.locators.SEARCH_RESULT)
 
+    def choose_male_sex(self):
+        demography = self.find(self.locators.DEMOGRAPHY_CONTAINER)
+        self.click(demography)
+        self.male_sex = self.find(self.locators.MALE_SEX)
+        self.click(self.male_sex)
+
+    def open_interest(self):
+        self.find_and_click(self.locators.INTEREST_AND_BEHAVIOUR_CONTAINER)
+        self.interest_container = self.find(self.locators.INTEREST_CONTAINER)
+        self.click(self.interest_container)
+
+    def choose_first_interest(self):
+        self.find_and_click(self.locators.INTEREST_INPUT)
+        self.find_and_click(self.locators.FIRST_SEARCH_INTEREST)
+        self.choosen_interest = self.find(self.locators.CHOSEN_INTEREST)
+
+    def delete_interest(self):
+        self.find_and_click(self.locators.DELETE_CHOSEN_INTEREST)
+
+    def exclude_first_interest(self):
+        self.find_and_click(self.locators.ADD_EXCLUDES)
+        self.find_and_click(self.locators.EXCLUDES_INPUT)
+        self.find_and_click(self.locators.FIRST_SEARCH_INTEREST)
+        self.choosen_interest = self.find(self.locators.CHOSEN_INTEREST)
+
+    def delete_all_interest(self):
+        trash_bean = self.find(self.locators.DELETE_INTEREST)
+        self.click(trash_bean)
+        self.is_element_not_present(trash_bean)
+
+    def open_interest_with_plus(self):
+        open_button = self.find(self.locators.ADD_INTEREST)
+        self.is_element_visible(open_button)
+        self.click(open_button)
+
+
+
     @allure.step("Переход на следующий этап")
     def transfer_to_next_step(self):
         self.click(self.continue_button)
@@ -97,6 +134,25 @@ class CompaniesPage(BasePage):
         assert self.get_text(
             self.locators.NUMBER_CHOSEN) == '2 выбрано', 'Не сработал выбор нескольких регионов'
 
+    def assert_male_sex_selected(self):
+        input = self.find(self.locators.MALE_SEX_INPUT)
+        assert input.is_selected() == True, "Выбор пола не работает"
+
+    def assert_interest_input(self):
+        assert self.get_element_text(self.choosen_interest) == 'Авто', 'Поиск не работает'
+
+    def assert_interest_delete(self):
+        assert self.is_element_not_present(self.locators.CHOSEN_INTEREST), "Удаление категории не произошло"
+
+    def assert_interest_error(self):
+        assert self.get_text(
+            self.locators.INTEREST_ERROR) == 'Нельзя исключать добавленное — просто удалите это из интересов', 'Конфликт интересов не проверяется'
+
+    def assert_all_interest_deleted(self):
+
+        assert self.is_element_not_present(
+            self.choosen_interest), 'Удаление интересов не произошло'
+
     def get_error_href_text(self):
         return self.get_text(self.locators.HREF_ERROR)
 
@@ -115,11 +171,10 @@ class CompaniesPage(BasePage):
     def transfer_to_group_advertise(self):
         self.create_new_company()
         self.create_site_advertise()
-        self.enter_field(self.locators.SITE_HREF, "https://www.statista.com")
-        self.click(self.locators.CREATE_SITE_ADVERTISE)
-        self.enter_field(self.locators.BUDGET_FIELD, "100")
-        self.click(self.locators.CONTINUE_BUTTON)
-        self.click(self.locators.CONTINUE_BUTTON)
+        self.insert_site_href("https://www.statista.com")
+        self.set_budget("100")
+        self.wait_budget_error_not_present()
+        self.transfer_to_next_step()
 
     @allure.step("Перейти к третьему этапу")
     def transfer_to_advertisement(self):
