@@ -47,8 +47,17 @@ class BasePage(object):
     def find(self, locator, timeout=20):
         return self.wait(timeout).until(EC.visibility_of_element_located(locator))
 
+    def find_visibility(self, locator, timeout=20):
+        return self.wait(timeout).until(EC.visibility_of_element_located(locator))
+
+    def find_located(self, locator, timeout=20):
+        return self.wait(timeout).until(EC.presence_of_element_located(locator))
+
     def find_presence(self, locator, timeout=20):
         return self.wait(timeout).until(EC.presence_of_element_located(locator))
+
+    def find_clickable(self, locator, timeout=20):
+        return self.wait(timeout).until(EC.element_to_be_clickable(locator))
 
     @allure.step('Wait for click')
     def wait_for_clickable(self, locator, timeout=5):
@@ -64,8 +73,8 @@ class BasePage(object):
 
     @allure.step('Click')
     def click(self, element, timeout=15) -> WebElement:
-        elem = self.wait(timeout).until(EC.element_to_be_clickable(element))
-        elem.click()
+        self.wait(timeout).until(EC.element_to_be_clickable(element))
+        element.click()
 
     @allure.step('Find and click')
     def find_and_click(self, locator, timeout=15) -> WebElement:
@@ -74,8 +83,7 @@ class BasePage(object):
         elem.click()
 
     @allure.step('EnterField')
-    def enter_field(self, locator, value, timeout=20) -> WebElement:
-        elem = self.find_presence(locator, timeout)
+    def enter_field(self, elem, value) -> WebElement:
         elem.send_keys(Keys.COMMAND + "a") # TODO поменять на control + a, если не на маке :)
         elem.send_keys(Keys.DELETE)
         elem.send_keys(value)
@@ -115,13 +123,6 @@ class BasePage(object):
     def get_element_text(self, element, timeout=20) -> str:
         self.wait(timeout).until(EC.visibility_of(element))
         return element.text
-
-    @allure.step('GetText')
-    def get_text_visible(self, locator, timeout=20) -> str:
-        self.wait(timeout).until(EC.visibility_of_element_located(locator))
-        element = self.driver.find_element(*locator)
-        return element.text
-
 
     @allure.step('GetAttr')
     def get_attribute(self, locator, attribute, timeout=20) -> str:
