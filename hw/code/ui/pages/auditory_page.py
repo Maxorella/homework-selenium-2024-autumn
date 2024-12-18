@@ -69,8 +69,25 @@ class AuditoryPage(BasePage):
     def assert_edit_titles(self, phrase_in_edit, title_in_edit):
         assert self.get_element_text(self.phrases_label) == phrase_in_edit
         assert self.get_element_text(self.title_edit) == title_in_edit
+        self.find_and_click(self.locators.CANCEL_EDIT_BTN)
 
+    # удаление аудитории
+
+    def delete_auditory(self):
+        self.aud_in_list = self.find_located(self.locators.AUD_IN_LIST)
+        self.point_3 = self.find_located(self.locators.POINT_3)
+
+        self.move_to_element(self.aud_in_list)
+        self.move_to_element(self.point_3)
+        self.click(self.point_3)
+
+        self.delete_dropped_btn = self.find_located(self.locators.DELETE_DROPPED_BTN)
+        self.click(self.delete_dropped_btn)
+
+        self.find_and_click(self.locators.DELETE_SUBMIT_BTN)
     # 2 тест
+
+
     def click_add_ist(self):
         self.click(self.locators.ADD_IST_BTN)
 

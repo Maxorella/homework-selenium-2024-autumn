@@ -32,8 +32,11 @@ class TestAuditory(BaseCase):
         auditory_page.go_to_edit_page()
         auditory_page.find_edit_page_labels()
         auditory_page.assert_edit_titles("пиво", "Phrases")
+        auditory_page.delete_auditory()
 
 
+    def test_delete_auditory(self, auditory_page):
+        auditory_page.delete_auditory()
 
 
     @allure.title("Проверка создания аудитории")
