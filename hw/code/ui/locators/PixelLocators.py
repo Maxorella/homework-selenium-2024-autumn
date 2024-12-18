@@ -18,10 +18,10 @@ class PixelLocators:
 
     # 3 тест
 
-    EDIT_DROPPED_BTN = (By.XPATH, '//*[@id=":rb:"]//label[1]')
-    EDIT_NAME_INPUT = (By.XPATH, '//*[@id="_modal_28"]//input')
-    EDIT_SUBMIT_BTN = (By.XPATH, '//*[@id="_modal_28"]//button[contains(normalize-space(.), "Изменить")]')
-    PIXEL_TITLE = (By.XPATH, '//*[@id="pixels"]//div[@title="tean auth"]//span[contains(text(), "tean auth")]')
+    EDIT_NAME_DROPPED_BTN = (By.XPATH, '//div[contains(@class,"PopoverContent_root")]//label[1]')
+    EDIT_NAME_INPUT = (By.XPATH, '//span/input[@name="name"]')
+    EDIT_SUBMIT_BTN = (By.XPATH, '//button[contains(normalize-space(.), "Изменить")]')
+    PIXEL_TITLE = (By.XPATH, "(//*[@id=\"pixels\"]//span[contains(@class, 'vkuiSimpleCell__children')])[1]")
 
     # 4 тест
 
