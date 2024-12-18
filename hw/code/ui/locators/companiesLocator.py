@@ -17,6 +17,9 @@ class CompaniesLocator:
     DECEMBER_31 = (By.XPATH, '//*[@class="vkuiCalendarDays"]/div[7]/div[2]')
     END_INPUT_DATE = (By.XPATH, '//*[@data-testid="end-date"]/input')
     DECEMBER_2 = (By.XPATH, '//*[@class="vkuiCalendarDays"]/div[3]/div[1]')
+    STRATEGY = (By.XPATH, '//*[@data-name="autobidding_mode"]/div')
+    STRATEGY_SELECT = (By.XPATH, '//*[@data-name="autobidding_mode"]/div/select')
+    STRATEGY_SELECTED = (By.XPATH, '(//*[@class="vkuiCustomSelectInput__container"])[2]/span')
 
     # Группы объявлений
     FAST_CHOICE_REGIONS = (By.XPATH, '//*[@class="RegionsQuickSelection_wrapper__7kX9f"]/button[2]')
@@ -47,6 +50,7 @@ class CompaniesLocator:
     DELETE_INTEREST = (By.XPATH, '(//div[contains(@class, "InterestsSubSection_header__6qVgB")])[1]//*[local-name()="svg"]')
     ADD_INTEREST = (By.XPATH, '(//*[@class="InterestsSubSection_wrap__fUg-P"])[1]/div//*[local-name()="svg"]')
 
+
     # Ключевые фразы
     KEY_PHRASES_CONTAINER = (By.XPATH, '(//*[@class="InterestsSubSection_wrap__fUg-P"])[2]')
     PHRASES_SUGGEST = (By.XPATH, '//*[@class="SuggestionsButton_button__b3AJw"]/div')
@@ -56,6 +60,7 @@ class CompaniesLocator:
     SEARCH_PERIOD = (By.XPATH, '//*[@max="30"]')
     FIELDS_CONTAINER = (By.CLASS_NAME, 'InterestsSubSection_content__VfrET')
     DELETE_KEY_PHRASES = (By.XPATH, '(//div[contains(@class, "InterestsSubSection_header__6qVgB")])[2]//*[local-name()="svg"]')
+    ADD_KEY_PHRASES = (By.XPATH, '(//div[contains(@class, "InterestsSubSection_header__6qVgB")])[2]//*[local-name()="svg"]')
 
     # Сообщества
     COMMUNITIES_CONTAINER = (By.XPATH, '(//*[@class="InterestsSubSection_wrap__fUg-P"])[3]')
@@ -68,7 +73,8 @@ class CompaniesLocator:
     DELETE_GROUP = (By.XPATH, '//*[@class="Selected_item__DdUMQ"]/div')
     SELECTED_GROUP = (By.CLASS_NAME, 'Selected_item__DdUMQ')
     CANCEL_BTN = (By.XPATH, '//*[@class="AppsAndGroupsForm_header__HNNOB"]/h4[2]')
-    COMMUNITIES_DELETE_ALL = (By.XPATH, '//*[@id="react-collapsed-toggle-:r4j:"]/svg')
+    COMMUNITIES_DELETE_ALL = (By.CLASS_NAME, 'InterestsSubSection_deleteIcon__DPjpZ')
+    OPEN_COMMUNITIES = (By.XPATH, '(//div[contains(@class, "InterestsSubSection_header__6qVgB")])[3]//*[local-name()="svg"]')
 
     # Музыканты
     MUSICIANS_CONTAINER = (By.XPATH, '(//*[@class="InterestsSubSection_wrap__fUg-P"])[4]')
@@ -79,7 +85,9 @@ class CompaniesLocator:
     DELETE_SEARCHED_MUSICIAN = (By.XPATH, '//*[@class="Selected_item__Po+fb"]/div')
     SELECTED_MUSICIAN = (By.CLASS_NAME, 'Selected_item__Po+fb')
     MUSICIANS_DELETE_ALL = (By.XPATH, '//*[@class="Header_header__iyI-k"]/h4[2]')
-    MUSICIANS_TRASH_BEAN = (By.XPATH, '(//div[contains(@class, "InterestsSubSection_header__6qVgB")])[4]//*[local-name()="svg"]')
+    MUSICIANS_TRASH_BEAN = (By.CLASS_NAME, 'InterestsSubSection_deleteIcon__DPjpZ')
+    OPEN_MUSICIANS = (
+    By.XPATH, '(//div[contains(@class, "InterestsSubSection_header__6qVgB")])[4]//*[local-name()="svg"]')
 
 
     # Объявления
@@ -88,7 +96,7 @@ class CompaniesLocator:
     SHORT_DESCRIPTION = (By.XPATH, '(//div[contains(@class, "EditableTextField__textField")])[2]/p')
     ABOUT = (By.XPATH, '(//div[contains(@class, "EditableTextField__textField")])[5]/p')
     MEDIAFILES_BUTTON = (By.XPATH, '(//*[@role="group"])[2]/button[1]')
-    MEDIA_PICTURE = (By.CLASS_NAME, 'ImageItem_image__wFT85')
+    MEDIA_PICTURE = (By.XPATH, '(//*[@class="ImageItem_image__wFT85"])[2]')
     ADD_PICTURES = (By.XPATH, '//*[@data-testid="submit"]')
     IMAGES = (By.XPATH, '//*[@class="MediaContentList_flexContainer__-CZU8"]/div[3]')
     AI_IMAGE = (By.XPATH, '(//*[@class="AdMediaPreview_autogenIcon__UdC42"])[1]')
@@ -100,8 +108,12 @@ class CompaniesLocator:
     # SELECT_ALL = (By.XPATH, '//*[@id="adPlan"]/div/div[2]/div/div[2]/div/div/div/div[1]/div[2]/div[2]/div/div/div[1]/label/div[2]')
     ACTIONS = (By.XPATH, '//*[@data-testid="select-options"]')
     DELETE_ACTION = (By.XPATH, '//*[@data-testid="archive"]')
+    COMPANY_STRING = (By.XPATH, '(//*[@class="BaseTable__body"])[1]')
     COMPANY_OPTIONS = (By.XPATH, '//*[@data-testid="actions"]')
     COMPANY_DUPLICATE = (By.XPATH, '//*[@data-testid="copy"]')
+    CLOSE_SUGGEST = (By.XPATH, '//*[@aria-label="Закрыть"]')
+    REDACT_OBJECT = (By.XPATH, '//*[@data-name="objective"]')
+    DONT_SAVE_DRAFT = (By.XPATH, '//*[@data-testid="cancel"]')
 
     # Для удаления всех кампаний
     BASE_PAGE = (By.XPATH, '//*[@class="header_left__cv9bp"]/button')

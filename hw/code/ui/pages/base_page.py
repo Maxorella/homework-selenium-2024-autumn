@@ -7,7 +7,7 @@ from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
-
+from selenium.webdriver.support.select import Select
 
 class PageNotOpenedException(Exception):
     pass
@@ -179,3 +179,13 @@ class BasePage(object):
     def move_to_element(self, element):
         action = ActionChains(self.driver)
         action.move_to_element(element).perform()
+
+    def wait_elemnt_enabled(self, element, timeout=20) -> bool:
+        WebDriverWait(self.driver, timeout).until(
+            lambda d: not element.get_attribute('disabled')
+        )
+        return element
+
+    def select_element(self, element, timeout=20):
+        select = Select(element)
+        return select
