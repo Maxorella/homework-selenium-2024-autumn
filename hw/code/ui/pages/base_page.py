@@ -122,6 +122,10 @@ class BasePage(object):
         element = self.driver.find_element(*locator)
         return element.get_attribute(attribute)
 
+    @allure.step('GetElAttr')
+    def get_element_attribute(self, element, attribute, timeout=20) -> str:
+        return element.get_attribute(attribute)
+
     def is_not_present(self, locator, timeout=20) -> bool:
         """
         Проверяет, что элемента НЕТ или он НЕВИДИМ на странице в течение указанного времени ожидания.
@@ -172,7 +176,6 @@ class BasePage(object):
         action = ActionChains(self.driver)
         action.move_to_element(button).click(button).perform()
 
-    def move_to_element(self, locator):
-        elem = self.find(locator)
+    def move_to_element(self, element):
         action = ActionChains(self.driver)
-        action.move_to_element(elem).perform()
+        action.move_to_element(element).perform()

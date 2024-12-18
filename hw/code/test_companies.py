@@ -121,6 +121,7 @@ class TestCompanies(BaseCase):
     @allure.title("Интересы и поведение. Тест строки интересов")
     def test_interest_input(self, companies_page):
         companies_page.transfer_to_group_advertise()
+        companies_page.open_interest_and_behaviour()
         companies_page.open_interest()
         companies_page.choose_first_interest()
 
@@ -129,6 +130,7 @@ class TestCompanies(BaseCase):
     @allure.title("Удаление выбранной категории")
     def test_interest_delete(self, companies_page):
         companies_page.transfer_to_group_advertise()
+        companies_page.open_interest_and_behaviour()
         companies_page.open_interest()
         companies_page.choose_first_interest()
         companies_page.delete_interest()
@@ -139,6 +141,7 @@ class TestCompanies(BaseCase):
     @allure.title("Exclude interest test")
     def test_interest_exclude(self, companies_page):
         companies_page.transfer_to_group_advertise()
+        companies_page.open_interest_and_behaviour()
         companies_page.open_interest()
         companies_page.exclude_first_interest()
 
@@ -147,6 +150,7 @@ class TestCompanies(BaseCase):
     @allure.title("interest and exclude interest conflict test")
     def test_interest_conflict(self, companies_page):
         companies_page.transfer_to_group_advertise()
+        companies_page.open_interest_and_behaviour()
         companies_page.open_interest()
         companies_page.choose_first_interest()
         companies_page.exclude_first_interest()
@@ -157,6 +161,7 @@ class TestCompanies(BaseCase):
     @allure.title("delete interest test")
     def test_interest_delete_exclude(self, companies_page):
         companies_page.transfer_to_group_advertise()
+        companies_page.open_interest_and_behaviour()
         companies_page.open_interest()
         companies_page.choose_first_interest()
         companies_page.exclude_first_interest()
@@ -168,67 +173,61 @@ class TestCompanies(BaseCase):
     @allure.title("key phrases suggest test")
     def test_keyphrases_suggest(self, companies_page):
         companies_page.transfer_to_group_advertise()
-        companies_page.open_interest() # закончил тут
-        companies_page.click(companies_page.locators.KEY_PHRASES_CONTAINER)
-        companies_page.move_to_element(companies_page.locators.INPUT_KEY_PHRASES)
-        companies_page.enter_field(companies_page.locators.INPUT_KEY_PHRASES, 'Авто')
+        companies_page.open_interest_and_behaviour()
+        companies_page.open_key_phrases()
+        companies_page.insert_key_phases('Авто')
 
-        assert companies_page.get_text(companies_page.locators.PHRASES_SUGGEST) == 'Показать 10 похожих', "Подсказки не работают"
+        companies_page.assert_key_phrases_suggest()
 
     @allure.title("minus phrases test")
     def test_minus_phrases(self, companies_page):
         companies_page.transfer_to_group_advertise()
-        companies_page.click(companies_page.locators.INTEREST_AND_BEHAVIOUR_CONTAINER)
-        companies_page.click(companies_page.locators.KEY_PHRASES_CONTAINER)
-        companies_page.move_to_element(companies_page.locators.INPUT_MINUS_PHRASES)
-        companies_page.enter_field(companies_page.locators.INPUT_MINUS_PHRASES, 'Авто')
+        companies_page.open_interest_and_behaviour()
+        companies_page.open_key_phrases()
 
-        assert companies_page.get_text(companies_page.locators.INPUT_MINUS_PHRASES) == 'Авто', "Поле минус фразы заблокировано"
+        companies_page.insert_minus_phrases('Авто')
+
+        companies_page.assert_minus_phrases_input()
 
     @allure.title("phrases conflict test")
     def test_phrases_conflict(self, companies_page):
         companies_page.transfer_to_group_advertise()
-        companies_page.click(companies_page.locators.INTEREST_AND_BEHAVIOUR_CONTAINER)
-        companies_page.click(companies_page.locators.KEY_PHRASES_CONTAINER)
-        companies_page.move_to_element(companies_page.locators.INPUT_KEY_PHRASES)
-        companies_page.enter_field(companies_page.locators.INPUT_KEY_PHRASES, 'Авто')
-        companies_page.move_to_element(companies_page.locators.INPUT_MINUS_PHRASES)
-        companies_page.enter_field(companies_page.locators.INPUT_MINUS_PHRASES, 'Авто')
+        companies_page.open_interest_and_behaviour()
+        companies_page.open_key_phrases()
+        companies_page.insert_key_phases('Авто')
+        companies_page.insert_minus_phrases('Авто')
 
-        assert companies_page.get_text(companies_page.locators.PHRASES_WARNINGS) == 'У вас дублируется\n1 фраза', 'Не обработано дублирование фраз'
+        companies_page.assert_phrases_conflict()
 
-    @allure.title("search period test")
+    @allure.title("search period input test")
     def test_search_period(self, companies_page):
         companies_page.transfer_to_group_advertise()
-        companies_page.click(companies_page.locators.INTEREST_AND_BEHAVIOUR_CONTAINER)
-        companies_page.click(companies_page.locators.KEY_PHRASES_CONTAINER)
+        companies_page.open_interest_and_behaviour()
+        companies_page.open_key_phrases()
 
-        companies_page.move_to_element(companies_page.locators.SEARCH_PERIOD)
-        companies_page.enter_field(companies_page.locators.SEARCH_PERIOD, "300")
+        companies_page.insert_search_period("300")
 
-        assert companies_page.get_attribute(companies_page.locators.SEARCH_PERIOD, "value") == "30", "Ввод не ограничен 2 символами"
+        companies_page.assert_search_period_input()
 
     @allure.title("enter big period test")
     def test_enter_big_period(self, companies_page):
         companies_page.transfer_to_group_advertise()
-        companies_page.click(companies_page.locators.INTEREST_AND_BEHAVIOUR_CONTAINER)
-        companies_page.click(companies_page.locators.KEY_PHRASES_CONTAINER)
+        companies_page.open_interest_and_behaviour()
+        companies_page.open_key_phrases()
 
-        companies_page.move_to_element(companies_page.locators.SEARCH_PERIOD)
-        companies_page.enter_field(companies_page.locators.SEARCH_PERIOD, "50")
-        companies_page.click(companies_page.locators.FIELDS_CONTAINER)
+        companies_page.insert_search_period("50")
+        companies_page.confirm_search_period()
 
-        assert companies_page.get_attribute(companies_page.locators.SEARCH_PERIOD, "value") == "30", "Ввод не исправляет значение на 30"
+        companies_page.assert_big_search_period()
 
     @allure.title("enter zero period test")
     def test_enter_zero_period(self, companies_page):
         companies_page.transfer_to_group_advertise()
-        companies_page.click(companies_page.locators.INTEREST_AND_BEHAVIOUR_CONTAINER)
-        companies_page.click(companies_page.locators.KEY_PHRASES_CONTAINER)
+        companies_page.open_interest_and_behaviour()
+        companies_page.open_key_phrases()
 
-        companies_page.move_to_element(companies_page.locators.SEARCH_PERIOD)
-        companies_page.enter_field(companies_page.locators.SEARCH_PERIOD, "0")
-        companies_page.click(companies_page.locators.FIELDS_CONTAINER)
+        companies_page.insert_search_period("0")
+        companies_page.confirm_search_period()
 
         assert companies_page.get_attribute(companies_page.locators.SEARCH_PERIOD,
                                             "value") == "1", "Ввод не исправляет значение на 1"

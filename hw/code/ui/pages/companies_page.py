@@ -56,8 +56,10 @@ class CompaniesPage(BasePage):
         self.male_sex = self.find(self.locators.MALE_SEX)
         self.click(self.male_sex)
 
-    def open_interest(self):
+    def open_interest_and_behaviour(self):
         self.find_and_click(self.locators.INTEREST_AND_BEHAVIOUR_CONTAINER)
+
+    def open_interest(self):
         self.interest_container = self.find(self.locators.INTEREST_CONTAINER)
         self.click(self.interest_container)
 
@@ -85,7 +87,28 @@ class CompaniesPage(BasePage):
         self.is_element_visible(open_button)
         self.click(open_button)
 
+    def open_key_phrases(self):
+        self.key_phrases_container = self.find(self.locators.KEY_PHRASES_CONTAINER)
+        self.move_to_element(self.key_phrases_container)
+        self.click(self.key_phrases_container)
 
+    def insert_key_phases(self, phrases):
+        self.input_key_phrases = self.find(self.locators.INPUT_KEY_PHRASES)
+        self.move_to_element(self.input_key_phrases)
+        self.enter_field_element(self.input_key_phrases, phrases)
+
+    def insert_minus_phrases(self, phrases):
+        self.input_minus_phrases = self.find(self.locators.INPUT_MINUS_PHRASES)
+        self.move_to_element(self.input_minus_phrases)
+        self.enter_field_element(self.input_minus_phrases, phrases)
+
+    def insert_search_period(self, period):
+        self.search_period = self.find(self.locators.SEARCH_PERIOD)
+        self.move_to_element(self.search_period)
+        self.enter_field_element(self.search_period, period)
+
+    def confirm_search_period(self):
+        self.click(self.key_phrases_container)
 
     @allure.step("Переход на следующий этап")
     def transfer_to_next_step(self):
@@ -153,6 +176,30 @@ class CompaniesPage(BasePage):
         assert self.is_element_not_present(
             self.choosen_interest), 'Удаление интересов не произошло'
 
+    def assert_key_phrases_suggest(self):
+        assert self.get_text(
+            self.locators.PHRASES_SUGGEST) == 'Показать 10 похожих', "Подсказки не работают"
+
+    def assert_minus_phrases_input(self):
+        assert self.get_element_text(
+            self.input_minus_phrases) == 'Авто', "Поле минус фразы заблокировано"
+
+    def assert_phrases_conflict(self):
+        assert self.get_text(
+            self.locators.PHRASES_WARNINGS) == 'У вас дублируется\n1 фраза', 'Не обработано дублирование фраз'
+
+    def assert_search_period_input(self):
+        assert self.get_element_attribute(self.search_period,
+                                            "value") == "30", "Ввод не ограничен 2 символами"
+
+    def assert_big_search_period(self):
+        assert self.get_element_attribute(self.search_period,
+                                            "value") == "30", "Ввод не исправляет значение на 30"
+
+    def assert_zero_search_period(self):
+        assert self.get_element_attribute(self.search_period,
+                                          "value") == "1", "Ввод не исправляет значение на 1"
+
     def get_error_href_text(self):
         return self.get_text(self.locators.HREF_ERROR)
 
@@ -173,7 +220,7 @@ class CompaniesPage(BasePage):
         self.create_site_advertise()
         self.insert_site_href("https://www.statista.com")
         self.set_budget("100")
-        self.wait_budget_error_not_present()
+        # self.wait_budget_error_not_present()
         self.transfer_to_next_step()
 
     @allure.step("Перейти к третьему этапу")
