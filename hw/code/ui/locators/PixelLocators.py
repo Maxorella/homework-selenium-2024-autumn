@@ -17,11 +17,11 @@ class PixelLocators:
     TITLE_NO_PIX = (By.XPATH, '//*[@id="pixels"]//h2[contains(text(), "Нет привязанных пикселей трекинга")]')
 
     # 3 тест
-
-    EDIT_DROPPED_BTN = (By.XPATH, '//*[@id=":rb:"]//label[1]')
-    EDIT_NAME_INPUT = (By.XPATH, '//*[@id="_modal_28"]//input')
-    EDIT_SUBMIT_BTN = (By.XPATH, '//*[@id="_modal_28"]//button[contains(normalize-space(.), "Изменить")]')
-    PIXEL_TITLE = (By.XPATH, '//*[@id="pixels"]//div[@title="tean auth"]//span[contains(text(), "tean auth")]')
+    SPIS_BODY_DIV = (By.XPATH, '//*[@id="pixels"]//div[@class="BaseTable__body"]')
+    EDIT_NAME_DROPPED_BTN = (By.XPATH, '//div[contains(@class,"PopoverContent_root")]//label[1]')
+    EDIT_NAME_INPUT = (By.XPATH, '//span/input[@name="name"]')
+    EDIT_SUBMIT_BTN = (By.XPATH, '//button[contains(normalize-space(.), "Изменить")]')
+    PIXEL_TITLE = (By.XPATH, "(//*[@id=\"pixels\"]//span[contains(@class, 'vkuiSimpleCell__children')])[1]")
 
     # 4 тест
 
@@ -35,6 +35,6 @@ class PixelLocators:
     # SETTINGS_BTN
     AUDITORY_TAGS_BTN = (By.XPATH, '//*[@id="tab_pixels.audience_tags"]')
     CREATE_AUDITORY_TAG_BTN = (By.XPATH, '//*[@id="pixels.audience_tags"]//button[normalize-space(.)="Создать аудиторный тег"]')
-    TAG_NAME_INPUT = (By.XPATH, '//*/span/input')
+    TAG_NAME_INPUT = (By.XPATH, '//span/input[@placeholder="Введите название тега"]')
     SUBMIT_CREATE_BTN = (By.XPATH, '//*/button[2]')
     TAG_NAME_CREATED_AUDITORY = (By.XPATH, '//*[@id="pixels.audience_tags"]//div[@class="BaseTable__row-cell-text" and contains(text(), "mytag_name")]')

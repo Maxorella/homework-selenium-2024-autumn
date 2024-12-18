@@ -31,7 +31,8 @@ class PixelPage(BasePage):
         assert self.get_text(self.locators.CREATED_PIX_URL) == pixel_url
 
     def click_3_point(self):
-        self.move_to_element(self.locators.AUD_SPIS)
+        body = self.find(self.locators.SPIS_BODY_DIV)
+        self.move_to_element(body)
         elem = self.find(self.locators.POINT_3_BTN)
         self.click_move(elem)
 
@@ -55,6 +56,7 @@ class PixelPage(BasePage):
         self.click(self.locators.CREATE_AUDITORY_TAG_BTN)
 
     def enter_tag_name(self, tag_name: str):
+        self.move_to_element(self.locators.DOMEN_INPUT)
         self.enter_field(self.locators.DOMEN_INPUT, tag_name)
 
     def click_submit_create_tag(self):
@@ -62,3 +64,16 @@ class PixelPage(BasePage):
 
     def assert_created_auditory(self, expected_title):
         assert self.get_text(self.locators.TAG_NAME_CREATED_AUDITORY) == expected_title
+
+    # 3 тест
+    def click_edit_name_dropped(self):
+        self.click(self.locators.EDIT_NAME_DROPPED_BTN)
+
+    def enter_new_title(self, new_title: str):
+        self.enter_field(self.locators.EDIT_NAME_INPUT, new_title)
+
+    def click_submit_edit_name(self):
+        self.click(self.locators.EDIT_SUBMIT_BTN)
+
+    def assert_new_title(self, expected_title: str):
+        assert self.get_text(self.locators.PIXEL_TITLE) == expected_title

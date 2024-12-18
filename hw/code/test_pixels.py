@@ -7,7 +7,7 @@ from hw.code.base_case import BaseCase
 
 @allure.story("Проверка Сайтов")
 class TestSites(BaseCase):
-
+    # 1 тест
     @allure.title("Проверка создания пикселя")
     def test_create_pixel_correct(self, pixel_page):
         pixel_page.click_create_pix()
@@ -17,7 +17,17 @@ class TestSites(BaseCase):
         pixel_page.click_close_created()
         pixel_page.assert_created_url("tean.homes")
 
+    # 3 тест
+    @allure.title("Проверка редактирования названия пикселя")
+    def test_edit_pixel_name(self, pixel_page):
+        pixel_page.click_3_point()
+        pixel_page.click_edit_name_dropped()
+        pixel_page.enter_new_title("New title")
+        pixel_page.click_submit_edit_name()
+        pixel_page.refresh_page()
+        pixel_page.assert_new_title("New title")
 
+    # 9 тест
     @allure.title("Создание аудиторного тега")
     def test_create_tag(self, pixel_page):
         pixel_page.click_settings()
@@ -27,7 +37,7 @@ class TestSites(BaseCase):
         pixel_page.click_submit_create_tag()
         pixel_page.assert_created_auditory("mytag_name")
 
-
+    # 2 тест
     @allure.title("Проверка удаления")
     def test_delete_pixel(self, pixel_page):
         pixel_page.click_3_point()
