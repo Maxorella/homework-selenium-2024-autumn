@@ -1,4 +1,7 @@
 import time
+from selenium.webdriver.support import expected_conditions as EC
+
+from selenium.webdriver.support.wait import WebDriverWait
 
 from hw.code.ui.locators.AuditoryLocators import AuditoryLocators
 from hw.code.ui.pages.base_page import BasePage
@@ -12,15 +15,68 @@ class AuditoryPage(BasePage):
         self.driver = driver
         self.is_opened()
 
+    # 1 тест
+    def find_create_aud_btn(self):
+        self.create_aud_btn = self.find_clickable(self.locators.CREATE_AUDITORY_BUTTON)
+
     def click_create_auditory(self):
-        self.click(self.locators.CREATE_AUDITORY_BUTTON)
+        self.click(self.create_aud_btn)
+
+    def find_add_ist_btn(self):
+        self.add_ist_btn = self.find_clickable(self.locators.ADD_IST_BTN)
+
+    def click_add_ist_btn(self):
+        self.click(self.add_ist_btn)
+
+    def find_phrases_btn(self):
+        self.phrases_btn = self.find_clickable(self.locators.PHRASES_OPTION)
+
+    def click_phrases_btn(self):
+        self.click(self.phrases_btn)
+
+    def find_create_phrase_window_elements(self):
+        self.input_title = self.find_visibility(self.locators.PHRASES_TITLE_INPUT)
+        self.input_phrases = self.find_visibility(self.locators.PHRASES_PLUS_INPUT)
+        self.save_phrase_btn = self.find_visibility(self.locators.SAVE_BTN)
+
+
 
     def enter_auditory_name(self, auditory_name):
-        self.enter_field(self.locators.AUDITORY_NAME_INPUT, auditory_name)
+        self.enter_field_element(self.input_title, auditory_name)
 
+    def enter_phrase(self, phrase):
+        self.enter_field_element(self.input_phrases, phrase)
+
+    def click_save_phrase_btn(self):
+        self.click(self.save_phrase_btn)
+
+    # общая для разных созданий
+    def find_save_aud_button(self):
+        self.save_aud_btn = self.find_clickable(self.locators.SAVE_2_BTN)
+
+    def click_save_aud_btn(self):
+        self.wait().until(EC.invisibility_of_element_located(self.save_phrase_btn))
+        self.click(self.save_aud_btn)
+
+    def go_to_edit_page(self):
+        h5_title = self.find_clickable(self.locators.AUD_TITLE_H5)
+        h5_title.click()
+
+    def find_edit_page_labels(self):
+        self.phrases_label = self.find_visibility(self.locators.PHRASE_IN_EDIT)
+        self.title_edit = self.find_visibility(self.locators.TITLE_IN_EDIT)
+
+    def assert_edit_titles(self, phrase_in_edit, title_in_edit):
+        assert self.get_element_text(self.phrases_label) == phrase_in_edit
+        assert self.get_element_text(self.title_edit) == title_in_edit
+
+    # 2 тест
     def click_add_ist(self):
         self.click(self.locators.ADD_IST_BTN)
 
+
+
+    #
     def click_add_soobs_subsc(self):
         self.click(self.locators.SOOBS_SUBSC_BTN)
 
