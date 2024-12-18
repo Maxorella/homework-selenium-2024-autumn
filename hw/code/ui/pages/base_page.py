@@ -76,8 +76,15 @@ class BasePage(object):
     @allure.step('EnterField')
     def enter_field(self, locator, value, timeout=20) -> WebElement:
         elem = self.find_presence(locator, timeout)
-        elem.clear()
+        elem.send_keys(Keys.COMMAND + "a") # TODO поменять на control + a, если не на маке :)
+        elem.send_keys(Keys.DELETE)
         elem.send_keys(value)
+
+    @allure.step('SetAttribute')
+    def set_attribute(self, elem, attribute_name, value):
+        self.driver.execute_script(
+            f"arguments[0].setAttribute('{attribute_name}', '{value}');", elem
+        )
 
     @allure.step('Enter field element')
     def enter_field_element(self, element, value, timeout=20) -> WebElement:

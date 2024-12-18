@@ -31,7 +31,8 @@ class PixelPage(BasePage):
         assert self.get_text(self.locators.CREATED_PIX_URL) == pixel_url
 
     def click_3_point(self):
-        self.move_to_element(self.locators.AUD_SPIS)
+        body = self.find(self.locators.SPIS_BODY_DIV)
+        self.move_to_element(body)
         elem = self.find(self.locators.POINT_3_BTN)
         self.click_move(elem)
 

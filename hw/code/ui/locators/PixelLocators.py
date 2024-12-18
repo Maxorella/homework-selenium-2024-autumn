@@ -17,7 +17,7 @@ class PixelLocators:
     TITLE_NO_PIX = (By.XPATH, '//*[@id="pixels"]//h2[contains(text(), "Нет привязанных пикселей трекинга")]')
 
     # 3 тест
-
+    SPIS_BODY_DIV = (By.XPATH, '//*[@id="pixels"]//div[@class="BaseTable__body"]')
     EDIT_NAME_DROPPED_BTN = (By.XPATH, '//div[contains(@class,"PopoverContent_root")]//label[1]')
     EDIT_NAME_INPUT = (By.XPATH, '//span/input[@name="name"]')
     EDIT_SUBMIT_BTN = (By.XPATH, '//button[contains(normalize-space(.), "Изменить")]')
