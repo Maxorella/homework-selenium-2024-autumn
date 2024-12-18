@@ -32,7 +32,7 @@ class PixelLocators:
     EVENT_SELECT = (By.XPATH, '(//*[@id="root"]//select[@class="vkuiCustomSelect__control"])[1]')
     CATEGORY_INPUT = (By.XPATH, '//*[@id="root"]//input[@placeholder="Выберите категорию"]')
 
-    # 5 тест
+    # 9 тест
     # SETTINGS_BTN
     AUDITORY_TAGS_BTN = (By.XPATH, '//*[@id="tab_pixels.audience_tags"]')
     CREATE_AUDITORY_TAG_BTN = (By.XPATH, '//*[@id="pixels.audience_tags"]//button[normalize-space(.)="Создать аудиторный тег"]')

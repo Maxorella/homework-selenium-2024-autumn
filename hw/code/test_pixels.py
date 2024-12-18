@@ -49,7 +49,9 @@ class TestSites(BaseCase):
         pixel_page.find_pix_title()
         pixel_page.assert_new_title("New title")
 
-    # 4 тест
+    # 4-8 тест press f to pay respect
+    # главная проблема, что непонятно как input который с всплывашкой выбирать, в коде страницы был select
+    # но с ним не получилось...
     # @allure.title("Добавление события. Условие наступления - 'Посещена страница'.")
     # def test_edit_pixel_name(self, pixel_page):
     #      pixel_page.click_settings()
@@ -57,16 +59,24 @@ class TestSites(BaseCase):
     #     pixel_page.select_option()
     #     time.sleep(10)
 
-
-
     # 9 тест
     @allure.title("Создание аудиторного тега")
     def test_create_tag(self, pixel_page):
+
+        pixel_page.find_settings_btn()
         pixel_page.click_settings()
+
+        pixel_page.find_aud_tags_btn()
         pixel_page.click_aud_tags()
+
+        pixel_page.find_create_tag()
         pixel_page.click_create_tag()
-        pixel_page.enter_tag_name("mytag_name") # here
+
+        pixel_page.find_move_tag_input()
+        pixel_page.enter_tag_name("mytag_name")
         pixel_page.click_submit_create_tag()
+
+        pixel_page.find_created_tag_name()
         pixel_page.assert_created_auditory("mytag_name")
 
     # 2 тест

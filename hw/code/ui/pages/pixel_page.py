@@ -126,22 +126,38 @@ class PixelPage(BasePage):
     #     objSelect = Select(elem)
 
     # 5 тест
+
+    def find_settings_btn(self):
+        self.settings_btn = self.find_clickable(self.locators.SETTINGS_BTN)
+
     def click_settings(self):
-        self.find_and_click(self.locators.SETTINGS_BTN)
+        self.click(self.settings_btn)
+
+    def find_aud_tags_btn(self):
+        self.aud_tags_btn = self.find_clickable(self.locators.AUDITORY_TAGS_BTN)
 
     def click_aud_tags(self):
-        self.click(self.locators.AUDITORY_TAGS_BTN)
+        self.click(self.aud_tags_btn)
+
+    def find_create_tag(self):
+        self.create_tag_btn = self.find_clickable(self.locators.CREATE_AUDITORY_TAG_BTN)
 
     def click_create_tag(self):
-        self.click(self.locators.CREATE_AUDITORY_TAG_BTN)
+        self.click(self.create_tag_btn)
+
+    def find_move_tag_input(self):
+        self.tag_input = self.find_visibility(self.locators.TAG_NAME_INPUT)
+        self.move_to_element(self.tag_input)
 
     def enter_tag_name(self, tag_name: str):
-        self.move_to_element(self.locators.DOMEN_INPUT)
-        self.enter_field(self.locators.DOMEN_INPUT, tag_name)
+        self.enter_field(self.tag_input, tag_name)
 
     def click_submit_create_tag(self):
-        self.click(self.locators.SUBMIT_CREATE_BTN)
+        self.find_and_click(self.locators.SUBMIT_CREATE_BTN)
+
+    def find_created_tag_name(self):
+        self.created_auditory_tag = self.find_visibility(self.locators.TAG_NAME_CREATED_AUDITORY)
 
     def assert_created_auditory(self, expected_title):
-        assert self.get_text(self.locators.TAG_NAME_CREATED_AUDITORY) == expected_title
+        assert self.get_element_text(self.created_auditory_tag) == expected_title
 
