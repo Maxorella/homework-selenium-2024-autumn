@@ -1,3 +1,6 @@
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.select import Select
+
 from hw.code.ui.locators.PixelLocators import PixelLocators
 from hw.code.ui.pages.base_page import BasePage
 
@@ -92,22 +95,39 @@ class PixelPage(BasePage):
     def assert_new_title(self, expected_title: str):
         assert self.get_text(self.locators.PIXEL_TITLE) == expected_title
 
+    # 2 тест
 
-
-
+    def find_delete_dropped(self):
+        self.delete_dropped_btn = self.find_clickable(self.locators.DELETE_DROPPED_BTN)
 
     def click_delete_dropped(self):
-        self.click(self.locators.DELETE_DROPPED_BTN)
+        self.click(self.delete_dropped_btn)
+
+    def find_submit_delete(self):
+        self.submit_delete_btn = self.find_clickable(self.locators.SUBMIT_DELETE_BTN)
 
     def click_submit_delete(self):
-        self.click(self.locators.SUBMIT_DELETE_BTN)
+        self.click(self.submit_delete_btn)
+
+    def find_no_pix_title(self):
+        self.no_pix_title = self.find_visibility(self.locators.TITLE_NO_PIX)
 
     def assert_deleted_pixel(self):
-        assert self.get_text(self.locators.TITLE_NO_PIX) == "Нет привязанных пикселей трекинга"
+        assert self.get_element_text(self.no_pix_title) == "Нет привязанных пикселей трекинга"
+
+    # 4 тест
+
+    # def click_add_event(self):
+    #     self.find_and_click(self.locators.ADD_EVENT_NO_OTHER_BTN)
+
+    # def select_option(self):
+    #     elem = self.find_presence(self.locators.EVENT_SELECT)
+    #     self.click(elem)
+    #     objSelect = Select(elem)
 
     # 5 тест
     def click_settings(self):
-        self.click(self.locators.SETTINGS_BTN)
+        self.find_and_click(self.locators.SETTINGS_BTN)
 
     def click_aud_tags(self):
         self.click(self.locators.AUDITORY_TAGS_BTN)

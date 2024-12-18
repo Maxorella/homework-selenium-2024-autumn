@@ -29,6 +29,7 @@ class PixelLocators:
     ADD_EVENT_NO_OTHER_BTN = (By.XPATH, '//*[@id="pixels.events"]//button')
 
     EVENT_NAME_INPUT = (By.XPATH, '//*[@id="root"]//input[@placeholder="Введите название"]')
+    EVENT_SELECT = (By.XPATH, '(//*[@id="root"]//select[@class="vkuiCustomSelect__control"])[1]')
     CATEGORY_INPUT = (By.XPATH, '//*[@id="root"]//input[@placeholder="Выберите категорию"]')
 
     # 5 тест

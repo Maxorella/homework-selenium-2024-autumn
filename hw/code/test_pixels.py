@@ -49,6 +49,16 @@ class TestSites(BaseCase):
         pixel_page.find_pix_title()
         pixel_page.assert_new_title("New title")
 
+    # 4 тест
+    # @allure.title("Добавление события. Условие наступления - 'Посещена страница'.")
+    # def test_edit_pixel_name(self, pixel_page):
+    #      pixel_page.click_settings()
+    #     pixel_page.click_add_event()
+    #     pixel_page.select_option()
+    #     time.sleep(10)
+
+
+
     # 9 тест
     @allure.title("Создание аудиторного тега")
     def test_create_tag(self, pixel_page):
@@ -62,7 +72,14 @@ class TestSites(BaseCase):
     # 2 тест
     @allure.title("Проверка удаления")
     def test_delete_pixel(self, pixel_page):
+        pixel_page.find_3_point_and_move()
         pixel_page.click_3_point()
+
+        pixel_page.find_delete_dropped()
         pixel_page.click_delete_dropped()
+
+        pixel_page.find_submit_delete()
         pixel_page.click_submit_delete()
+
+        pixel_page.find_no_pix_title()
         pixel_page.assert_deleted_pixel()
