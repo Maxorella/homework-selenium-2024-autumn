@@ -16,13 +16,28 @@ class AuthPage(BasePage):
         self.is_opened()
 
     def login(self, email, password):
-        self.click(AuthLocators.GO_TO_LK_BTN, 15)
-        self.click(AuthLocators.GO_WITH_EMAIL_BTN, 15)
-        self.enter_field(AuthLocators.EMAIL_ENTER_FIELD, email, 15)
-        self.click(AuthLocators.ENTER_BTN, 15)
-        self.click(AuthLocators.ENTER_OTHER_WAY_BTN, 15)
-        self.enter_field(AuthLocators.PASSWORD_ENTER_FIELD, password, 15)
-        self.click(AuthLocators.ENTER_PASSWORD_BTN, 15)
+        go_to_lk_btn = self.find_visibility(AuthLocators.GO_TO_LK_BTN)
+        self.click(go_to_lk_btn, 15)
+
+        go_mail_btn = self.find_visibility(AuthLocators.GO_WITH_EMAIL_BTN)
+
+        self.click(go_mail_btn, 15)
+
+        email_field = self.find_visibility(AuthLocators.EMAIL_ENTER_FIELD)
+
+        self.enter_field(email_field, email)
+
+        enter_btn = self.find_visibility(AuthLocators.ENTER_BTN)
+        self.click(enter_btn)
+
+        other_way_btn = self.find_visibility(AuthLocators.ENTER_OTHER_WAY_BTN)
+        self.click(other_way_btn)
+
+        password_field = self.find_visibility(AuthLocators.PASSWORD_ENTER_FIELD)
+        self.enter_field(password_field, password)
+
+        enter_password_btn = self.find_visibility(AuthLocators.ENTER_PASSWORD_BTN)
+        self.click(enter_password_btn)
 
     def login_mail(self, email, password):
         self.login(email, password)
@@ -30,16 +45,19 @@ class AuthPage(BasePage):
 
     def login_pixels(self, email, password):
         self.login(email, password)
-        self.click(AuthLocators.GO_TO_PIXEL_BTN, 15)
+        go_to_pixel_btn = self.find_visibility(AuthLocators.GO_TO_PIXEL_BTN)
+        self.click(go_to_pixel_btn)
         return PixelPage(self.driver)
 
     def login_auditory(self, email, password):
         self.login(email, password)
-        self.click(AuthLocators.GO_TO_AUDITORY_BTN, 15)
+        go_to_aud_btn = self.find_visibility(AuthLocators.GO_TO_AUDITORY_BTN)
+        self.click(go_to_aud_btn)
         return AuditoryPage(self.driver)
+
     def go_to_companies(self, email, password):
         self.login(email, password)
-        self.click(AuthLocators.COMPANIES_PAGE,timeout=60)
+        self.click(AuthLocators.COMPANIES_PAGE, timeout=60)
         self.click(AuthLocators.COMPANIES_PAGE)
         self.find(CompaniesLocator.CREATE_NEW_COMPANY)
 
