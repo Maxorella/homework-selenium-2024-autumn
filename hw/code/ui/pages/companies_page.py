@@ -30,7 +30,7 @@ class CompaniesPage(BasePage):
     def switch_strategy(self, index):
         strategy = self.find(self.locators.STRATEGY)
         self.move_to_element(strategy)
-        select = self.find_presence(self.locators.STRATEGY_SELECT)
+        select = self.find_located(self.locators.STRATEGY_SELECT)
         select = self.select_element(select)
         select.select_by_index(index)
 

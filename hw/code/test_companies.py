@@ -60,7 +60,7 @@ class TestCompanies(BaseCase):
         companies_page.create_new_company()
         companies_page.create_site_advertise()
         companies_page.insert_site_href("https://www.statista.com")
-        companies_page.enter_field(companies_page.locators.BUDGET_FIELD, "100")
+        companies_page.set_budget("100")
         companies_page.transfer_to_next_step()
 
         companies_page.assert_budget_save()

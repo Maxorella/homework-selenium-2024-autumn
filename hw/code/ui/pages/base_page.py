@@ -53,9 +53,6 @@ class BasePage(object):
     def find_located(self, locator, timeout=20):
         return self.wait(timeout).until(EC.presence_of_element_located(locator))
 
-    def find_presence(self, locator, timeout=20):
-        return self.wait(timeout).until(EC.presence_of_element_located(locator))
-
     def find_clickable(self, locator, timeout=20):
         return self.wait(timeout).until(EC.element_to_be_clickable(locator))
 
@@ -63,55 +60,29 @@ class BasePage(object):
     def wait_for_clickable(self, locator, timeout=5):
         return self.wait(timeout).until(EC.element_to_be_clickable(locator))
 
-    @allure.step('Search')
-    def search(self, query):
-        elem = self.find(self.locators.QUERY_LOCATOR_ID)
-        elem.send_keys(query)
-        go_button = self.find(self.locators.GO_BUTTON_LOCATOR)
-        go_button.click()
-
-
     @allure.step('Click')
-    def click(self, element, timeout=15) -> WebElement:
+    def click(self, element, timeout=15) -> None:
         self.wait(timeout).until(EC.element_to_be_clickable(element))
         element.click()
 
     @allure.step('Find and click')
-    def find_and_click(self, locator, timeout=15) -> WebElement:
+    def find_and_click(self, locator, timeout=15) -> None:
         self.find(locator, timeout=timeout)
         elem = self.wait(timeout).until(EC.element_to_be_clickable(locator))
         elem.click()
 
     @allure.step('EnterField')
-    def enter_field(self, elem, value) -> WebElement:
+    def enter_field(self, elem, value) -> None:
         elem.send_keys(Keys.COMMAND + "a") # TODO поменять на control + a, если не на маке :)
         elem.send_keys(Keys.DELETE)
         elem.send_keys(value)
 
-    @allure.step('SetAttribute')
-    def set_attribute(self, elem, attribute_name, value):
-        self.driver.execute_script(
-            f"arguments[0].setAttribute('{attribute_name}', '{value}');", elem
-        )
-
     @allure.step('Enter field element')
-    def enter_field_element(self, element, value, timeout=20) -> WebElement:
+    def enter_field_element(self, element, value, timeout=20) -> None:
         WebDriverWait(self.driver, timeout).until(EC.visibility_of(element))
         element.clear()
         element.send_keys(value)
 
-    @allure.step('ClearEnterField')
-    def clear_enter_field(self, locator, value, timeout=20) -> WebElement:
-        elem = self.find(locator, timeout)
-        elem.clear()
-        elem.send_keys(value)
-
-    @allure.step('EnterFieldReturn')
-    def enter_field_return(self, locator, value, timeout=20) -> WebElement:
-        elem = self.find(locator, timeout)
-        elem.clear()
-        elem.send_keys(value)
-        elem.send_keys(Keys.RETURN)
 
     @allure.step('GetText')
     def get_text(self, locator, timeout=20) -> str:
@@ -158,8 +129,8 @@ class BasePage(object):
 
     def is_element_visible(self, element, timeout=20) -> bool:
         """
-                Проверяет, что элемента  ВИДИМ на странице в течение указанного времени ожидания.
-                :return: True, если элемент виден, False, если он невиден или его нету.
+                Проверяет, что элемента ВИДИМ на странице в течение указанного времени ожидания.
+                :return: True, если элемент виден, False, если он невиден или его нет.
                 """
         try:
             WebDriverWait(self.driver, timeout).until(EC.visibility_of(element))
@@ -170,19 +141,14 @@ class BasePage(object):
 
     def element_presented(self, locator, timeout=20) -> bool:
         """
-        Проверяет, что элемента  ВИДИМ на странице в течение указанного времени ожидания.
-        :return: True, если элемент виден, False, если он невиден или его нету.
+        Проверяет, что элемента ВИДИМ на странице в течение указанного времени ожидания.
+        :return: True, если элемент виден, False, если он невиден или его нет.
         """
         try:
             WebDriverWait(self.driver, timeout).until(EC.visibility_of_element_located(locator))
             return True  # Элемент видим
         except TimeoutException:
             return False  # Элемент невидим
-
-    @allure.step('MoveClick')
-    def click_move(self, button):
-        action = ActionChains(self.driver)
-        action.move_to_element(button).click(button).perform()
 
     def move_to_element(self, element):
         action = ActionChains(self.driver)
