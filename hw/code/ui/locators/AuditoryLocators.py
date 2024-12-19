@@ -61,4 +61,6 @@ class AuditoryLocators:
     # lmao
     LMAO_SPAN = (By.XPATH, '//*[@id="audience"]//h5[contains(@class, "NameCell_name__lgrNA")]')
 
+    # lmao v edit
+    LMAO_IN_EDIT = (By.XPATH, '//div[@class="InfoRow_content__LN5Bb"]')
     # 1 тест

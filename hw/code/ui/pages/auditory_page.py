@@ -85,38 +85,48 @@ class AuditoryPage(BasePage):
         self.click(self.delete_dropped_btn)
 
         self.find_and_click(self.locators.DELETE_SUBMIT_BTN)
-    # 2 тест
-
-
-    def click_add_ist(self):
-        self.click(self.locators.ADD_IST_BTN)
-
-
+    # 8 тест
 
     #
-    def click_add_soobs_subsc(self):
-        self.click(self.locators.SOOBS_SUBSC_BTN)
+    def find_soobs_btn(self):
+        self.soobs_btn = self.find_clickable(self.locators.SOOBS_SUBSC_BTN)
+
+    def click_soobs_btn(self):
+        self.click(self.soobs_btn)
 
     def click_add_as_list(self):
-        self.click(self.locators.ADD_AS_LIST_BTN)
+        self.find_and_click(self.locators.ADD_AS_LIST_BTN)
 
     def click_soobs(self):
-        self.click(self.locators.VK_SOOBS_BTN)
+        self.find_and_click(self.locators.VK_SOOBS_BTN)
+
+    def find_soobs_input(self):
+        self.soobs_text_area = self.find_located(self.locators.TEXT_AREA)
 
     def enter_soobs_href(self, soobs_href):
-        self.enter_field(self.locators.TEXT_AREA, soobs_href, 15)
+        self.enter_field(self.soobs_text_area, soobs_href)
+
+
 
     def click_confr_add(self):
-        self.click(self.locators.ADD_BTN)
+        self.find_and_click(self.locators.ADD_BTN)
 
     def click_close_krest(self):
-        self.click(self.locators.CLOSE_BTN)
+        self.find_and_click(self.locators.CLOSE_BTN)
 
     def click_save(self):
-        self.click(self.locators.SAVE_BTN)
+        self.save_phr_btn = self.find_clickable(self.locators.SAVE_BTN)
+        self.click(self.save_phr_btn)
+        self.wait().until(EC.invisibility_of_element_located(self.save_phr_btn))
 
     def click_submit_create(self):
-        self.click(self.locators.SUBMIT_CREATE_BTN)
+        self.subm = self.find(self.locators.SUBMIT_CREATE_BTN)
+        self.click(self.subm)
+        self.wait().until(EC.invisibility_of_element_located(self.subm))
 
-    def assert_lmao_span(self, expected_title):
-        assert expected_title == self.get_text(self.locators.LMAO_SPAN)
+    def assert_lmao_span_in_edit(self, expected_title):
+        self.lmao_span = self.find_visibility(self.locators.LMAO_IN_EDIT)
+        assert expected_title == self.get_element_text(self.lmao_span)
+
+    def close_edit_page(self):
+        self.find_and_click(self.locators.CANCEL_EDIT_BTN)
